@@ -7,7 +7,6 @@
 #'
 #' @export
 
-
 detect_sdg = function(..., system = c("aurora","elsevier"), out = c("features","docs"), verbose = TRUE){
 
   input = list(...)

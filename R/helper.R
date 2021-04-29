@@ -33,11 +33,10 @@ search_corpus = function(corpus, queries, ...) corpustools::search_features(corp
 get_code = function(data) {
 
   # get id
-  id = ""
-  for(i in 1:ncol(data)) id = paste0(id, '_', data[[i]])
+  id = as.character(data[[1]])
+  for(i in 2:ncol(data)) id = paste0(id, '_', data[[i]])
 
   # out
-  data$hit_code = id
-  data
+  id
 
   }

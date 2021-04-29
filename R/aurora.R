@@ -24,7 +24,8 @@ detect_aurora = function(corpus, verbose = FALSE){
       dplyr::group_by(code, doc_id) %>%
       dplyr::mutate(both = length(unique(part))==2) %>%
       dplyr::filter(both) %>%
-      dplyr::ungroup()
+      dplyr::ungroup() %>%
+      select(-part, -both)
     and_hits$query = aurora_and$orig[as.numeric(stringr::str_extract(and_hits$code, '[:digit:]+'))]
   } else {
     and_hits = simple_hits %>% dplyr::filter(rep(FALSE, nrow(simple_hits)))
@@ -44,7 +45,8 @@ detect_aurora = function(corpus, verbose = FALSE){
       dplyr::group_by(code, doc_id) %>%
       dplyr::mutate(w3 = w_n(token_id[part == 'first'], token_id[part == 'second'])) %>%
       dplyr::filter(w3) %>%
-      dplyr::ungroup()
+      dplyr::ungroup() %>%
+      select(-part, -both, -w3)
     w_hits$query = aurora_w$orig[as.numeric(stringr::str_extract(w_hits$code, '[:digit:]+'))]
   } else {
     w_hits = simple_hits %>% dplyr::filter(rep(F, nrow(simple_hits)))
@@ -104,7 +106,8 @@ detect_aurora = function(corpus, verbose = FALSE){
     dplyr::bind_rows(s2_hits) %>%
     dplyr::bind_rows(s3_hits) %>%
     dplyr::select(-sentence) %>%
-    dplyr::mutate(doc_id = as.numeric(as.character(doc_id))) %>%
+    dplyr::mutate(doc_id = as.numeric(as.character(doc_id)),
+                  feature = as.character(feature)) %>%
     dplyr::arrange(doc_id)
 
   # out

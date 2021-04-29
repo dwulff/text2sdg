@@ -3,6 +3,8 @@
 export("%>%")
 export(detect_aurora)
 export(detect_elsevier)
+export(detect_sdg)
+export(get_code)
 export(make_corpus)
 export(search_corpus)
 importFrom(magrittr,"%>%")

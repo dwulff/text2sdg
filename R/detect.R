@@ -28,7 +28,7 @@ detect_sdg = function(..., system = c("aurora","elsevier"), out = c("features","
       hits = detect_aurora(corpus)
       } else if(system[1] == "elsevier"){
       if(verbose) cat("\tRunning elsevier queries (might take a while..)\n",sep = '')
-      hits = detect_aurora(corpus)
+      hits = detect_elsevier(corpus)
       } else {
       stop("system must be aurora or elsevier")
       }

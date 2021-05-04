@@ -25,7 +25,7 @@ detect_aurora = function(corpus, verbose = FALSE){
       dplyr::mutate(both = length(unique(part))==2) %>%
       dplyr::filter(both) %>%
       dplyr::ungroup() %>%
-      select(-part, -both)
+      dplyr::select(-part, -both)
     and_hits$query = aurora_and$orig[as.numeric(stringr::str_extract(and_hits$code, '[:digit:]+'))]
   } else {
     and_hits = simple_hits %>% dplyr::filter(rep(FALSE, nrow(simple_hits)))
@@ -46,7 +46,7 @@ detect_aurora = function(corpus, verbose = FALSE){
       dplyr::mutate(w3 = w_n(token_id[part == 'first'], token_id[part == 'second'])) %>%
       dplyr::filter(w3) %>%
       dplyr::ungroup() %>%
-      select(-part, -both, -w3)
+      dplyr::select(-part, -both, -w3)
     w_hits$query = aurora_w$orig[as.numeric(stringr::str_extract(w_hits$code, '[:digit:]+'))]
   } else {
     w_hits = simple_hits %>% dplyr::filter(rep(F, nrow(simple_hits)))

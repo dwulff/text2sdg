@@ -40,3 +40,10 @@ get_code = function(data) {
   id
 
   }
+
+w_n = function(x, y, n = 3){
+  pairs = expand.grid(x, y)
+  min(abs(pairs[,1] - pairs[,2])) <= n
+  }
+
+

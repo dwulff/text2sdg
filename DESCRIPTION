@@ -1,4 +1,4 @@
-Package: detectSGD
+Package: detectSDG
 Type: Package
 Title: Detect UN Sustainable Development Goals in Text
 Version: 0.1.0

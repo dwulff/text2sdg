@@ -1,2 +1,2 @@
-# detect_sdg
-Detect UN Sustainable Development Goals in Text
+# text2sdg
+Detecting UN Sustainable Development Goals in Natural Language

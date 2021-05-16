@@ -1,6 +1,6 @@
-Package: detectSDG
+Package: text2sdg
 Type: Package
-Title: Detect UN Sustainable Development Goals in Text
+Title: Detect UN Sustainable Development Goals in Natural Language
 Version: 0.1.0
 Author: Dirk U. Wulff
 Maintainer: Dirk U. Wulff <dirk.wulff@gmail.com>

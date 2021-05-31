@@ -14,7 +14,7 @@ detect_ontology = function(corpus, verbose = FALSE){
 
   # get hits
   simple_hits = search_corpus(corpus, ontology_queries$query)
-  simple_hits$sdg = ontology_queries$clasification[as.numeric(stringr::str_extract(simple_hits$code, '[:digit:]+'))]
+  simple_hits$sdg = ontology_queries$sdg[as.numeric(stringr::str_extract(simple_hits$code, '[:digit:]+'))]
   simple_hits$query = ontology_queries$query[as.numeric(stringr::str_extract(simple_hits$code, '[:digit:]+'))]
 
 

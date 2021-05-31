@@ -7,11 +7,10 @@
 #'
 #' @export
 
-detect_sdg = function(..., system = c("aurora","elsevier"), out = c("features","docs"), verbose = TRUE){
+detect_sdg = function(..., system = c("aurora","elsevier","siris", "ontology"), out = c("features","docs"), verbose = TRUE){
 
   input = list(...)
   names(input) = paste0("source_",1:length(input))
-
   # run sdg
   hit_list = list()
   for(i in 1:length(input)){
@@ -29,8 +28,14 @@ detect_sdg = function(..., system = c("aurora","elsevier"), out = c("features","
       } else if(system[1] == "elsevier"){
       if(verbose) cat("\tRunning elsevier queries (might take a while..)\n",sep = '')
       hits = detect_elsevier(corpus)
+      } else if(system[1] == "siris") {
+      if(verbose) cat("\tRunning siris queries (might take a while..)\n",sep = '')
+      hits = detect_siris(corpus)
+      } else if(system[1] == "ontology") {
+      if(verbose) cat("\tRunning ontology queries (might take a while..)\n",sep = '')
+      hits = detect_ontology(corpus)
       } else {
-      stop("system must be aurora or elsevier")
+      stop("system must be aurora, elsevier, siris or ontology")
       }
 
     # reduce if requested

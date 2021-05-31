@@ -16,7 +16,7 @@ detect_elsevier = function(corpus, verbose = FALSE){
 
   # out
   simple_hits %>%
-    select(-sentence) %>%
+    dplyr::select(-sentence) %>%
     dplyr::mutate(doc_id = as.numeric(as.character(doc_id)),
                   feature = as.character(feature))
 

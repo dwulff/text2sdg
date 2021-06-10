@@ -14,16 +14,15 @@ detect_siris = function(corpus, verbose = FALSE){
 
   # get hits
   simple_hits = search_corpus(corpus, zenodo_queries_v1.3$query)
-
+  simple_hits$sdg <- stringr::str_extract(simple_hits$code, "SDG-[0-9]{1,2}")
 
 
   # #development
-  # simple_hits = search_corpus(make_corpus(test_txt), zenodo_queries_v1.3$query)
+  #simple_hits = search_corpus(make_corpus(test_txt), zenodo_queries_v1.3$query)
 
 
   #out
   simple_hits %>%
-    dplyr::mutate(sdg = stringr::str_extract(code, "SDG[:digit:]{1,2}")) %>%
     #todo: remove ID from query string?
     dplyr::left_join(zenodo_queries_v1.3 %>% dplyr::select(ID, query), by = c("code" = "ID")) %>%
     dplyr::select(-sentence) %>%

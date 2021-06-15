@@ -21,34 +21,51 @@ detect_sdg = function(..., system = c("aurora","elsevier","siris", "ontology"), 
     # make corpus
     corpus = make_corpus(input[[i]])
 
+    #make output list
+    hits = list()
+
     # run sdg
-    if(system[1] == "aurora"){
+    if("aurora" %in% system){
       if(verbose) cat("\tRunning aurora queries (might take a while..)\n",sep = '')
-      hits = detect_aurora(corpus)
-      } else if(system[1] == "elsevier"){
+      hits_aurora = detect_aurora(corpus)
+      hits[["aurora"]] <- hits_aurora }
+    if("elsevier" %in% system){
       if(verbose) cat("\tRunning elsevier queries (might take a while..)\n",sep = '')
-      hits = detect_elsevier(corpus)
-      } else if(system[1] == "siris") {
+      hits_elsevier = detect_elsevier(corpus)
+      hits[["elsevier"]] <- hits_elsevier}
+    if("siris" %in% system) {
       if(verbose) cat("\tRunning siris queries (might take a while..)\n",sep = '')
-      hits = detect_siris(corpus)
-      } else if(system[1] == "ontology") {
+      hits_siris = detect_siris(corpus)
+      hits[["siris"]] <- hits_siris}
+    if("ontology" %in% system) {
       if(verbose) cat("\tRunning ontology queries (might take a while..)\n",sep = '')
-      hits = detect_ontology(corpus)
-      } else {
-      stop("system must be aurora, elsevier, siris or ontology")
-      }
+      hits_ontology = detect_ontology(corpus)
+      hits[["ontology"]] <- hits_ontology}
+    # if {
+    #   stop("system must be aurora, elsevier, siris or ontology")
+    #   }
+
+
+    #combine lists to df
+    hits_df <- do.call(rbind, hits)
+
+
 
     # reduce if requested
     if(out[1] == "docs"){
-      hits = hits %>%
-        dplyr::select(-code, -feature, -token_id, -hit_id) %>%
+      hits_df = hits_df %>%
+        dplyr::select(-code, -features, -hit, -query) %>%
+        #TODO: THIS STILL GETS RID OF SOME DUPLICATES -> SOME QUERIES ARE NOT UNIQUE (E.G., "WOMEN")
         unique()
       } else {
       if(out[1] != "features") stop("out must be features or docs")
       }
 
+
+
+
     # out
-    hit_list[[i]] = hits %>%
+    hit_list[[i]] = hits_df %>%
       dplyr::mutate(hit_code = get_code(.),
              source = names(input[i]))
 

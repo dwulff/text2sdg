@@ -18,6 +18,14 @@ detect_elsevier = function(corpus, verbose = FALSE){
   simple_hits %>%
     dplyr::select(-sentence) %>%
     dplyr::mutate(doc_id = as.numeric(as.character(doc_id)),
-                  feature = as.character(feature))
+                  feature = as.character(feature),
+                  method = "elsevier")  %>%
+    group_by(doc_id, code) %>%
+    #paste features together
+    summarise(features = toString(feature),
+              across(c(sdg, query, method), unique)) %>%
+    ungroup() %>%
+    #add hit id
+    mutate(hit = 1:nrow(.))
 
   }

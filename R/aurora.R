@@ -111,6 +111,16 @@ detect_aurora = function(corpus, verbose = FALSE){
     dplyr::arrange(doc_id)
 
   # out
-  hits %>% dplyr::left_join(aurora_sdg, by = c("query" = "queries"))
+  hits %>%
+    dplyr::left_join(aurora_sdg, by = c("query" = "queries")) %>%
+    dplyr::mutate(method = "aurora") %>%
+    dplyr::select(-sdg_title, -sdg_description)  %>%
+    group_by(doc_id, code) %>%
+    #paste features together
+    summarise(features = toString(feature),
+              across(c(sdg, query, method), unique)) %>%
+    ungroup() %>%
+    #add hit id
+    mutate(hit = 1:nrow(.))
 
   }

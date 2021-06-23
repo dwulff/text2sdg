@@ -41,9 +41,9 @@ detect_sdg = function(..., system = c("aurora","elsevier","siris", "ontology"), 
       if(verbose) cat("\tRunning ontology queries (might take a while..)\n",sep = '')
       hits_ontology = detect_ontology(corpus)
       hits[["ontology"]] <- hits_ontology}
-    # if {
-    #   stop("system must be aurora, elsevier, siris or ontology")
-    #   }
+    if (!any(system %in% c("aurora","elsevier","siris", "ontology"))){
+      stop("system must be aurora, elsevier, siris or ontology")
+      }
 
 
     #combine lists to df

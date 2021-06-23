@@ -34,14 +34,15 @@ detect_aurora = function(corpus, verbose = FALSE){
   # deal with W/
   w_hits_1 = search_corpus(corpus, aurora_w$correct)
   w_hits_2 = search_corpus(corpus, aurora_w$`correct 2`)
-  if(nrow(and_hits_1) > 0 & nrow(and_hits_2) > 0){
-    w_hits_1$part = "first"
-    w_hits_2$part = "second"
-    w_hits = w_hits_1 %>%
-      dplyr::bind_rows(w_hits_2) %>%
-      dplyr::group_by(code, doc_id) %>%
-      dplyr::mutate(both = length(unique(part))==2) %>%
-      dplyr::filter(both) %>%
+  w_hits_1$part = "first"
+  w_hits_2$part = "second"
+  w_hits = w_hits_1 %>%
+    dplyr::bind_rows(w_hits_2) %>%
+    dplyr::group_by(code, doc_id) %>%
+    dplyr::mutate(both = length(unique(part))==2) %>%
+    dplyr::filter(both)
+  if(nrow(w_hits) > 0){
+    w_hits%>%
       dplyr::group_by(code, doc_id) %>%
       dplyr::mutate(w3 = w_n(token_id[part == 'first'], token_id[part == 'second'])) %>%
       dplyr::filter(w3) %>%
@@ -121,6 +122,6 @@ detect_aurora = function(corpus, verbose = FALSE){
               across(c(sdg, query, method), unique)) %>%
     ungroup() %>%
     #add hit id
-    mutate(hit = 1:nrow(.))
+    dplyr::mutate(hit = 1:nrow(.))
 
   }

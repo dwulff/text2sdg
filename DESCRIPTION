@@ -5,10 +5,11 @@ Version: 0.1.0
 Maintainer: Dominik Meier <dominikmeier@outlook.com>
 Authors@R: c(
     person(c("Dirk","U."), "Wulff", role= "aut",
-            email= "dirk.wulff@gmail.com"),
+            email= "dirk.wulff@gmail.com",
+    		comment = c(ORCID = "0000-0002-4008-8022")),
     person(c("Dominik","S."), "Meier", role = c("aut", "cre"),
     		email = "dominikmeier@outlook.com",
-    		comment = c(ORCID = "0000-0002-4008-8022")),
+    		comment = c(ORCID = "0000-0002-3999-1388")),
     person("Mata", "Rui", role = "ctb",
         email= "rui.mata@unibas.ch",
         comment = c(ORCID = "0000-0002-1679-906X"))

@@ -115,18 +115,28 @@ detect_aurora = function(corpus, verbose = FALSE){
     dplyr::select(-c(code))
 
   # out
-  hits %>%
-    dplyr::left_join(aurora_sdg, by = c("query" = "queries")) %>%
-    dplyr::mutate(method = "aurora") %>%
-    dplyr::select(-sdg_title, -sdg_description)  %>%
-    dplyr::group_by(doc_id, query_id) %>%
-    #paste features together
-    dplyr::summarise(number_of_matches = dplyr::n(),
-                     features = toString(feature),
-              dplyr::across(c(sdg, method), unique)) %>%
-    dplyr::ungroup() %>%
-    #add hit id
-    dplyr::mutate(hit = 1:nrow(.)) %>%
-    dplyr::rename(system = method)
+
+  if(nrow(hits > 0)) {
+
+    hits %>%
+      dplyr::left_join(aurora_sdg, by = c("query" = "queries")) %>%
+      dplyr::mutate(method = "aurora") %>%
+      dplyr::select(-sdg_title, -sdg_description)  %>%
+      dplyr::group_by(doc_id, query_id) %>%
+      #paste features together
+      dplyr::summarise(number_of_matches = dplyr::n(),
+                       features = toString(feature),
+                       dplyr::across(c(sdg, method), unique)) %>%
+      dplyr::ungroup() %>%
+      #add hit id
+      dplyr::mutate(hit = 1:nrow(.)) %>%
+      dplyr::rename(system = method)
+
+  } else {
+
+    hits
+
+  }
+
 
   }

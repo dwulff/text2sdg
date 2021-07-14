@@ -107,36 +107,26 @@ detect_aurora = function(corpus, verbose = FALSE){
     dplyr::bind_rows(s2_hits) %>%
     dplyr::bind_rows(s3_hits) %>%
     dplyr::select(-sentence) %>%
-    dplyr::mutate(doc_id = as.numeric(as.character(doc_id)),
+    dplyr::mutate(document = as.numeric(as.character(doc_id)),
                   feature = as.character(feature)) %>%
-    dplyr::arrange(doc_id) %>%
-    #change code to query_id
-    dplyr::mutate(query_id = stringr::str_extract(code, '[:digit:]+')) %>%
-    dplyr::select(-c(code))
+    dplyr::arrange(document)
 
   # out
 
-  if(nrow(hits > 0)) {
+  if(nrow(hits) == 0) return(NULL)
 
-    hits %>%
-      dplyr::left_join(aurora_sdg, by = c("query" = "queries")) %>%
-      dplyr::mutate(method = "aurora") %>%
-      dplyr::select(-sdg_title, -sdg_description)  %>%
-      dplyr::group_by(doc_id, query_id) %>%
-      #paste features together
-      dplyr::summarise(number_of_matches = dplyr::n(),
-                       features = toString(feature),
-                       dplyr::across(c(sdg, method), unique)) %>%
-      dplyr::ungroup() %>%
-      #add hit id
-      dplyr::mutate(hit = 1:nrow(.)) %>%
-      dplyr::rename(system = method)
-
-  } else {
-
-    hits
-
-  }
-
+  hits %>%
+    dplyr::left_join(aurora_sdg, by="query") %>%
+    dplyr::mutate(system = "aurora") %>%
+    dplyr::select(-sdg_title, -sdg_description)  %>%
+    dplyr::group_by(document, query_id) %>%
+    #paste features together
+    dplyr::summarise(matches = dplyr::n(),
+                     features = toString(feature),
+                     dplyr::across(c(sdg, system), unique)) %>%
+    dplyr::ungroup() %>%
+    #add hit id
+    dplyr::mutate(hit = 1:nrow(.)) %>%
+    dplyr::select(document, sdg, system, query_id, features, hit)
 
   }

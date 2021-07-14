@@ -10,36 +10,29 @@ detect_ontology = function(corpus, verbose = FALSE){
 
 
   # get hits
-  simple_hits = search_corpus(corpus, ontology_queries$query)
-  simple_hits$sdg = ontology_queries$sdg[as.numeric(stringr::str_extract(simple_hits$code, '[:digit:]+'))]
-  simple_hits$query_id = as.numeric(stringr::str_extract(simple_hits$code, '[:digit:]+'))
+  hits = search_corpus(corpus, ontology_queries$query)
+  hits$sdg = ontology_queries$sdg[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))]
+  hits$query_id = as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))
 
-  #drop code since we now use query_id
-  simple_hits <- simple_hits %>%
-    dplyr::select(-code)
+  # exit if no hits
+  if(nrow(hits) == 0 )  return(NULL)
 
-
-
-  # #development
-  #simple_hits = search_corpus(make_corpus(test_txt), ontology_queries$query)
   # out
-
-
-  simple_hits %>%
+  hits %>%
     dplyr::select(-sentence) %>%
-    dplyr::mutate(doc_id = as.numeric(as.character(doc_id)),
+    dplyr::mutate(document = as.numeric(as.character(doc_id)),
                   feature = as.character(feature),
-                  method = "ontology")  %>%
-    dplyr::group_by(doc_id, query_id) %>%
+                  system = "ontology")  %>%
+    dplyr::group_by(document, query_id) %>%
     #paste features together
-    dplyr::summarise(number_of_matches = dplyr::n(),
+    dplyr::summarise(matches = dplyr::n(),
                      features = toString(feature),
-              dplyr::across(c(sdg, method), unique)) %>%
+              dplyr::across(c(sdg, system), unique)) %>%
     dplyr::ungroup() %>%
     #add hit id
     dplyr::mutate(hit = 1:nrow(.)) %>%
-    dplyr::rename(system = method)
-
+    dplyr::select(document, sdg, system, query_id, features, hit) %>%
+    dplyr::arrange(document, sdg, query_id)
 
 }
 

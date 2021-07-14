@@ -56,34 +56,23 @@ detect_sdg = function(..., system = c("aurora","elsevier","siris", "ontology"), 
     # reduce if requested
     if(out[1] == "docs"){
       hits_df = hits_df %>%
-        dplyr::select(-query_id, -features, -hit) %>%
-        #TODO: THIS STILL GETS RID OF SOME DUPLICATES -> SOME QUERIES ARE NOT UNIQUE (E.G., "WOMEN")
-        unique()
+        dplyr::group_by(document, sdg, system) %>%
+        dplyr::summarize(hits = dplyr::n())
       } else {
       if(out[1] != "features") stop("out must be features or docs")
       }
 
-
-
-
     # out
-    hit_list[[i]] = hits_df %>%
-      dplyr::mutate(hit_code = get_code(.),
-             source = names(input[i]))
+    hit_list[[i]] = hits_df %>% dplyr::mutate(source = names(input[i]))
 
   }
 
   # combine
   hits = do.call(rbind, hit_list)
 
-  # check double
+  # out
   hits %>%
-    dplyr::group_by(hit_code) %>%
-    dplyr::mutate(source = paste0(source, collapse=',')) %>%
-    dplyr::slice(1) %>%
-    dplyr::ungroup() %>%
-    dplyr::select(-hit_code) %>%
-    dplyr::arrange(doc_id)
+    dplyr::arrange(document, sdg, system)
 
   }
 

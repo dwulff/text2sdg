@@ -56,7 +56,7 @@ detect_sdg = function(..., system = c("aurora","elsevier","siris", "ontology"), 
     # reduce if requested
     if(out[1] == "docs"){
       hits_df = hits_df %>%
-        dplyr::select(-code, -features, -hit, -query) %>%
+        dplyr::select(-query_id, -features, -hit) %>%
         #TODO: THIS STILL GETS RID OF SOME DUPLICATES -> SOME QUERIES ARE NOT UNIQUE (E.G., "WOMEN")
         unique()
       } else {

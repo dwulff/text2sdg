@@ -5,10 +5,7 @@
 #' @param corpus object of class \code{tCorpus} containing text.
 #' @param verbose logical.
 #'
-#' @return
 #' @export
-#'
-#' @examples
 detect_ontology = function(corpus, verbose = FALSE){
 
 

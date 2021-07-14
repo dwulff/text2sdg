@@ -6,7 +6,7 @@
 \usage{
 detect_sdg(
   ...,
-  system = c("aurora", "elsevier"),
+  system = c("aurora", "elsevier", "siris", "ontology"),
   out = c("features", "docs"),
   verbose = TRUE
 )

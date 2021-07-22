@@ -7,7 +7,7 @@
 #'
 #' @export
 
-detect_sdg = function(..., system = c("aurora","elsevier","siris", "ontology"), out = c("features","docs"), verbose = TRUE){
+detect_sdg = function(..., system = c("aurora","elsevier","siris"), out = c("features","docs"), verbose = TRUE){
 
   input = list(...)
   names(input) = paste0("source_",1:length(input))

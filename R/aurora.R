@@ -116,7 +116,7 @@ detect_aurora = function(corpus, verbose = FALSE){
   if(nrow(hits) == 0) return(NULL)
 
   hits %>%
-    dplyr::left_join(aurora_sdg, by="query") %>%
+    dplyr::left_join(aurora_queries, by="query") %>%
     dplyr::mutate(system = "aurora") %>%
     dplyr::select(-sdg_title, -sdg_description)  %>%
     dplyr::group_by(document, query_id) %>%

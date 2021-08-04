@@ -55,10 +55,11 @@ plot_sdg = function(hits,
   # change to titles
   if(sdg_titles == TRUE){
     sdg_titles = aurora_queries %>%
+      dplyr::mutate(sdg_title = stringr::str_to_title(sdg_title)) %>%
       dplyr::select(sdg, sdg_title) %>%
       unique() %>%
-      dplyr::pull(sdg_title, sdg) %>%
-      stringr::str_to_title()
+      dplyr::arrange(sdg) %>%
+      dplyr::pull(sdg_title, sdg)
     hits = hits %>%
       dplyr::mutate(sdg = factor(sdg_titles[sdg], levels = sdg_titles))
     }

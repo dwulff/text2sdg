@@ -57,7 +57,8 @@ detect_sdg = function(..., system = c("aurora","elsevier","siris"), out = c("fea
     if(out[1] == "docs"){
       hits_df = hits_df %>%
         dplyr::group_by(document, sdg, system) %>%
-        dplyr::summarize(hits = dplyr::n())
+        dplyr::summarize(hits = dplyr::n()) %>%
+        ungroup()
       } else {
       if(out[1] != "features") stop("out must be features or docs")
       }

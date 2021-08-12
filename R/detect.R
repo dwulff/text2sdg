@@ -1,75 +1,59 @@
-#' Detect SDGs
+#' Detect SDGs in text
 #'
-#' Detect SDGs
+#' `detect_sdg` identifies SDGs in text using the Aurora, Elsevier, and Siris query systems.
 #'
 #' @param corpus object of class \code{tCorpus} containing text.
 #' @param verbose logical.
 #'
 #' @export
 
-detect_sdg = function(..., system = c("aurora","elsevier","siris"), out = c("features","docs"), verbose = TRUE){
+detect_sdg = function(text, system = c("aurora","elsevier","siris"), out = c("features","docs"), verbose = TRUE){
 
-  input = list(...)
-  names(input) = paste0("source_",1:length(input))
+  if(class())
+
+  # make corpus
+  if(class(text) != "tCorpus"){
+    corpus = make_corpus(input[[i]])
+    } else {
+    corpus = input[[i]]
+    }
+
+  #make output list
+  hits = list()
 
   # run sdg
-  hit_list = list()
-  for(i in 1:length(input)){
+  if("aurora" %in% system){
+    if(verbose) cat("Running aurora queries\n",sep = '')
+    hits_aurora = detect_aurora(corpus)
+    hits[["aurora"]] <- hits_aurora }
+  if("elsevier" %in% system){
+    if(verbose) cat("Running elsevier queries\n",sep = '')
+    hits_elsevier = detect_elsevier(corpus)
+    hits[["elsevier"]] <- hits_elsevier}
+  if("siris" %in% system) {
+    if(verbose) cat("Running siris queries\n",sep = '')
+    hits_siris = detect_siris(corpus)
+    hits[["siris"]] <- hits_siris}
+  if("ontology" %in% system) {
+    if(verbose) cat("Running ontology queries\n",sep = '')
+    hits_ontology = detect_ontology(corpus)
+    hits[["ontology"]] <- hits_ontology}
+  if (!any(system %in% c("aurora","elsevier","siris", "ontology"))){
+    stop("system must be aurora, elsevier, siris or ontology")
+    }
 
-    # keep track
-    if(verbose) cat("\nRunning source ",i,"\n",sep = '')
+  #combine lists to df
+  hits <- do.call(rbind, hits)
 
-    # make corpus
-    if(class(input[[i]])[1] != "tCorpus"){
-      corpus = make_corpus(input[[i]])
-      } else {
-      corpus = input[[i]]
-      }
-
-    #make output list
-    hits = list()
-
-    # run sdg
-    if("aurora" %in% system){
-      if(verbose) cat("\tRunning aurora queries\n",sep = '')
-      hits_aurora = detect_aurora(corpus)
-      hits[["aurora"]] <- hits_aurora }
-    if("elsevier" %in% system){
-      if(verbose) cat("\tRunning elsevier queries\n",sep = '')
-      hits_elsevier = detect_elsevier(corpus)
-      hits[["elsevier"]] <- hits_elsevier}
-    if("siris" %in% system) {
-      if(verbose) cat("\tRunning siris queries\n",sep = '')
-      hits_siris = detect_siris(corpus)
-      hits[["siris"]] <- hits_siris}
-    if("ontology" %in% system) {
-      if(verbose) cat("\tRunning ontology queries\n",sep = '')
-      hits_ontology = detect_ontology(corpus)
-      hits[["ontology"]] <- hits_ontology}
-    if (!any(system %in% c("aurora","elsevier","siris", "ontology"))){
-      stop("system must be aurora, elsevier, siris or ontology")
-      }
-
-    #combine lists to df
-    hits_df <- do.call(rbind, hits)
-
-    # reduce if requested
-    if(out[1] == "docs"){
-      hits_df = hits_df %>%
-        dplyr::group_by(document, sdg, system) %>%
-        dplyr::summarize(hits = dplyr::n()) %>%
-        dplyr::ungroup()
-      } else {
-      if(out[1] != "features") stop("out must be features or docs")
-      }
-
-    # out
-    hit_list[[i]] <- hits_df %>% dplyr::mutate(source = names(input[i]))
-
-  }
-
-  # combine
-  hits <- do.call(rbind, hit_list)
+  # reduce if requested
+  if(out[1] == "docs"){
+    v = hits_df %>%
+      dplyr::group_by(document, sdg, system) %>%
+      dplyr::summarize(hits = dplyr::n()) %>%
+      dplyr::ungroup()
+    } else {
+    if(out[1] != "features") stop("out must be features or docs")
+    }
 
   #convert document to factor for downstream functions
   hits <- hits %>%

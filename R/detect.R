@@ -58,18 +58,23 @@ detect_sdg = function(..., system = c("aurora","elsevier","siris"), out = c("fea
       hits_df = hits_df %>%
         dplyr::group_by(document, sdg, system) %>%
         dplyr::summarize(hits = dplyr::n()) %>%
-        ungroup()
+        dplyr::ungroup()
       } else {
       if(out[1] != "features") stop("out must be features or docs")
       }
 
     # out
-    hit_list[[i]] = hits_df %>% dplyr::mutate(source = names(input[i]))
+    hit_list[[i]] <- hits_df %>% dplyr::mutate(source = names(input[i]))
 
   }
 
   # combine
-  hits = do.call(rbind, hit_list)
+  hits <- do.call(rbind, hit_list)
+
+  #convert document to factor for downstream functions
+  hits <- hits %>%
+    dplyr::mutate(document = factor(document, levels = 1:length(unlist(input))))
+
 
   # out
   hits %>%

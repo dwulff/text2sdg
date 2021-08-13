@@ -2,20 +2,40 @@
 % Please edit documentation in R/detect.R
 \name{detect_sdg}
 \alias{detect_sdg}
-\title{Detect SDGs}
+\title{Detect SDGs in text}
 \usage{
 detect_sdg(
-  ...,
-  system = c("aurora", "elsevier", "siris", "ontology"),
-  out = c("features", "docs"),
+  text,
+  system = c("aurora", "siris", "elsevier"),
+  output = c("features", "docs"),
   verbose = TRUE
 )
 }
 \arguments{
-\item{verbose}{logical.}
+\item{text}{\code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.}
 
-\item{corpus}{object of class \code{tCorpus} containing text.}
+\item{system}{\code{character} vector specifying the query systems to be used. Can be one or more of \code{"aurora"}, \code{"siris"}, \code{"elsevier"}, and \code{"ontology"}. By deafult all but \code{"ontology"} are used.}
+
+\item{output}{\code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"docs"} returns an aggregated \code{tibble} with one row per matched sdg, without information on the featurs.}
+
+\item{verbose}{\code{logical} specifying whether messages on the function's progress should be printed.}
+}
+\value{
+The function returns a tibble containing the SDG hits found in the vector of documents. Depending on the value of \code{output} the tibble will contain all or some of the following columns:
+\describe{
+ \item{document}{Index of the element in \code{text} where match was found.}
+ \item{sdg}{Label of the SDG found in document.}
+ \item{system}{The name of the query system that produced the match.}
+ \item{query_id}{Index of the query within the query system that produced the match.}
+ \item{features}{Concatenated list of words that caused the query to match.}
+ \item{hit}{Index of hit for a given system.}
+}
 }
 \description{
-Detect SDGs
+\code{detect_sdg} identifies SDGs in text using SDG query systems developed by the Aurora Universities Network, SIRIS Academic, and Elsevier.
+}
+\details{
+\code{detect_sdg} implements three SDG query systems developed by the Arora Universities Network (see \code{\link{aurora_queries}}), SIRIS Academic (see \code{\link{siris_queries}}), and Elsevier (see \code{\link{elsevier_queries}}), and one keyword-based system by Bautista-Puig and Mauleón labeled Ontology (see \code{\link{ontology_queries}}). `detect_sdg` calls dedicated \code{detect_*} for each of the four system. Search of the Lucene-style Boolean queries and the keywords is implemented using the \code{\link[corpustools]{search_features}} function from the \href{https://cran.r-project.org/package=corpustools}{\code{corpustools}} package.
+
+By default, \code{detect_sdg} runs only the three query systems, as they are considerably less liberal than the keyword-based Ontology and therefore likely produce more valid SDG classifications. Users should be aware that systematic validations and comparison between the systems are still largely lacking. Consequently, any results should be interpreted with a high level caution.
 }

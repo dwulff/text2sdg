@@ -23,7 +23,7 @@ detect_sdg(
 \value{
 The function returns a tibble containing the SDG hits found in the vector of documents. Depending on the value of \code{output} the tibble will contain all or some of the following columns:
 \describe{
- \item{document}{Index of the element in \code{text} where match was found.}
+ \item{document}{Index of the element in \code{text} where match was found. Formatted as a factor with the number of levels matching the original number of documents.}
  \item{sdg}{Label of the SDG found in document.}
  \item{system}{The name of the query system that produced the match.}
  \item{query_id}{Index of the query within the query system that produced the match.}

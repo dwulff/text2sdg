@@ -3,7 +3,7 @@
 comp_phi <- function(hits,
                      compare = c("systems", "SDGs"),
                      show_sdg = 1:17,
-                     show_system = c("aurora","elsevier","siris", "ontology")) {
+                     show_system = c("aurora","elsevier","siris")) {
 
 
   # check if columns present
@@ -48,63 +48,22 @@ comp_phi <- function(hits,
       }
 
 
-
       phi_dat <- tidyr::expand_grid(document = 1:length(levels(hits$document)), system = show_system, sdg = sdgs) %>%
         dplyr::mutate(document = as.factor(document)) %>%
         dplyr::left_join(hits %>% dplyr::select(document, system, sdg, hit)) %>%
-        dplyr::mutate(hit = dplyr::if_else(is.na(hit), FALSE, TRUE)) %>%
+        dplyr::mutate(hit = dplyr::if_else(is.na(hit), 0, 1)) %>%
         dplyr::distinct() %>%
         dplyr::arrange(document, sdg) %>%
         tidyr::pivot_wider(names_from = system, values_from = hit) %>%
         `[`(,-(1))
 
-      # phi_dat %>%
-      #   split(.$sdg) %>%
-      #   purrr::map(~ .x %>% dplyr::select(-sdg) %>% cor(.))
+
+      systems_correlation <- phi_dat %>%
+        dplyr::select(-sdg) %>%
+        cor(.)
 
 
-
-      comp_phi_internal <- function(x) {
-
-        x %>%
-          split(.$sdg) %>%
-          purrr::map(~ dplyr::select(., -sdg)) %>%
-          purrr::map(~ .x %>%  dplyr::mutate_at(dplyr::everything(.), function(x) factor(x, levels = c(TRUE, FALSE)))) %>%
-          purrr::map(~ table(.)) %>%
-          purrr::map(psych::phi) %>%
-          dplyr::as_tibble() %>%
-          tidyr::pivot_longer(dplyr::everything())
-
-      }
-
-
-      phis <- list()
-      i <- 1
-      for(idx in as.data.frame(utils::combn(ncol(phi_dat) - 1,2))) {
-
-        a <- comp_phi_internal(phi_dat[,c(1,idx + 1)])
-        a["comparison"] <- paste(names(phi_dat[, idx + 1]), collapse = " - ")
-        print(paste(names(phi_dat[, idx + 1]), collapse = " - "))
-
-        phis[[i]] <- a
-        i = i + 1
-
-      }
-
-      phis <- do.call(rbind, phis)
-      print(phis)
-
-      #convert nans to NA
-      phis <- phis %>%
-        dplyr::mutate(value = dplyr::if_else(is.nan(value), NA_real_, value)) %>%
-        dplyr::rename(sdg = name,
-                      phi = value)
-
-
-      return(phis)
-
-
-
+      return(systems_correlation)
 
 
   } else {
@@ -130,15 +89,13 @@ comp_phi <- function(hits,
       `[`(,-(1))
 
 
-    phi_dat <- phi_dat %>%
-      split(.$system) %>%
-      purrr::map(~ .x %>% dplyr::select(-system) %>% cor(.))
+    sdgs_correlation <- phi_dat %>%
+      dplyr::select(-system) %>%
+      cor(.)
 
 
 
-
-
-    return(phi_dat)
+    return(sdgs_correlation)
 
 
 

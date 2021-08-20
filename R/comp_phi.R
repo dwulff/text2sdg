@@ -1,5 +1,16 @@
 
 
+#' Title
+#'
+#' @param hits object of class \code{tCorpus} containing text.
+#' @param compare Specify whether to get correlation between the systems or the SDGs.
+#' @param show_sdg Specify SDGs to use for the computation.
+#' @param show_system Specify systems to use for the computation.
+#'
+#' @return Correlation table with correlation between the systems (if compare = "systems") or with the correlation between SDGs (if compare = "SDGs")
+#' @export
+#'
+#' @examples
 comp_phi <- function(hits,
                      compare = c("systems", "SDGs"),
                      show_sdg = 1:17,

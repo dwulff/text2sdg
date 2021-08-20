@@ -25,7 +25,7 @@
 #'
 #' @export
 
-detect_sdg = function(text, system = c("aurora","siris","elsevier"), output = c("features","docs"), verbose = TRUE){
+detect_sdg = function(text, sdgs = 1:17, system = c("aurora","siris","elsevier"), output = c("features","docs"), verbose = TRUE){
 
   # make corpus
   if(class(text)[1] == "character"){
@@ -39,6 +39,12 @@ detect_sdg = function(text, system = c("aurora","siris","elsevier"), output = c(
   #make output list
   hits = list()
 
+
+  #handle selected SDGs
+  if(any(!show_sdg %in% 1:17)) stop("show_sdg can only take numbers in 1:17.")
+  sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
+
+
   # run sdg
   if (!all(system %in% c("aurora","elsevier","siris", "ontology"))){
     stop("Argument system must be aurora, elsevier, siris or ontology.")
@@ -48,13 +54,13 @@ detect_sdg = function(text, system = c("aurora","siris","elsevier"), output = c(
     hits[["aurora"]] = detect_aurora(corpus)}
   if("siris" %in% system) {
     if(verbose) cat("Running siris queries\n",sep = '')
-    hits[["siris"]] = detect_siris(corpus)}
+    hits[["siris"]] = detect_siris(corpus, sdgs)}
   if("elsevier" %in% system){
     if(verbose) cat("Running elsevier queries\n",sep = '')
-    hits[["elsevier"]] = detect_elsevier(corpus)}
+    hits[["elsevier"]] = detect_elsevier(corpus, sdgs)}
   if("ontology" %in% system) {
     if(verbose) cat("Running ontology queries\n",sep = '')
-    hits[["ontology"]] = detect_ontology(corpus)}
+    hits[["ontology"]] = detect_ontology(corpus, sdgs)}
 
   #combine lists to df
   hits <- do.call(rbind, hits)

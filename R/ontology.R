@@ -6,8 +6,12 @@
 #' @param verbose logical.
 #'
 #' @export
-detect_ontology = function(corpus, verbose = FALSE){
+detect_ontology = function(corpus, sdgs, verbose = FALSE){
 
+
+  #filter queries based on selected sdgs
+  ontology_queries <- ontology_queries %>%
+    dplyr::filter(sdg %in% sdgs)
 
   # get hits
   hits = search_corpus(corpus, ontology_queries$query)

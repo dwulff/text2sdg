@@ -7,7 +7,11 @@
 #'
 #' @export
 
-detect_elsevier = function(corpus, verbose = FALSE){
+detect_elsevier = function(corpus, sdgs, verbose = FALSE){
+
+  #filter queries based on selected sdgs
+  elsevier_queries <- elsevier_queries %>%
+    dplyr::filter(sdg %in% sdgs)
 
   # get hits
   hits = search_corpus(corpus, elsevier_queries$query)

@@ -6,7 +6,12 @@
 #' @param verbose logical.
 #'
 #' @export
-detect_siris = function(corpus, verbose = FALSE){
+detect_siris = function(corpus, sdgs, verbose = FALSE){
+
+
+  #filter queries based on selected sdgs
+  siris_queries <- siris_queries %>%
+    dplyr::filter(sdg %in% sdgs)
 
 
   # get hits

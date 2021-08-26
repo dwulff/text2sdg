@@ -2,17 +2,17 @@
 detect_aurora = function(corpus, sdgs, verbose = FALSE){
 
   # select sdgs from simples
-  aurora_simple = aurora_simple %>%
+  aurora_simple = text2sdg:::aurora_simple %>%
     dplyr::left_join(aurora_queries %>% dplyr::select(query, sdg), by = c("orig"="query")) %>%
     dplyr::filter(sdg %in% sdgs)
 
   # select sdgs from ws
-  aurora_and = aurora_and %>%
+  aurora_and = text2sdg:::aurora_and %>%
     dplyr::left_join(aurora_queries %>% dplyr::select(query, sdg), by = c("orig"="query")) %>%
     dplyr::filter(sdg %in% sdgs)
 
   # select sdgs from ands
-  aurora_w = aurora_w %>%
+  aurora_w = text2sdg:::aurora_w %>%
     dplyr::left_join(aurora_queries %>% dplyr::select(query, sdg), by = c("orig"="query")) %>%
     dplyr::filter(sdg %in% sdgs)
 

@@ -38,7 +38,7 @@ The function is built using \code{\link[ggplot2]{ggplot}} and can thus be flexib
 \examples{
 
 # run sdg detection
-hits <- detect_sdgs(test_txt)
+hits <- detect_sdgs(abstracts)
 
 # create barplot
 plot_sdgs(hits)

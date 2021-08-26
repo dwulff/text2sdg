@@ -1,3 +1,11 @@
+#' Abstracts of research articles
+#'
+#' A random subset of 100 abstracts of research articles published by the University of Basel.
+#'
+#' @format A \code{character} vector of length 100.
+#'
+"abstracts"
+
 #' SDG queries of the Aurora Universities Network
 #'
 #' A dataset containing the SDG queries version 5.0 of the \href{https://aurora-network.global/activity/sustainability/}{Aurora Universities Network}. See the corresponding \href{https://github.com/Aurora-Network-Global/sdg-queries}{GitHub repository}. For the actual implementation of the queries see \code{aurora_simple}, \code{aurora_and}, \code{aurora_w}, and the queries hard-coded on \code{detect_aurora}.

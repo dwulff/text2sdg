@@ -16,7 +16,7 @@
 #' @examples
 #'
 #' # run sdg detection
-#' hits <- detect_sdgs(test_txt)
+#' hits <- detect_sdgs(abstracts)
 #'
 #' # create barplot
 #' plot_sdgs(hits)

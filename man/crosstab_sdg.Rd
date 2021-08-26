@@ -32,7 +32,7 @@ crosstab_sdg(
 \examples{
 
 # run sdg detection
-hits <- detect_sdgs(test_txt)
+hits <- detect_sdgs(abstracts)
 
 # create cross table of systems
 crosstab_sdg(hits)

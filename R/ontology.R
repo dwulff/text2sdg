@@ -1,13 +1,5 @@
-#' Detect ontology SDG
-#'
-#'Detect ontology SDG
-#'
-#' @param corpus object of class \code{tCorpus} containing text.
-#' @param verbose logical.
-#'
-#' @export
+# Detect ontology SDG
 detect_ontology = function(corpus, sdgs, verbose = FALSE){
-
 
   #filter queries based on selected sdgs
   ontology_queries <- ontology_queries %>%

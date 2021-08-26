@@ -1,18 +1,9 @@
-#' Detect Siris SDG
-#'
-#'Detect Siris SDG
-#'
-#' @param corpus object of class \code{tCorpus} containing text.
-#' @param verbose logical.
-#'
-#' @export
+# Detect Siris SDG
 detect_siris = function(corpus, sdgs, verbose = FALSE){
-
 
   #filter queries based on selected sdgs
   siris_queries <- siris_queries %>%
     dplyr::filter(sdg %in% sdgs)
-
 
   # get hits
   hits = search_corpus(corpus, siris_queries$query, mode = "unique_hits")

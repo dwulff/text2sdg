@@ -16,13 +16,22 @@
 #' \describe{
 #'  \item{document}{Index of the element in \code{text} where match was found. Formatted as a factor with the number of levels matching the original number of documents.}
 #'  \item{sdg}{Label of the SDG found in document.}
-#'  \item{system}{The name of the query system that produced the match.}
+#'  \item{systems}{The name of the query system that produced the match.}
 #'  \item{query_id}{Index of the query within the query system that produced the match.}
 #'  \item{features}{Concatenated list of words that caused the query to match.}
 #'  \item{hit}{Index of hit for a given system.}
 #' }
 #'
+#' @examples
 #'
+#' # run sdg detection
+#' hits <- detect_sdgs(test_txt)
+#'
+#' # run sdg detection with aurora only
+#' hits <- detect_sdgs(test_txt, systems = "aurora")
+#'
+#' # run sdg detection for sdg 3 only
+#' hits <- detect_sdgs(test_txt, sdgs = 3)
 #'
 #' @export
 
@@ -41,7 +50,7 @@ detect_sdg = function(text, systems = c("aurora","siris","elsevier"), sdgs = 1:1
   hits = list()
 
   #handle selected SDGs
-  if(any(!show_sdg %in% 1:17)) stop("show_sdg can only take numbers in 1:17.")
+  if(any(!sdgs %in% 1:17)) stop("show_sdg can only take numbers in 1:17.")
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
 
   # run sdg
@@ -50,7 +59,7 @@ detect_sdg = function(text, systems = c("aurora","siris","elsevier"), sdgs = 1:1
     }
   if("aurora" %in% systems){
     if(verbose) cat("Running aurora queries\n",sep = '')
-    hits[["aurora"]] = detect_aurora(corpus)}
+    hits[["aurora"]] = detect_aurora(corpus, sdgs)}
   if("siris" %in% systems) {
     if(verbose) cat("Running siris queries\n",sep = '')
     hits[["siris"]] = detect_siris(corpus, sdgs)}

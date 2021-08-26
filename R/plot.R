@@ -1,14 +1,34 @@
-#' Plot SDGs
+#' Plot distributions of SDGs identified in text
 #'
-#' Plot SDGs
+#' \code{plot_sdg} creates a (stacked) barplot of the frequency distribution of SDGs identified via \link{detect_sdg}.
 #'
-#' @param hits object of class \code{tCorpus} containing text.
+#' The function is built using \code{\link[ggplot2]{ggplot}} and can thus be flexibly extended. See examples.
+#'
+#' @param hits \code{data frame} as returned by \code{\link{detect_sdg}}. Must include columns \code{sdg} and \code{system}.
+#' @param systems \code{character} vector specifying the query systems to be visualized. Values must be available in the \code{system} column of \code{hits}. \code{systems} of length greater 1 result, by default, in a stacked barplot.
+#' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the SDGs to be visualized. Values must be available in the \code{sdg} column of \code{hits}.
+#' @param color \code{character} vector used to color the bars according to systems. The default, \code{"unibas"}, uses three colors of University of Basel's corporate design. Alternatively, \code{color} must specified using \link{color} names or color hex values. \code{color} will be interpolated to match the length of \code{systems}.
+#' @param sdg_titles \code{logical} specifying whether the titles of the SDG should added to the axis annotation.
+#' @param remove_duplicates \code{logical} specifying the handling of multiple hits of the same SDG for a given document and system. Defaults to \code{TRUE} impliyng that no more than one hit is counted per SDG, system, and document.
+#'
+#' @return The function returns a \code{\link[ggplot2]{ggplot}} object that can either be stored in an object or printed to produce the plot.
+#'
+#' @examples
+#'
+#' # run sdg detection
+#' hits <- detect_sdgs(test_txt)
+#'
+#' # create barplot
+#' plot_sdgs(hits)
+#'
+#' # create barplot with facets
+#' plot_sdgs(hits) + facet_wrap(~system)
 #'
 #' @export
 
 plot_sdg = function(hits,
-                    show_sdg = 1:17,
-                    show_system = c("aurora","elsevier","siris"),
+                    systems = c("aurora","elsevier","siris"),
+                    sdgs = 1:17,
                     color = "unibas",
                     sdg_titles = FALSE,
                     remove_duplicates = TRUE){
@@ -21,8 +41,8 @@ plot_sdg = function(hits,
   }
 
   # check sdg and system
-  if(any(!show_sdg %in% 1:17)) stop("show_sdg can only take numbers in 1:17.")
-  if(any(!show_system %in% hits$system)){
+  if(any(!sdgs %in% 1:17)) stop("sdgs can only take numbers in 1:17.")
+  if(any(!systems %in% hits$system)){
     stop(paste0("Data object only contains systems [",paste0(unique(hits$system), collapse = ", "),"]."))
     }
 
@@ -37,20 +57,20 @@ plot_sdg = function(hits,
   if(color[1] == "unibas"){
     color = c("#D2EBE9","#A5D7D2","#46505A")
     }
-  if(length(color) != length(show_system)){
-    color = grDevices::colorRampPalette(color)(length(show_system))
+  if(length(color) != length(systems)){
+    color = grDevices::colorRampPalette(color)(length(systems))
   }
 
   # hadnle sdgs
-  sdgs = paste0("SDG-", ifelse(show_sdg < 10, "0", ""),show_sdg) %>% sort()
+  sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
 
   # prepare data
   hits = hits %>%
     dplyr::filter(sdg %in% sdgs,
-                  system %in% show_system) %>%
+                  system %in% systems) %>%
     dplyr::mutate(sdg = factor(sdg, levels = sdgs),
                   system = factor(stringr::str_to_title(system),
-                                  levels = stringr::str_to_title(show_system)))
+                                  levels = stringr::str_to_title(systems)))
 
   # change to titles
   if(sdg_titles == TRUE){

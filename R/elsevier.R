@@ -1,12 +1,4 @@
-#' Detect Elsevier SDG
-#'
-#' Detect Elsevier SDG
-#'
-#' @param corpus object of class \code{tCorpus} containing text.
-#' @param verbose logical.
-#'
-#' @export
-
+# Detect Elsevier SDG
 detect_elsevier = function(corpus, sdgs, verbose = FALSE){
 
   #filter queries based on selected sdgs

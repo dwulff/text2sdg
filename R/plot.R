@@ -7,9 +7,11 @@
 #' @param hits \code{data frame} as returned by \code{\link{detect_sdg}}. Must include columns \code{sdg} and \code{system}.
 #' @param systems \code{character} vector specifying the query systems to be visualized. Values must be available in the \code{system} column of \code{hits}. \code{systems} of length greater 1 result, by default, in a stacked barplot.
 #' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the SDGs to be visualized. Values must be available in the \code{sdg} column of \code{hits}.
+#' @param normalize \code{character} specifying whether results should be presented as frequencies (\code{normalize = "none"}), the default, or whether the frequencies should be normalized using either the total frequencies of each system (\code{normalize = "systems"}) or the total number of documents (\code{normalize = "documents"}).
 #' @param color \code{character} vector used to color the bars according to systems. The default, \code{"unibas"}, uses three colors of University of Basel's corporate design. Alternatively, \code{color} must specified using \link{color} names or color hex values. \code{color} will be interpolated to match the length of \code{systems}.
 #' @param sdg_titles \code{logical} specifying whether the titles of the SDG should added to the axis annotation.
 #' @param remove_duplicates \code{logical} specifying the handling of multiple hits of the same SDG for a given document and system. Defaults to \code{TRUE} impliyng that no more than one hit is counted per SDG, system, and document.
+#' @param ... arguments passed to \code{\link[ggplot2]{geom_bar}}.
 #'
 #' @return The function returns a \code{\link[ggplot2]{ggplot}} object that can either be stored in an object or printed to produce the plot.
 #'
@@ -29,9 +31,11 @@
 plot_sdg = function(hits,
                     systems = c("aurora","elsevier","siris"),
                     sdgs = 1:17,
+                    normalize = "none",
                     color = "unibas",
                     sdg_titles = FALSE,
-                    remove_duplicates = TRUE){
+                    remove_duplicates = TRUE,
+                    ...){
 
   # check if columns present
   required_columns = c("sdg","system")
@@ -53,6 +57,9 @@ plot_sdg = function(hits,
     message(paste0(sum(duplicates)," duplicate hits removed. Set remove_duplicates = FALSE to retain duplicates."))
   }
 
+  # extract number of documents
+  n_documents = length(levels(hits$document))
+
   # handle colors
   if(color[1] == "unibas"){
     color = c("#D2EBE9","#A5D7D2","#46505A")
@@ -61,7 +68,7 @@ plot_sdg = function(hits,
     color = grDevices::colorRampPalette(color)(length(systems))
   }
 
-  # hadnle sdgs
+  # handle sdgs
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
 
   # prepare data
@@ -84,16 +91,41 @@ plot_sdg = function(hits,
       dplyr::mutate(sdg = factor(sdg_titles[sdg], levels = sdg_titles))
     }
 
+  # get frequencies
+  hits = hits %>%
+    dplyr::group_by(system, sdg) %>%
+    dplyr::summarize(n = dplyr::n()) %>%
+    dplyr::ungroup()
+  y_label = "Frequency"
+
+  # transform to proportions
+  if(normalize[1] != "none"){
+    if(normalize[1] == "systems"){
+      hits = hits %>%
+        dplyr::group_by(system) %>%
+        dplyr::mutate(n = n / sum(n)) %>%
+        dplyr::ungroup()
+    } else if(normalize[1] == "documents"){
+      hits = hits %>%
+        dplyr::group_by(system) %>%
+        dplyr::mutate(n = n / n_documents) %>%
+        dplyr::ungroup()
+    } else {
+      stop('Argument normalize must the "none", "systems", or "documents".')
+    }
+    y_label = "Proportion"
+  }
+
   # generate plot
   plot = hits %>%
-    ggplot2::ggplot(mapping = ggplot2::aes(x = sdg, fill = system)) +
-    ggplot2::geom_bar() +
+    ggplot2::ggplot(mapping = ggplot2::aes(x = sdg, y = n, fill = system)) +
+    ggplot2::geom_bar(..., stat = "identity") +
     ggplot2::scale_x_discrete(drop=FALSE) +
     ggplot2::scale_fill_manual(name="Query\nsystem", values = color) +
     ggplot2::theme_minimal() +
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1),
                    axis.title.x = ggplot2::element_blank()) +
-    ggplot2::labs(y = "Frequency")
+    ggplot2::labs(y = y_label)
 
   # output plot
   plot

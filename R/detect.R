@@ -7,7 +7,7 @@
 #' By default, \code{detect_sdg} runs only the three query systems, as they are considerably less liberal than the keyword-based Ontology and therefore likely produce more valid SDG classifications. Users should be aware that systematic validations and comparison between the systems are still largely lacking. Consequently, any results should be interpreted with a high level caution.
 #'
 #' @param text \code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.
-#' @param systems \code{character} vector specifying the query systems to be used. Can be one or more of \code{"aurora"}, \code{"siris"}, \code{"elsevier"}, and \code{"ontology"}. By deafult all but \code{"ontology"} are used.
+#' @param systems \code{character} vector specifying the query systems to be used. Can be one or more of \code{"aurora"}, \code{"siris"}, \code{"elsevier"}, \code{"sdsn"}, and \code{"ontology"}. By deafult all but \code{"ontology"} are used.
 #' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.
 #' @param output \code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"docs"} returns an aggregated \code{tibble} with one row per matched sdg, without information on the featurs.
 #' @param verbose \code{logical} specifying whether messages on the function's progress should be printed.
@@ -35,7 +35,7 @@
 #'
 #' @export
 
-detect_sdg = function(text, systems = c("aurora","siris","elsevier"), sdgs = 1:17, output = c("features","docs"), verbose = TRUE){
+detect_sdg = function(text, systems = c("aurora","siris","elsevier", "sdsn"), sdgs = 1:17, output = c("features","docs"), verbose = TRUE){
 
   # make corpus
   if(class(text)[1] == "character"){
@@ -54,7 +54,7 @@ detect_sdg = function(text, systems = c("aurora","siris","elsevier"), sdgs = 1:1
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
 
   # run sdg
-  if (!all(systems %in% c("aurora","elsevier","siris", "ontology"))){
+  if (!all(systems %in% c("aurora","elsevier","siris", "ontology", "sdsn"))){
     stop("Argument system must be aurora, elsevier, siris or ontology.")
     }
   if("aurora" %in% systems){
@@ -69,6 +69,9 @@ detect_sdg = function(text, systems = c("aurora","siris","elsevier"), sdgs = 1:1
   if("ontology" %in% systems) {
     if(verbose) cat("Running ontology queries\n",sep = '')
     hits[["ontology"]] = detect_ontology(corpus, sdgs)}
+  if("sdsn" %in% systems) {
+    if(verbose) cat("Running sdsn queries\n",sep = '')
+    hits[["sdsn"]] = detect_sdsn(corpus, sdgs)}
 
   #combine lists to df
   hits <- do.call(rbind, hits)

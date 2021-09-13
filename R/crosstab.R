@@ -30,7 +30,7 @@ crosstab_sdg <- function(hits,
 
 
   # check if columns present
-  required_columns = c("document", "sdg", "system", "hit")
+  required_columns = c("document", "sdg", "system")
   if(any(!required_columns %in% names(hits))){
     missing = required_columns[!required_columns %in% names(hits)]
     stop(paste0("Data object must include columns [", paste0(missing, collapse=", "),"]."))
@@ -61,8 +61,7 @@ crosstab_sdg <- function(hits,
 
 
   # handle duplicates
-  duplicates = hits %>% dplyr::select(document, sdg, system) %>% duplicated()
-  hits = hits %>% dplyr::filter(!duplicates)
+  hits <- hits %>% dplyr::distinct(document, sdg, system)
 
   # handle selected sdgs
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
@@ -81,7 +80,10 @@ crosstab_sdg <- function(hits,
       # do something
       phi_dat <- tidyr::expand_grid(document = 1:length(levels(hits$document)), system = systems, sdg = sdgs) %>%
         dplyr::mutate(document = as.factor(document)) %>%
-        dplyr::left_join(hits %>% dplyr::select(document, system, sdg, hit), by = c("document", "system", "sdg")) %>%
+        dplyr::left_join(hits %>%
+                           dplyr::mutate(hit = 1) %>%
+                           dplyr::select(document, system, sdg, hit),
+                         by = c("document", "system", "sdg")) %>%
         dplyr::mutate(hit = dplyr::if_else(is.na(hit), 0, 1)) %>%
         dplyr::distinct() %>%
         dplyr::arrange(document, sdg) %>%
@@ -98,7 +100,10 @@ crosstab_sdg <- function(hits,
     # do something
     phi_dat <- tidyr::expand_grid(document = 1:length(levels(hits$document)), system = systems, sdg = sdgs) %>%
       dplyr::mutate(document = as.factor(document)) %>%
-      dplyr::left_join(hits %>% dplyr::select(document, system, sdg, hit), by = c("document", "system", "sdg")) %>%
+      dplyr::left_join(hits %>%
+                         dplyr::mutate(hit = 1),
+                         dplyr::select(document, system, sdg, hit),
+                       by = c("document", "system", "sdg")) %>%
       dplyr::mutate(hit = dplyr::if_else(is.na(hit), 0, 1)) %>%
       dplyr::distinct() %>%
       dplyr::arrange(document, sdg) %>%

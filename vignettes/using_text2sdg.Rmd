@@ -1,0 +1,71 @@
+---
+title: "Using text2sdg"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{using_text2sdg}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width=7, fig.height=4
+)
+```
+
+```{r setup}
+library(text2sdg)
+```
+
+Using the text2sdg package is quite simple as it only consists of three core functions (`detect_sdg()`, `plot_sdg()` and `crosstab_sdg()`). We start with `detect_sdg()`, as the latter two functions take the output of this function as input. 
+
+The `detect_sdg()` function allows you to detect SDGs in text. The text in which you want to detect SDGs is the only required argument, and you need to feed it in the form of a character vector. The function takes some additional arguments. `sdgs` lets you specify which SDGs you are interested in in the first place. It defaults to all 17 SDGs, but you can limit it with a numeric vector. With `sdgs = 1:5` the function will only detect SDGs one to five, this can significantly speed up runtime if you are only interetsed in a subset of the sDGs. The `systems` argument lets you specify which systems will be used to detect the SDGs in the text. By default, all systems but ontology will be used to detect SDGs. As we will se later, the output tells you which SDG was detected by which system in which document. If we would only want to use the systems of aurora and Elsevier, we would specify `systems = c("aurora", "elsevier")`. The `output` argument allows you to specify the level of detail in the output. The default `features` returns a `tibble` with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, `docs` returns an aggregated `tibble` with one row per matched sdg, without information on the features that produced the hits. Finally, the `verbose` argument let's you specify whether you want to be informed about the function's progress with printed messages, it defaults to `TRUE`.
+
+The `text_txt` data is a character vector of 100 abstracts from academic publications. To detect SDGs in this text we can simply write
+```{r}
+sdgs_default <- detect_sdg(test_txt)
+sdgs_default
+```
+
+We are informed that the SDGs are detected system by system, and after a few seconds we see the resulting output (a tibble with six columns). The output tells us which SDG was detected in which document by which system (columns one to three). It also tells us which query and features produced the hit. The last column is the hit index for a given system. 
+
+This output is informative, but does not provide a good overview of which sDGs have been detected in the text. This is where the `plot_sdg()` function comes into play. `plot_sdg()` takes the output of `detect_sdg()` as input.
+```{r}
+plot_sdg(sdgs_default)
+```
+
+The output of `plot_sdg()` is a stacked bar chart that shows you how often a SDG was detected by a given system in the text that you fed to `detect_sdg()`. There are a few more arguments that you can specify. As with the `detect_sdg()` function, you can subset the systems and SDGs that you want to show with `systems` and `sdgs` respectively. The `normalize` argument allows you to normalize the frequencies using either the total frequencies of each system `normalize = "systems"` or the total number of documents `normalize = "documents"`. There are a few more arguments that allow you to customize the appearance of the plot. The plot below shows you the normalized frequency (by system) of SDGs 03, 10, and 13 for the systems Aurora and Elsevier and sdsn.
+```{r}
+plot_sdg(sdgs_default, sdgs = c(3, 10, 13), systems = c("aurora", "elsevier", "sdsn"), normalize = "documents")
+```
+
+
+Once you have an overiview about which SDGs were matched how often by which system, you might want to see which SDGs co-occured in the text. You can do this with the `crosstab_sdg()` function. It also takes the output of `detect_sdg()` as input.
+
+```{r}
+sdg_corr <- crosstab_sdg(sdgs_default, compare = "sdgs")
+```
+
+The output is a correlation matrix, which we visualize with the `corrplot()` function from the `corrplot` package. 
+
+```{r}
+corrplot::corrplot(sdg_corr)
+```
+
+Like this we can easily see which SDGs co-occur in the text and which do not. As with the previous functions, we can subset both the SDGs and the systems (with the same arguments as in the other functions).
+
+You might also be interested in whether the different systems reach similar conlusions regarding whether an SDG is present in your documents or not. We can also use the `crosstab_sdg()` function for this but specify `compare = "systems"`.
+
+```{r}
+systems_corr <- crosstab_sdg(sdgs_default, compare = "systems")
+corrplot::corrplot(systems_corr)
+```
+
+We see that all but the Elsevier and Aurora systems correlate positively with each other, meaning they reach similar conclusions regarding whether a SDG is present in a document or not. 
+
+
+

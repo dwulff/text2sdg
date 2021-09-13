@@ -29,7 +29,7 @@
 #' @export
 
 plot_sdg = function(hits,
-                    systems = c("aurora","elsevier","siris"),
+                    systems = c("aurora","elsevier","siris", "sdsn"),
                     sdgs = 1:17,
                     normalize = "none",
                     color = "unibas",

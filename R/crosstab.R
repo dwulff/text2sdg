@@ -25,7 +25,7 @@
 #' @export
 crosstab_sdg <- function(hits,
                          compare = c("systems", "sdgs"),
-                         systems = c("aurora","elsevier","siris"),
+                         systems = c("aurora","elsevier","siris", "sdsn"),
                          sdgs = 1:17) {
 
 

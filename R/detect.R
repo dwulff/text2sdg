@@ -9,7 +9,7 @@
 #' @param text \code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.
 #' @param systems \code{character} vector specifying the query systems to be used. Can be one or more of \code{"aurora"}, \code{"siris"}, \code{"elsevier"}, \code{"sdsn"}, and \code{"ontology"}. By deafult all but \code{"ontology"} are used.
 #' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.
-#' @param output \code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"docs"} returns an aggregated \code{tibble} with one row per matched sdg, without information on the features
+#' @param output \code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"docs"} returns an aggregated \code{tibble} with one row per matched sdg, without information on the features.
 #' @param verbose \code{logical} specifying whether messages on the function's progress should be printed.
 #'
 #' @return The function returns a tibble containing the SDG hits found in the vector of documents. Depending on the value of \code{output} the tibble will contain all or some of the following columns:
@@ -78,7 +78,7 @@ detect_sdg = function(text, systems = c("aurora","siris","elsevier", "sdsn"), sd
 
   # reduce if requested
   if(output[1] == "docs"){
-    v = hits_df %>%
+    v = hits %>%
       dplyr::group_by(document, sdg, system) %>%
       dplyr::summarize(hits = dplyr::n()) %>%
       dplyr::ungroup()

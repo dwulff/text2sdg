@@ -6,8 +6,8 @@
 #'
 #' @param hits \code{data frame} as returned by \code{\link{detect_sdg}}. Must include columns \code{document}, \code{sdg}, \code{system}, and \code{hit}.
 #' @param compare \code{character} specifying whether systems or SDGs should be cross tabulated.
-#' @param systems \code{character} vector specifying the query systems to be cross tabulated. Values must be available in the \code{system} column of \code{hits}. \code{systems} of length greater 1 result, by default, in a stacked barplot.
-#' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the SDGs to be cross tabluated. Values must be available in the \code{sdg} column of \code{hits}.
+#' @param systems \code{character} vector specifying the query systems to be cross tabulated. Values must be available in the \code{system} column of \code{hits}. \code{systems} of length greater 1 result, by default, in a stacked barplot. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.
+#' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the SDGs to be cross tabluated. Values must be available in the \code{sdg} column of \code{hits}. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.
 #'
 #' @return \code{matrix} showing correlation coefficients for all pairs of query systems (if \code{compare = "systems"}) or SDGs (if \code{compare = "SDGs"}).
 #'
@@ -25,8 +25,8 @@
 #' @export
 crosstab_sdg <- function(hits,
                          compare = c("systems", "sdgs"),
-                         systems = c("aurora","elsevier","siris", "sdsn"),
-                         sdgs = 1:17) {
+                         systems = NULL,
+                         sdgs = NULL) {
 
 
   # check if columns present
@@ -35,6 +35,10 @@ crosstab_sdg <- function(hits,
     missing = required_columns[!required_columns %in% names(hits)]
     stop(paste0("Data object must include columns [", paste0(missing, collapse=", "),"]."))
   }
+
+  # replace NULLs
+  if(is.null(systems)) systems = unique(hits$system)
+  if(is.null(sdgs)) sdgs = unique(stringr::str_extract(hits$sdg,"[:digit:]{2}") %>% as.numeric())
 
   # check compare
   if(!compare[[1]] %in% c("systems", "sdgs")){

@@ -4,21 +4,16 @@
 \alias{crosstab_sdg}
 \title{Compare query systems and SDGs}
 \usage{
-crosstab_sdg(
-  hits,
-  compare = c("systems", "sdgs"),
-  systems = c("aurora", "elsevier", "siris"),
-  sdgs = 1:17
-)
+crosstab_sdg(hits, compare = c("systems", "sdgs"), systems = NULL, sdgs = NULL)
 }
 \arguments{
 \item{hits}{\code{data frame} as returned by \code{\link{detect_sdg}}. Must include columns \code{document}, \code{sdg}, \code{system}, and \code{hit}.}
 
 \item{compare}{\code{character} specifying whether systems or SDGs should be cross tabulated.}
 
-\item{systems}{\code{character} vector specifying the query systems to be cross tabulated. Values must be available in the \code{system} column of \code{hits}. \code{systems} of length greater 1 result, by default, in a stacked barplot.}
+\item{systems}{\code{character} vector specifying the query systems to be cross tabulated. Values must be available in the \code{system} column of \code{hits}. \code{systems} of length greater 1 result, by default, in a stacked barplot. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.}
 
-\item{sdgs}{\code{numeric} vector with integers between 1 and 17 specifying the SDGs to be cross tabluated. Values must be available in the \code{sdg} column of \code{hits}.}
+\item{sdgs}{\code{numeric} vector with integers between 1 and 17 specifying the SDGs to be cross tabluated. Values must be available in the \code{sdg} column of \code{hits}. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.}
 }
 \value{
 \code{matrix} showing correlation coefficients for all pairs of query systems (if \code{compare = "systems"}) or SDGs (if \code{compare = "SDGs"}).

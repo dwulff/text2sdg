@@ -1,10 +1,10 @@
-#' Abstracts of research articles
+#' Descriptions of research projects
 #'
-#' A random subset of 100 abstracts of research articles published by the University of Basel.
+#' 500 project descriptions of University of Basel research projects that were selecting for funding by the Swiss National Science Foundation. The data is a subset of the public \href{https://p3.snf.ch}{P3 project data base}.
 #'
 #' @format A \code{character} vector of length 100.
 #'
-"abstracts"
+"projects"
 
 #' SDG queries of the Aurora Universities Network
 #'

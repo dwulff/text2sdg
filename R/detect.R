@@ -7,9 +7,9 @@
 #' By default, \code{detect_sdg} runs only the three query systems, as they are considerably less liberal than the keyword-based Ontology and therefore likely produce more valid SDG classifications. Users should be aware that systematic validations and comparison between the systems are still largely lacking. Consequently, any results should be interpreted with a high level caution.
 #'
 #' @param text \code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.
-#' @param systems \code{character} vector specifying the query systems to be used. Can be one or more of \code{"aurora"}, \code{"siris"}, \code{"elsevier"}, \code{"sdsn"}, and \code{"ontology"}. By deafult all but \code{"ontology"} are used.
+#' @param systems \code{character} vector specifying the query systems to be used. Can be one or more of \code{"aurora"}, \code{"siris"}, \code{"elsevier"}, \code{"sdsn"}, and \code{"ontology"}. By deafult all but \code{"sdsn"} and \code{"ontology"} are used.
 #' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.
-#' @param output \code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"docs"} returns an aggregated \code{tibble} with one row per matched sdg, without information on the features.
+#' @param output \code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"documents"} returns an aggregated \code{tibble} with one row per matched sdg, without information on the features.
 #' @param verbose \code{logical} specifying whether messages on the function's progress should be printed.
 #'
 #' @return The function returns a tibble containing the SDG hits found in the vector of documents. Depending on the value of \code{output} the tibble will contain all or some of the following columns:
@@ -35,7 +35,7 @@
 #'
 #' @export
 
-detect_sdg = function(text, systems = c("aurora","siris","elsevier", "sdsn"), sdgs = 1:17, output = c("features","docs"), verbose = TRUE){
+detect_sdg = function(text, systems = c("aurora","siris","elsevier"), sdgs = 1:17, output = c("features","documents"), verbose = TRUE){
 
   # make corpus
   if(class(text)[1] == "character"){
@@ -58,32 +58,32 @@ detect_sdg = function(text, systems = c("aurora","siris","elsevier", "sdsn"), sd
     stop("Argument system must be aurora, elsevier, siris or ontology.")
     }
   if("aurora" %in% systems){
-    if(verbose) cat("Running aurora queries\n",sep = '')
+    if(verbose) cat("\nRunning aurora queries",sep = '')
     hits[["aurora"]] = detect_aurora(corpus, sdgs)}
   if("siris" %in% systems) {
-    if(verbose) cat("Running siris queries\n",sep = '')
+    if(verbose) cat("\nRunning siris queries",sep = '')
     hits[["siris"]] = detect_siris(corpus, sdgs)}
   if("elsevier" %in% systems){
-    if(verbose) cat("Running elsevier queries\n",sep = '')
+    if(verbose) cat("\nRunning elsevier queries",sep = '')
     hits[["elsevier"]] = detect_elsevier(corpus, sdgs)}
   if("ontology" %in% systems) {
-    if(verbose) cat("Running ontology queries\n",sep = '')
+    if(verbose) cat("\nRunning ontology queries",sep = '')
     hits[["ontology"]] = detect_ontology(corpus, sdgs)}
   if("sdsn" %in% systems) {
-    if(verbose) cat("Running sdsn queries\n",sep = '')
+    if(verbose) cat("\nRunning sdsn queries",sep = '')
     hits[["sdsn"]] = detect_sdsn(corpus, sdgs)}
 
   #combine lists to df
   hits <- do.call(rbind, hits)
 
   # reduce if requested
-  if(output[1] == "docs"){
-    v = hits %>%
+  if(output[1] == "documents"){
+    hits = hits %>%
       dplyr::group_by(document, sdg, system) %>%
       dplyr::summarize(hits = dplyr::n()) %>%
       dplyr::ungroup()
     } else {
-    if(output[1] != "features") stop('Argument output must be "features" or "docs"')
+    if(output[1] != "features") stop('Argument output must be "features" or "documents"')
     }
 
   #convert document to factor for downstream functions

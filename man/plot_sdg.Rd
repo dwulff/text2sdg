@@ -6,8 +6,8 @@
 \usage{
 plot_sdg(
   hits,
-  systems = c("aurora", "elsevier", "siris"),
-  sdgs = 1:17,
+  systems = NULL,
+  sdgs = NULL,
   normalize = "none",
   color = "unibas",
   sdg_titles = FALSE,
@@ -18,9 +18,9 @@ plot_sdg(
 \arguments{
 \item{hits}{\code{data frame} as returned by \code{\link{detect_sdg}}. Must include columns \code{sdg} and \code{system}.}
 
-\item{systems}{\code{character} vector specifying the query systems to be visualized. Values must be available in the \code{system} column of \code{hits}. \code{systems} of length greater 1 result, by default, in a stacked barplot.}
+\item{systems}{\code{character} vector specifying the query systems to be visualized. Values must be available in the \code{system} column of \code{hits}. \code{systems} of length greater 1 result, by default, in a stacked barplot. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.}
 
-\item{sdgs}{\code{numeric} vector with integers between 1 and 17 specifying the SDGs to be visualized. Values must be available in the \code{sdg} column of \code{hits}.}
+\item{sdgs}{\code{numeric} vector with integers between 1 and 17 specifying the SDGs to be visualized. Values must be available in the \code{sdg} column of \code{hits}. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.}
 
 \item{normalize}{\code{character} specifying whether results should be presented as frequencies (\code{normalize = "none"}), the default, or whether the frequencies should be normalized using either the total frequencies of each system (\code{normalize = "systems"}) or the total number of documents (\code{normalize = "documents"}).}
 

@@ -48,6 +48,10 @@ plot_sdg = function(hits,
   if(is.null(systems)) systems = unique(hits$system)
   if(is.null(sdgs)) sdgs = unique(stringr::str_extract(hits$sdg,"[:digit:]{2}") %>% as.numeric())
 
+  # relevel
+  all_systems = c("aurora", "elsevier", "siris", "ontology", "sdsn")
+  hits = hits %>% mutate(system = factor(system, levels = all_systems[all_systems %in% systems]))
+
   # check sdg and system
   if(any(!sdgs %in% 1:17)) stop("sdgs can only take numbers in 1:17.")
   if(any(!systems %in% hits$system)){

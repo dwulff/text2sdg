@@ -2,6 +2,7 @@
 
 export("%>%")
 export(crosstab_sdg)
+export(detect_any)
 export(detect_sdg)
 export(get_code)
 export(make_corpus)

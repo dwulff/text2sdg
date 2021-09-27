@@ -14,7 +14,7 @@
 #' @examples
 #'
 #' # run sdg detection
-#' hits <- detect_sdgs(abstracts)
+#' hits <- detect_sdgs(projects)
 #'
 #' # create cross table of systems
 #' crosstab_sdg(hits)
@@ -69,9 +69,19 @@ crosstab_sdg <- function(hits,
 
   # handle selected sdgs
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
-  hits <- hits %>%
-    dplyr::filter(sdg %in% sdgs) %>%
-    dplyr::filter(system %in% systems)
+
+  # prepare system labels
+  labels = c("aurora" = "Aurora",
+             "elsevier" = "Elsevier",
+             "siris" = "SIRIS",
+             "sdsn" = "SDSN",
+             "ontology" = "Ontology")
+
+  # filter and process systems
+  hits = hits %>%
+    dplyr::filter(sdg %in% sdgs,
+                  system %in% systems) %>%
+    dplyr::mutate(system = labels[system])
 
   # abort if no hits left
   if(nrow(hits) == 0) {
@@ -82,7 +92,7 @@ crosstab_sdg <- function(hits,
   if(compare[[1]] == "systems") {
 
       # do something
-      phi_dat <- tidyr::expand_grid(document = 1:length(levels(hits$document)), system = systems, sdg = sdgs) %>%
+      phi_dat <- tidyr::expand_grid(document = 1:length(levels(hits$document)), system = labels[systems], sdg = sdgs) %>%
         dplyr::mutate(document = as.factor(document)) %>%
         dplyr::left_join(hits %>%
                            dplyr::mutate(hit = 1) %>%
@@ -99,10 +109,15 @@ crosstab_sdg <- function(hits,
         dplyr::select(-sdg) %>%
         cor(.) %>% suppressWarnings()
 
+      # reorder
+      correlations <-
+        correlations[labels[labels %in% rownames(correlations)],
+                     labels[labels %in% colnames(correlations)]]
+
   } else {
 
     # do something
-    phi_dat <- tidyr::expand_grid(document = 1:length(levels(hits$document)), system = systems, sdg = sdgs) %>%
+    phi_dat <- tidyr::expand_grid(document = 1:length(levels(hits$document)), system = labels[systems], sdg = sdgs) %>%
       dplyr::mutate(document = as.factor(document)) %>%
       dplyr::left_join(hits %>%
                          dplyr::mutate(hit = 1),

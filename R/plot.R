@@ -18,7 +18,7 @@
 #' @examples
 #'
 #' # run sdg detection
-#' hits <- detect_sdgs(abstracts)
+#' hits <- detect_sdgs(projects)
 #'
 #' # create barplot
 #' plot_sdgs(hits)
@@ -48,10 +48,6 @@ plot_sdg = function(hits,
   if(is.null(systems)) systems = unique(hits$system)
   if(is.null(sdgs)) sdgs = unique(stringr::str_extract(hits$sdg,"[:digit:]{2}") %>% as.numeric())
 
-  # relevel
-  all_systems = c("aurora", "elsevier", "siris", "ontology", "sdsn")
-  hits = hits %>% mutate(system = factor(system, levels = all_systems[all_systems %in% systems]))
-
   # check sdg and system
   if(any(!sdgs %in% 1:17)) stop("sdgs can only take numbers in 1:17.")
   if(any(!systems %in% hits$system)){
@@ -79,13 +75,20 @@ plot_sdg = function(hits,
   # handle sdgs
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
 
+  # prepare system labels
+  labels = c("aurora" = "Aurora",
+             "elsevier" = "Elsevier",
+             "siris" = "SIRIS",
+             "sdsn" = "SDSN",
+             "ontology" = "Ontology")
+
   # prepare data
   hits = hits %>%
     dplyr::filter(sdg %in% sdgs,
                   system %in% systems) %>%
     dplyr::mutate(sdg = factor(sdg, levels = sdgs),
-                  system = factor(stringr::str_to_title(system),
-                                  levels = stringr::str_to_title(systems)))
+                  system = labels[system],
+                  system = factor(system, levels = labels[labels %in% system]))
 
   # change to titles
   if(sdg_titles == TRUE){

@@ -45,12 +45,12 @@ By default, \code{detect_sdg} runs only the three query systems, as they are con
 \examples{
 
 # run sdg detection
-hits <- detect_sdgs(abstracts)
+hits <- detect_sdgs(projects)
 
 # run sdg detection with aurora only
-hits <- detect_sdgs(abstracts, systems = "aurora")
+hits <- detect_sdgs(projects, systems = "aurora")
 
 # run sdg detection for sdg 3 only
-hits <- detect_sdgs(abstracts, sdgs = 3)
+hits <- detect_sdgs(projects, sdgs = 3)
 
 }

@@ -24,7 +24,7 @@ detect_any(
 \item{verbose}{\code{logical} specifying whether messages on the function's progress should be printed.}
 }
 \value{
-The function returns a tibble containing the SDG hits found in the vector of documents. Depending on the value of \code{output} the tibble will contain all or some of the following columns:
+The function returns a \code{tibble} containing the SDG hits found in the vector of documents. Depending on the value of \code{output} the tibble will contain all or some of the following columns:
 \describe{
  \item{document}{Index of the element in \code{text} where match was found. Formatted as a factor with the number of levels matching the original number of documents.}
  \item{sdg}{Label of the SDG found in document.}
@@ -40,13 +40,15 @@ The function returns a tibble containing the SDG hits found in the vector of doc
 \examples{
 
 # create data frame with query system
-own_query_system_df <- tibble::tibble(sdg = c(1,2,3,3), query = c("Past analyses", "Results", "clarity ", "higher"), system = rep("own_sytem", 4))
+own_query_system <- tibble::tibble(sdg = c(1,2,3,3),
+                                   query = c("Past analyses", "Results", "clarity ", "higher"),
+                                   system = rep("own_sytem", 4))
 
 # run sdg detection with own query system
-hits <- detect_any(abstracts, own_query_system_df)
+hits <- detect_any(abstracts, own_query_system)
 
 # run sdg detection for sdg 3 only
-hits <- detect_any(abstracts, own_query_system_df, sdgs = 3)
+hits <- detect_any(abstracts, own_query_system, sdgs = 3)
 
 
 }

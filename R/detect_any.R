@@ -20,16 +20,16 @@
 #'
 #' @examples
 #'
-# # create data frame with query system
-# own_query_system <- tibble::tibble(sdg = c(1,2,3,3),
-#                                    query = c("Past analyses", "Results", "clarity ", "higher"),
-#                                    system = rep("own_sytem", 4))
+#' # create data frame with query system
+#' my_queries <- tibble::tibble(system = rep("my_system", 4),
+#'                              query = c("theory", "analysis OR analyses OR analyzed", "study AND hypothesis"),
+#'                              sdg = c(1,2,2))
 #'
 #' # run sdg detection with own query system
-#' hits <- detect_any(abstracts, own_query_system)
+#' hits <- detect_any(projects, my_queries)
 #'
 #' # run sdg detection for sdg 3 only
-#' hits <- detect_any(abstracts, own_query_system, sdgs = 3)
+#' hits <- detect_any(projects, my_queries, sdgs = 3)
 #'
 #'
 #' @export
@@ -61,7 +61,7 @@ detect_any <- function(text, queries, sdgs = NULL, output = c("features","docs")
   #filter queries based on selected sdgs
   queries <- queries %>%
     dplyr::mutate(sdg = paste0("SDG-", ifelse(queries$sdg < 10, "0", ""),queries$sdg),
-                  query_id = 1:n()) %>%
+                  query_id = 1:dplyr::n()) %>%
     dplyr::filter(sdg %in% sdgs)
 
 
@@ -72,13 +72,13 @@ detect_any <- function(text, queries, sdgs = NULL, output = c("features","docs")
   hits = hits %>%
     dplyr::mutate(sdg = queries$sdg[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))],
                   query_id = as.numeric(stringr::str_extract(hits$code, '[:digit:]+')),
-                  system = (queries %>% pull(system, query_id))[query_id]) %>%
+                  system = (queries %>% dplyr::pull(system, query_id))[query_id]) %>%
     dplyr::rename(document = doc_id) %>%
     dplyr::select(document, sdg, system, query_id, feature) %>%
     dplyr::group_by(document, sdg, system, query_id) %>%
-    dplyr::summarize(features = toString(unique(feature))) %>%
+    dplyr::summarize(features = toString(unique(feature %>% stringr::str_to_lower()))) %>%
     dplyr::group_by(system) %>%
-    dplyr::mutate(hit = 1:n()) %>%
+    dplyr::mutate(hit = 1:dplyr::n()) %>%
     dplyr::ungroup() %>%
     suppressMessages()
 

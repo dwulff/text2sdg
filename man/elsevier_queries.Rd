@@ -5,8 +5,9 @@
 \alias{elsevier_queries}
 \title{SDG queries of Elsevier}
 \format{
-A data frame with 378 rows and 5 columns
+A data frame with 16 rows and 4 columns
 \describe{
+  \item{system}{Name of system}
   \item{sdg}{Label of the SDG}
   \item{query_id}{Index of the query}
   \item{query}{SDG query}

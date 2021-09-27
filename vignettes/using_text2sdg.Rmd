@@ -1,8 +1,8 @@
 ---
-title: "Using text2sdg"
+title: "text2sdg: An open-source solution to monitoring sustainable development goals from text"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{using_text2sdg}
+  %\VignetteIndexEntry{text2sdg}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -19,11 +19,11 @@ library(text2sdg)
 
 ```
 
-## Intro
+## Introduction
 
 The United Nations’ Sustainable Development Goals (SDGs) have become an important guideline for organizations to monitor and plan their contributions to social, economic, and environmental transformations. Existing approaches to identify efforts addressing each of the 17 goals rely on economic indicators or, in the case of academic output, on search engines of academic data bases. `text2sdg` is the first open source, multi-system tool to detect SDGs in text.     
 
-The `text2sdg` package consists of three core functions: `detect_sdg()`, `plot_sdg()`, and `crosstab_sdg()`. The function `detect_sdg()` carries out the detection of SDGs in text using a maximum of five different search systems. The functions `plot_sdg()` and `crosstab_sdg()` help visualize and analyze the resulting SDG matches. 
+The `text2sdg` package consists of four functions: `detect_sdg()`, `detect_any()`, `plot_sdg()`, and `crosstab_sdg()`. The function `detect_sdg()` carries out the detection of SDGs in text using up to five different established search systems. The function `detect_any()` enables search for custom search queries. Finally, the functions `plot_sdg()` and `crosstab_sdg()` help visualize and analyze the resulting SDG matches.
 
 ## Detecting SDGs using `detect_sdg()`
 
@@ -48,7 +48,7 @@ hits_default
 
 By default `sdg_detect()` runs the three query-based search systems, Aurora, Elsevier, and SIRIS. Using the function's `system` argument the user can control which systems are run. There are two additional keyword-based systems that can be selected, Ontology and SDSN. In comparison, the two keyword-based systems tend to identify larger numbers of SDGs compared to the query-based search systems. Systematic validations are outstanding, however, it is likely that keyword-based systems produce a larger number of false positives, which is the reason they are not included in the function's default search system set. 
 
-The code below runs the `detect_sdg()` on the `projects` for each search system individually, including the two keyword baed system. The resulting `tibble`s reveal that Aurora is most conservative (60 hits), followed by SIRIS (167), Elsevier (235), and then with large margin the two keyword-based systems SDSN (2,575) and Ontology (3,617). Note that the high numbers for the two keyword-based systems imply that, on average, 5 respectively 7 SDGs are identified per document. 
+The example below runs the `detect_sdg()` on the `projects` for each search system individually, including the two keyword baed system. The resulting `tibble`s reveal that Aurora is most conservative (60 hits), followed by SIRIS (167), Elsevier (235), and then with large margin the two keyword-based systems SDSN (2,575) and Ontology (3,617). Note that the high numbers for the two keyword-based systems imply that, on average, 5 respectively 7 SDGs are identified per document. 
 
 ```{r, echo = F}
 options(tibble.print_min = 5)
@@ -71,7 +71,7 @@ options(tibble.print_min = 10)
 
 By default the `detect_sdg()` function aims to detect all SDGs covered by the different systems, which is all 17 for Aurora, Ontology, and SDSN, and 16 for Elsevier and Siris. The latter two do not include queries for gaol 17 - Global Partnerships for the Goals. If the user is only interested in a subset of SDGs or wants to reduce runtime, the `sdgs` argument can be used to run subsets of SDGs. The argument takes a numeric vector with integers in [1,17] indiciating the SDGs that shall be detected. 
 
-The code below runs the `detect_sdg()` function only for SDGs 1, 2, 3, 4, and 5. 
+The example below runs the `detect_sdg()` function only for SDGs 1, 2, 3, 4, and 5. 
 
 ```{r}
 # detecting only for SDGs 1 to 5
@@ -95,10 +95,30 @@ detect_sdg(projects, output = "documents")
 By default the `detect_sdg()` function prints messages whenever it begins running a search system. This can help track the progress of the function, which for large number of texts can take several minutes. To suppress these messages, the user can set the `verbose` argument to `FALSE`. 
 
 
-# Using custom queries in `detect_any()`
+## Custom search with `detect_any()`
+
+The `text2sdg` provides with `detect_any()` a fucntion that permits specification of custom search systems. The function operates similarity to `detect_sdg()`, but it requires an additional argument `queries` that specifies the queries to be employed. The `queries` argument expects a `tibble` with the following columns:
+
+- `system` (`character`) - names used to label search systems.
+- `queries` (`character`) - queries used in search. 
+- `sdg` (`integer`) - mapping of queries to SDGs. 
+
+The queries in the custom query set can be Lucene-style queries following the syntax of the `corpustools` package. See `vignette("corpustools")`. This is illustrated in the example below. First, a tibble of three queries is defined that includes a single system and three queries that are mapped onto two sdgs, 3 and 7. The first query represents a simple keyword search, whereas queries 2 and 3 rely are proper search queries using logical operators.  
 
 
-# Visualizing SDGs hits with `plot_sdg()`
+```{r}
+# definition of query set
+my_queries <- tibble::tibble(system = "my_system",
+                              query = c("theory", "analysis OR analyses OR analyzed", "study AND hypothesis"),
+                              sdg = c(3,7,7))
+
+# return documents output format
+detect_any(text = projects, 
+           queries = my_queries)
+```
+
+
+## Visualizing hits with `plot_sdg()`
 
 To visualize the hits produced by `detect_sdg`, the `text2sdg` package provides the function `plot_sdg()`. The function produces barplots illustrating either the hit frequencies produced by the different search systems. It is build on the `ggplot2` package, which provides high levels of flexibility for adapting and extending its visualizations.  
 
@@ -127,7 +147,7 @@ plot_sdg(hits_all,
 
 ### Extending visualizations with `ggplot2`
 
-Since `plot_sdg()` is implemented using `ggplot2`, visualizations can easily be extended using functions from the `ggplot2` universe. The code below illustrates this. Using the `facet_wrap` function separate panels are created, one for each system, that show the absolute frequencies of hits per SDG. 
+Since `plot_sdg()` is implemented using `ggplot2`, visualizations can easily be extended using functions from the `ggplot2` universe. The example below illustrates this. Using the `facet_wrap` function separate panels are created, one for each system, that show the absolute frequencies of hits per SDG. 
 
 ```{r}
 # show system hits in separate panels
@@ -136,11 +156,11 @@ plot_sdg(hits_all) +
 ```
 
 
-# Analyzing hits using `crosstab_sdg()`
+## Analyzing hits using `crosstab_sdg()`
 
 To assist the user in understanding the relationships among SDGs and search systems, the `text2sdg` package provides the `crosstab_sdg()` function. The function takes as input the `tibble` of hits produced by `detect_sdg()` and compares hits either between systems or SDGs. Comparing hits by systems means that correlations are determined across all documents and all SDGs for every pair of systems to produce a fully crossed table of system correlations. Conversely, comparing hits by SDG means that correlations are determined across all documents and all systems for every pair of SDGs to produce a fullly crossed table of SDG correlations. 
 
-# Correspondence between search systems
+### Correspondence between search systems
 
 By default the `crosstab_sdg()` function compares `systems`, which is illustrated below for the hits for all five systems. Note that the `crosstab_sdg()` function only considers distinct combinations of documents, systems, and SDGs implying that the output type of `detect_sdg()` does not matter; it will automatically treat the hits as if they had been produced using `output = documents`. 
 
@@ -148,16 +168,16 @@ The analysis reveals two noteworthy results. First, correlations between systems
 
 ```{r}
 # evaluate correspondence between systems 
-crosstab_sdg(hits_all)
+crosstab_sdg(hits_all) %>% round(2)
 ```
 
 When `crosstab_sdg()` evaluates the correspondence between search systems it does not distinguish between hits of different SDGs. Correlations for individual SDGs could be different from the overall correlations, and it is likely that they are higher, on average. To determine the correspondence between search systems for individual SDGs, the user can use the `sdgs` argument. For instance, `sdgs = 1` will only result in an comparisons of systems using only hits of SDG 1. 
 
-# Correspondence between search systems
+### Correspondence between search systems
 
 The `crosstab_sdg()` can also be used to analyze, in a similar fashion, the correspondence between SDGs. To do this, the `compare` argument must be set to `"sdgs"`. Again, correlations are calculated for distinct hits, while ignoring, in this case, the systems from which the hits originated. 
 
-The code below analyzes the correspondence of all SDGs across all systems. The resulting cross table reveals strong correspondences between certain pairs of SDGs, such as, for instance, between `SDG-01` and `SDG-02` or between `SDG-07` and `SDG-13`. 
+The example below analyzes the correspondence of all SDGs across all systems. The resulting cross table reveals strong correspondences between certain pairs of SDGs, such as, for instance, between `SDG-01` and `SDG-02` or between `SDG-07` and `SDG-13`. 
 
 ```{r}
 # evaluate correspondence between systems 

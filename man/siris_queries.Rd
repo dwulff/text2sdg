@@ -5,8 +5,9 @@
 \alias{siris_queries}
 \title{SDG queries of SIRIS Academic}
 \format{
-A data frame with 378 rows and 5 columns
+A data frame with 3,445 rows and 6 columns
 \describe{
+  \item{system}{Name of system}
   \item{sdg}{Label of the SDG}
   \item{keyword}{Primary SDG query element}
   \item{extra}{Secodary SDG query element}

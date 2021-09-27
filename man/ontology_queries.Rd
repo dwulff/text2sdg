@@ -5,8 +5,9 @@
 \alias{ontology_queries}
 \title{SDG keyword ontology of Bautista-Puig and Mauleón}
 \format{
-A data frame with 378 rows and 5 columns
+A data frame with 4,122 rows and 5 columns
 \describe{
+  \item{system}{Name of system}
   \item{sdg}{Label of the SDG}
   \item{keyword}{SDG keyword used in query}
   \item{query_id}{Index of the query}

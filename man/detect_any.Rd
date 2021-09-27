@@ -7,7 +7,7 @@
 detect_any(
   text,
   queries,
-  sdgs = 1:17,
+  sdgs = NULL,
   output = c("features", "docs"),
   verbose = TRUE
 )
@@ -40,15 +40,15 @@ The function returns a \code{tibble} containing the SDG hits found in the vector
 \examples{
 
 # create data frame with query system
-own_query_system <- tibble::tibble(sdg = c(1,2,3,3),
-                                   query = c("Past analyses", "Results", "clarity ", "higher"),
-                                   system = rep("own_sytem", 4))
+my_queries <- tibble::tibble(system = rep("my_system", 4),
+                             query = c("theory", "analysis OR analyses OR analyzed", "study AND hypothesis"),
+                             sdg = c(1,2,2))
 
 # run sdg detection with own query system
-hits <- detect_any(abstracts, own_query_system)
+hits <- detect_any(projects, my_queries)
 
 # run sdg detection for sdg 3 only
-hits <- detect_any(abstracts, own_query_system, sdgs = 3)
+hits <- detect_any(projects, my_queries, sdgs = 3)
 
 
 }

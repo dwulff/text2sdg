@@ -8,7 +8,7 @@
 
 #' SDG queries of the Aurora Universities Network
 #'
-#' A dataset containing the SDG queries version 5.0 of the \href{https://aurora-network.global/activity/sustainability/}{Aurora Universities Network}. See the corresponding \href{https://github.com/Aurora-Network-Global/sdg-queries}{GitHub repository}. For the actual implementation of the queries see \code{aurora_simple}, \code{aurora_and}, \code{aurora_w}, and the queries hard-coded on \code{detect_aurora}. There are multiple queries per SDG (one per row). This version of the queries Aurora added more academic terminology related keywords to yield more reserach papers related to the SDG's. This version also drew inspiration from the Siris keywords (\code{siris_queries}). The aurora queries were designed to be precise rather than yielding a large amount of false positives, this is why they use keyword-combination queries as much as possible, as opposed to single-keyword queries.
+#' A dataset containing the SDG queries version 5.0 of the \href{https://aurora-network.global/activity/sustainability/}{Aurora Universities Network}. See the corresponding \href{https://github.com/Aurora-Network-Global/sdg-queries}{GitHub repository}. For the actual implementation of the queries see \code{aurora_simple}, \code{aurora_and}, \code{aurora_w}, and the queries hard-coded on \code{detect_aurora}. There are multiple queries per SDG (one per row). This version of the queries Aurora added more academic terminology related keywords to yield more reserach papers related to the SDG's. This version also drew inspiration from the Siris keywords (\code{siris_queries}). The aurora queries were designed to be precise rather than yielding a large amount of false positives, this is why they use keyword-combination queries as much as possible, as opposed to single-keyword queries. All SDGs (1-17) are covered.
 #'
 #'
 #' @format A data frame with 378 rows and 5 columns
@@ -73,7 +73,7 @@
 
 #' SDG keywords by SDSN
 #'
-#' A dataset containing SDG-specific keywords compiled from several universities from the Sustainable Development Solutions Network (SDSN) Australia, New Zealand & Pacific Network.The authors used UN documents, Google searches and personal communications as sources for the keywords.
+#' A dataset containing SDG-specific keywords compiled from several universities from the Sustainable Development Solutions Network (SDSN) Australia, New Zealand & Pacific Network.The authors used UN documents, Google searches and personal communications as sources for the keywords.All SDGs (1-17) are covered.
 #'
 #'
 #' @format A data frame with 847 rows and 5 columns

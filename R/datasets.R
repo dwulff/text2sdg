@@ -3,12 +3,13 @@
 #' 500 project descriptions of University of Basel research projects that were selecting for funding by the Swiss National Science Foundation. The data is a subset of the public \href{https://p3.snf.ch}{P3 project data base}.
 #'
 #' @format A \code{character} vector of length 100.
-#'
+#' @source \url{https://p3.snf.ch/Pages/DataAndDocumentation.aspx}
 "projects"
 
 #' SDG queries of the Aurora Universities Network
 #'
-#' A dataset containing the SDG queries version 5.0 of the \href{https://aurora-network.global/activity/sustainability/}{Aurora Universities Network}. See the corresponding \href{https://github.com/Aurora-Network-Global/sdg-queries}{GitHub repository}. For the actual implementation of the queries see \code{aurora_simple}, \code{aurora_and}, \code{aurora_w}, and the queries hard-coded on \code{detect_aurora}.
+#' A dataset containing the SDG queries version 5.0 of the \href{https://aurora-network.global/activity/sustainability/}{Aurora Universities Network}. See the corresponding \href{https://github.com/Aurora-Network-Global/sdg-queries}{GitHub repository}. For the actual implementation of the queries see \code{aurora_simple}, \code{aurora_and}, \code{aurora_w}, and the queries hard-coded on \code{detect_aurora}. There are multiple queries per SDG (one per row). This version of the queries Aurora added more academic terminology related keywords to yield more reserach papers related to the SDG's. This version also drew inspiration from the Siris keywords (\code{siris_queries}). The aurora queries were designed to be precise rather than yielding a large amount of false positives, this is why they use keyword-combination queries as much as possible, as opposed to single-keyword queries.
+#'
 #'
 #' @format A data frame with 378 rows and 5 columns
 #' \describe{
@@ -19,11 +20,12 @@
 #'   \item{query_id}{Index of the query}
 #'   \item{query}{Original SDG query}
 #' }
+#' @source \url{https://github.com/Aurora-Network-Global/sdg-queries/releases/tag/v5.0}
 "aurora_queries"
 
 #' SDG queries of SIRIS Academic
 #'
-#' A dataset containing the SDG queries of \href{http://www.sirislab.com/lab/sdg-research-mapping/}{SIRIS Academic}. The queries are available from\href{https://zenodo.org/record/3567769#.YRY9xdMzY8N}{Zenodo.org}. For the actual implementation of the queries see \code{aurora_simple}, \code{aurora_and}, \code{aurora_w}, and the queries hard-coded on \code{detect_aurora}.
+#' A dataset containing the SDG queries of \href{http://www.sirislab.com/lab/sdg-research-mapping/}{SIRIS Academic}. The queries are available from\href{https://zenodo.org/record/3567769#.YRY9xdMzY8N}{Zenodo.org}. The queries were developed by extracting key terms from the UN official list of goals, targets and indicators as well from relevant literature around SDGs. This list has subsequently been expanded with a trained Word2Vec model and an algorithm that selects related words from the Wikipedia APIs. There are multiple queries per SDG (one per row). There are no queries for SDG-17.
 #'
 #' @format A data frame with 3,445 rows and 6 columns
 #' \describe{
@@ -34,11 +36,12 @@
 #'   \item{query_id}{Index of the query}
 #'   \item{query}{SDG query}
 #' }
+#' @source \url{https://zenodo.org/record/3567769#.YVMhH9gzYUG}
 "siris_queries"
 
 #' SDG queries of Elsevier
 #'
-#' A dataset containing the SDG queries of \href{https://www.elsevier.com/connect/sdg-report}{Elsevier}. The queries are available from \href{https://data.mendeley.com/datasets/87txkw7khs/1}{data.mendeley.com}.
+#' A dataset containing the SDG queries of \href{https://www.elsevier.com/connect/sdg-report}{Elsevier} (version 1). The queries are available from \href{https://data.mendeley.com/datasets/87txkw7khs/1}{data.mendeley.com}. These queries were developed by checking whether they yielded relevant hits on the Scoupus database. A detailed description of how each SDG query was developed can be found \href{https://elsevier.digitalcommonsdata.com/datasets/87txkw7khs/1}{here}. There is one query per SDG. There are no queries for SDG-17.
 #'
 #' @format A data frame with 16 rows and 4 columns
 #' \describe{
@@ -47,13 +50,15 @@
 #'   \item{query_id}{Index of the query}
 #'   \item{query}{SDG query}
 #' }
+#' @source \url{https://data.mendeley.com/datasets/87txkw7khs/1}
 "elsevier_queries"
 
 #' SDG keyword ontology of Bautista-Puig and Mauleón
 #'
 #' A dataset containing the SDG queries based on the keyword ontology of Bautista-Puig and Mauleón. The queries are available from \href{https://figshare.com/articles/dataset/SDG_ontology/11106113/1}{figshare.com}.
 #'
-#' Bautista-Puig, N.; Mauleón E. (2019). Unveiling the path towards sustainability: is there a research interest on sustainable goals? In the 17th International Conference on Scientometrics & Informetrics (ISSI 2019), Rome (Italy), Volume II, ISBN 978-88-3381-118-5, p.2770-2771.
+#' Bautista-Puig, N.; Mauleón E. (2019). Unveiling the path towards sustainability: is there a research interest on sustainable goals? In the 17th International Conference on Scientometrics & Informetrics (ISSI 2019), Rome (Italy), Volume II, ISBN 978-88-3381-118-5, p.2770-2771. The authors of these queries first created an ontology from central keywords in the SDG UN description and expanded these keywords with keywords they identified in SDG related research output. There are multiple queries per SDG. All SDGs (1-17) are covered.
+#'
 #'
 #' @format A data frame with 4,122 rows and 5 columns
 #' \describe{
@@ -63,13 +68,13 @@
 #'   \item{query_id}{Index of the query}
 #'   \item{query}{SDG query}
 #' }
+#' @source \url{https://figshare.com/articles/dataset/SDG_ontology/11106113/1}
 "ontology_queries"
 
 #' SDG keywords by SDSN
 #'
-#' DESCRIPTION
+#' A dataset containing SDG-specific keywords compiled from several universities from the Sustainable Development Solutions Network (SDSN) Australia, New Zealand & Pacific Network.The authors used UN documents, Google searches and personal communications as sources for the keywords.
 #'
-#' DESCRIPTION 2
 #'
 #' @format A data frame with 847 rows and 5 columns
 #' \describe{
@@ -79,5 +84,6 @@
 #'   \item{query_id}{Index of the query}
 #'   \item{query}{SDG query}
 #' }
+#' @source \url{https://ap-unsdsn.org/regional-initiatives/universities-sdgs/}
 "sdsn_queries"
 

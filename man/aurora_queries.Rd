@@ -15,10 +15,13 @@ A data frame with 378 rows and 5 columns
   \item{query}{Original SDG query}
 }
 }
+\source{
+\url{https://github.com/Aurora-Network-Global/sdg-queries/releases/tag/v5.0}
+}
 \usage{
 aurora_queries
 }
 \description{
-A dataset containing the SDG queries version 5.0 of the \href{https://aurora-network.global/activity/sustainability/}{Aurora Universities Network}. See the corresponding \href{https://github.com/Aurora-Network-Global/sdg-queries}{GitHub repository}. For the actual implementation of the queries see \code{aurora_simple}, \code{aurora_and}, \code{aurora_w}, and the queries hard-coded on \code{detect_aurora}.
+A dataset containing the SDG queries version 5.0 of the \href{https://aurora-network.global/activity/sustainability/}{Aurora Universities Network}. See the corresponding \href{https://github.com/Aurora-Network-Global/sdg-queries}{GitHub repository}. For the actual implementation of the queries see \code{aurora_simple}, \code{aurora_and}, \code{aurora_w}, and the queries hard-coded on \code{detect_aurora}. There are multiple queries per SDG (one per row). This version of the queries Aurora added more academic terminology related keywords to yield more reserach papers related to the SDG's. This version also drew inspiration from the Siris keywords (\code{siris_queries}). The aurora queries were designed to be precise rather than yielding a large amount of false positives, this is why they use keyword-combination queries as much as possible, as opposed to single-keyword queries.
 }
 \keyword{datasets}

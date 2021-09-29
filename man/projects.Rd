@@ -7,6 +7,9 @@
 \format{
 A \code{character} vector of length 100.
 }
+\source{
+\url{https://p3.snf.ch/Pages/DataAndDocumentation.aspx}
+}
 \usage{
 projects
 }

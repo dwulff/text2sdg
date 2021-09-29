@@ -14,13 +14,13 @@ A data frame with 847 rows and 5 columns
   \item{query}{SDG query}
 }
 }
+\source{
+\url{https://ap-unsdsn.org/regional-initiatives/universities-sdgs/}
+}
 \usage{
 sdsn_queries
 }
 \description{
-DESCRIPTION
-}
-\details{
-DESCRIPTION 2
+A dataset containing SDG-specific keywords compiled from several universities from the Sustainable Development Solutions Network (SDSN) Australia, New Zealand & Pacific Network.The authors used UN documents, Google searches and personal communications as sources for the keywords.
 }
 \keyword{datasets}

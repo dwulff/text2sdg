@@ -15,10 +15,13 @@ A data frame with 3,445 rows and 6 columns
   \item{query}{SDG query}
 }
 }
+\source{
+\url{https://zenodo.org/record/3567769#.YVMhH9gzYUG}
+}
 \usage{
 siris_queries
 }
 \description{
-A dataset containing the SDG queries of \href{http://www.sirislab.com/lab/sdg-research-mapping/}{SIRIS Academic}. The queries are available from\href{https://zenodo.org/record/3567769#.YRY9xdMzY8N}{Zenodo.org}. For the actual implementation of the queries see \code{aurora_simple}, \code{aurora_and}, \code{aurora_w}, and the queries hard-coded on \code{detect_aurora}.
+A dataset containing the SDG queries of \href{http://www.sirislab.com/lab/sdg-research-mapping/}{SIRIS Academic}. The queries are available from\href{https://zenodo.org/record/3567769#.YRY9xdMzY8N}{Zenodo.org}. The queries were developed by extracting key terms from the UN official list of goals, targets and indicators as well from relevant literature around SDGs. This list has subsequently been expanded with a trained Word2Vec model and an algorithm that selects related words from the Wikipedia APIs. There are multiple queries per SDG (one per row). There are no queries for SDG-17.
 }
 \keyword{datasets}

@@ -1,4 +1,4 @@
-![](man/figures/text2sdg.png =50x50)
+<img src="man/figures/text2sdg.png" style="heigh:60px"></img>
 
 # text2sdg
 

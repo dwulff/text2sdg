@@ -1,4 +1,4 @@
-![](man/figures/text2sdg.png)
+![](man/figures/text2sdg.png =50x50)
 
 # text2sdg
 

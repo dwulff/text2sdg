@@ -18,7 +18,7 @@ devtools::install_github("dwulff/text2sdg", build_vignettes = TRUE)
 
 Access the tutorial via
 ```r
-devtools::install_github("dwulff/text2sdg", build_vignettes = TRUE)
+dvignette("text2sdg")
 ```
 
 # Feedback

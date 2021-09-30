@@ -29,8 +29,6 @@ Feel free to post [issues](https://github.com/dwulff/text2sdg/issues) or reach o
 
 Cheers!
 
-<a href="https://twitter.com/intent/tweet?button_hashtag=text2sdg&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-show-count="false">Tweet #TwitterDev</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-[Dominik Meier](https://github.com/psychobas) <a href="https://twitter.com/Dominikmeie_r"><i class="fab fa-twitter"></i></i></a><br>
-[Rui Mata](https://github.com/matarui) <a href="https://twitter.com/rui__mata"><i class="fab fa-twitter"></i></i></a><br>
-[Dirk Wulff](https://github.com/dwulff) <a href="https://twitter.com/dirkuwulff"><i class="fab fa-twitter"></i></i></a>
+[Dominik Meier](https://github.com/psychobas) <a href="https://twitter.com/Dominikmeie_r">@Dominikmeie_r</i></i></a><br>
+[Rui Mata](https://github.com/matarui) <a href="https://twitter.com/rui__mata">@rui__mata</i></i></a><br>
+[Dirk Wulff](https://github.com/dwulff) <a href="https://twitter.com/dirkuwulff">@dirkuwulff</i></i></a>

@@ -1,6 +1,5 @@
-<img src="man/figures/text2sdg.png" style="height:150px"></img>
 
-# text2sdg
+# <img src="man/figures/text2sdg.png" style="height:150px"></img> text2sdg
 
 The United Nations’ Sustainable Development Goals (SDGs) have become an important guideline for higher-education and research institutions to monitor and plan their contributions to social, economic, and environmental transformations.
 

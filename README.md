@@ -9,7 +9,7 @@ The *text2sdg* package is the first open-source, multi-system analysis package t
 
 # Installation
 
-Install the development version via (requires that `devtools` is installed; may also require installation of `rmarkdown` and `knitr`)
+Install the development version via (requires isntallation of `devtools`; may also require installation of `rmarkdown` and `knitr`)
 
 ```r
 devtools::install_github("dwulff/text2sdg", build_vignettes = TRUE)

@@ -1,4 +1,4 @@
-<img src="man/figures/text2sdg.png" style="heigh:60px"></img>
+<img src="man/figures/text2sdg.png" style="height:60px"></img>
 
 # text2sdg
 

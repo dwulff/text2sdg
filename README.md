@@ -25,6 +25,10 @@ Feel free to post [issues](https://github.com/dwulff/text2sdg/issues) or reach o
 
 Cheers!
 
-[Dominik Meier](https://github.com/psychobas) <a href="https://twitter.com/Dominikmeie_r"><i class="fab fa-twitter"></i></i></a>
-[Rui Mata](https://github.com/matarui) <a href="https://twitter.com/rui__mata"><i class="fab fa-twitter"></i></i></a>
+<link href="/your-path-to-fontawesome/css/fontawesome.css" rel="stylesheet">
+<link href="/your-path-to-fontawesome/css/brands.css" rel="stylesheet">
+<link href="/your-path-to-fontawesome/css/solid.css" rel="stylesheet">
+
+[Dominik Meier](https://github.com/psychobas) <a href="https://twitter.com/Dominikmeie_r"><i class="fab fa-twitter"></i></i></a><br>
+[Rui Mata](https://github.com/matarui) <a href="https://twitter.com/rui__mata"><i class="fab fa-twitter"></i></i></a><br>
 [Dirk Wulff](https://github.com/dwulff) <a href="https://twitter.com/dirkuwulff"><i class="fab fa-twitter"></i></i></a>

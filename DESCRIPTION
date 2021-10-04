@@ -17,12 +17,15 @@ Authors@R: c(
 Description: The United Nations’ Sustainable Development Goals (SDGs) have become an important guideline for organisations to monitor and plan their contributions to social, economic, and environmental transformations. The text2sdg package is an open-source analysis package that identifies SDGs in text using scientifically developed query systems, opening up the opportunity to monitor any type of text-based data, such as scientific output or corporate publications.  
 License: GPL-3
 Encoding: UTF-8
-Depends: R (>= 3.1.0)
+Depends: R (>= 3.5.0)
 Imports: 
     magrittr,
     dplyr,
     corpustools,
-    tidyr
+    tidyr,
+    tibble,
+    stringr,
+    ggplot2
 Suggests: 
     testthat,
     knitr,

@@ -41,14 +41,16 @@ The function returns a \code{tibble} containing the SDG hits found in the vector
 
 # create data frame with query system
 my_queries <- tibble::tibble(system = rep("my_system", 3),
-                             query = c("theory", "analysis OR analyses OR analyzed", "study AND hypothesis"),
+                             query = c("theory",
+                             "analysis OR analyses OR analyzed",
+                             "study AND hypothesis"),
                              sdg = c(1,2,2))
 
 # run sdg detection with own query system
 hits <- detect_any(projects, my_queries)
 
 # run sdg detection for sdg 3 only
-hits <- detect_any(projects, my_queries, sdgs = 3)
+hits <- detect_any(projects, my_queries, sdgs = 2)
 
 
 }

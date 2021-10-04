@@ -25,13 +25,13 @@
 #' @examples
 #'
 #' # run sdg detection
-#' hits <- detect_sdgs(projects)
+#' hits <- detect_sdg(projects)
 #'
 #' # run sdg detection with aurora only
-#' hits <- detect_sdgs(projects, systems = "aurora")
+#' hits <- detect_sdg(projects, systems = "aurora")
 #'
 #' # run sdg detection for sdg 3 only
-#' hits <- detect_sdgs(projects, sdgs = 3)
+#' hits <- detect_sdg(projects, sdgs = 3)
 #'
 #' @export
 

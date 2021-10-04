@@ -22,7 +22,9 @@
 #'
 #' # create data frame with query system
 #' my_queries <- tibble::tibble(system = rep("my_system", 3),
-#'                              query = c("theory", "analysis OR analyses OR analyzed", "study AND hypothesis"),
+#'                              query = c("theory",
+#'                              "analysis OR analyses OR analyzed",
+#'                              "study AND hypothesis"),
 #'                              sdg = c(1,2,2))
 #'
 #' # run sdg detection with own query system

@@ -26,7 +26,7 @@ search_corpus = function(corpus, queries, ...) corpustools::search_features(corp
 #'
 #' Get hit code
 #'
-#' @param hist data frame
+#' @param data data frame
 #'
 #' @export
 

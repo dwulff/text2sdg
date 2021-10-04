@@ -40,7 +40,7 @@ The function returns a \code{tibble} containing the SDG hits found in the vector
 \examples{
 
 # create data frame with query system
-my_queries <- tibble::tibble(system = rep("my_system", 4),
+my_queries <- tibble::tibble(system = rep("my_system", 3),
                              query = c("theory", "analysis OR analyses OR analyzed", "study AND hypothesis"),
                              sdg = c(1,2,2))
 

@@ -14,7 +14,7 @@
 #' @examples
 #'
 #' # run sdg detection
-#' hits <- detect_sdgs(projects)
+#' hits <- detect_sdg(projects)
 #'
 #' # create cross table of systems
 #' crosstab_sdg(hits)

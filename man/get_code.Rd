@@ -7,7 +7,7 @@
 get_code(data)
 }
 \arguments{
-\item{hist}{data frame}
+\item{data}{data frame}
 }
 \description{
 Get hit code

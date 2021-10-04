@@ -21,7 +21,7 @@
 #' @examples
 #'
 #' # create data frame with query system
-#' my_queries <- tibble::tibble(system = rep("my_system", 4),
+#' my_queries <- tibble::tibble(system = rep("my_system", 3),
 #'                              query = c("theory", "analysis OR analyses OR analyzed", "study AND hypothesis"),
 #'                              sdg = c(1,2,2))
 #'
@@ -29,7 +29,7 @@
 #' hits <- detect_any(projects, my_queries)
 #'
 #' # run sdg detection for sdg 3 only
-#' hits <- detect_any(projects, my_queries, sdgs = 3)
+#' hits <- detect_any(projects, my_queries, sdgs = 2)
 #'
 #'
 #' @export
@@ -49,6 +49,9 @@ detect_any <- function(text, queries, sdgs = NULL, output = c("features","docs")
   # replace NULLs
   if(is.null(sdgs)) sdgs = unique(stringr::str_extract(queries$sdg,"[:digit:]+") %>% as.numeric())
 
+  #check that selected subset of sdgs is in queries
+  if(all(!sdgs %in% unique(queries$sdg))) {stop("At least one of the selected SDGs needs to be present in the queries data frame.")}
+
   #check query data
   if (!all(names(queries) %in% c("sdg", "query", "system"))) {
     stop(paste0("Variables 'sdg', 'query' and 'system' must be present in quries dataset."))
@@ -57,6 +60,8 @@ detect_any <- function(text, queries, sdgs = NULL, output = c("features","docs")
   #handle selected SDGs
   if(any(!sdgs %in% 1:17)) stop("show_sdg can only take numbers in 1:17.")
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
+
+
 
   #filter queries based on selected sdgs
   queries <- queries %>%

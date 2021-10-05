@@ -18,16 +18,15 @@
 #' @examples
 #'
 #' # run sdg detection
-#' hits <- detect_sdgs(projects)
+#' hits <- detect_sdg(projects)
 #'
 #' # create barplot
-#' plot_sdgs(hits)
+#' plot_sdg(hits)
 #'
 #' # create barplot with facets
-#' plot_sdgs(hits) + facet_wrap(~system)
+#' plot_sdg(hits) + ggplot2::facet_wrap(~system)
 #'
 #' @export
-
 plot_sdg = function(hits,
                     systems = NULL,
                     sdgs = NULL,

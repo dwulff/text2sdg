@@ -5,7 +5,7 @@
 \alias{projects}
 \title{Descriptions of research projects}
 \format{
-A \code{character} vector of length 100.
+A \code{character} vector of length 500.
 }
 \source{
 \url{https://p3.snf.ch/Pages/DataAndDocumentation.aspx}

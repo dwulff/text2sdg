@@ -22,6 +22,6 @@ A data frame with 3,445 rows and 6 columns
 siris_queries
 }
 \description{
-A dataset containing the SDG queries of \href{http://www.sirislab.com/lab/sdg-research-mapping/}{SIRIS Academic}. The queries are available from\href{https://zenodo.org/record/3567769#.YRY9xdMzY8N}{Zenodo.org}. The queries were developed by extracting key terms from the UN official list of goals, targets and indicators as well from relevant literature around SDGs. This list has subsequently been expanded with a trained Word2Vec model and an algorithm that selects related words from the Wikipedia APIs. There are multiple queries per SDG (one per row). There are no queries for SDG-17.
+A dataset containing the SDG queries of \href{http://www.sirislab.com/lab/sdg-research-mapping/}{SIRIS Academic}. The queries are available from\href{https://zenodo.org/record/3567769#.YRY9xdMzY8N}{Zenodo.org}. The SIRIS queries were developed by extracting key terms from the UN official list of goals, targets and indicators as well from relevant literature around SDGs. The query system has subsequently been expanded with a pre-trained word2vec model and an algorithm that selects related words from Wikipedia. There are multiple queries per SDG (one per row). There are no queries for SDG-17.
 }
 \keyword{datasets}

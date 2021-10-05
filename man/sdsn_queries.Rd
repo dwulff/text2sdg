@@ -21,6 +21,6 @@ A data frame with 847 rows and 5 columns
 sdsn_queries
 }
 \description{
-A dataset containing SDG-specific keywords compiled from several universities from the Sustainable Development Solutions Network (SDSN) Australia, New Zealand & Pacific Network.The authors used UN documents, Google searches and personal communications as sources for the keywords.All SDGs (1-17) are covered.
+A dataset containing SDG-specific keywords compiled from several universities from the Sustainable Development Solutions Network (SDSN) Australia, New Zealand & Pacific Network. The authors used UN documents, Google searches and personal communications as sources for the keywords. All SDGs (1-17) are covered.
 }
 \keyword{datasets}

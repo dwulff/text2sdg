@@ -69,7 +69,7 @@ options(tibble.print_min = 10)
 
 ### Selecting SDGs
 
-By default the `detect_sdg()` function aims to detect all SDGs covered by the different systems, which is all 17 for Aurora, Ontology, and SDSN, and 16 for Elsevier and Siris. The latter two do not include queries for gaol 17 - Global Partnerships for the Goals. If the user is only interested in a subset of SDGs or wants to reduce runtime, the `sdgs` argument can be used to run subsets of SDGs. The argument takes a numeric vector with integers in [1,17] indiciating the SDGs that shall be detected. 
+By default the `detect_sdg()` function aims to detect all SDGs covered by the different systems, which is all 17 for Aurora, Ontology, and SDSN, and 16 for Elsevier and Siris. The latter two do not include queries for goal 17 - Global Partnerships for the Goals. If the user is only interested in a subset of SDGs or wants to reduce runtime, the `sdgs` argument can be used to run subsets of SDGs. The argument takes a numeric vector with integers in [1,17] indiciating the SDGs that shall be detected. 
 
 The example below runs the `detect_sdg()` function only for SDGs 1, 2, 3, 4, and 5. 
 
@@ -81,7 +81,7 @@ hits_sdg_subset
 
 ### Controlling the ouptut
 
-By default the output of the `detect_sdg()` function returns matches at the level of query. This means one SDG can be matched multiple times for one document, if multiple queries of a given system belonging to the same SDGs produce hits for the same document. On this level, it is meaningful to study the features (individual words) that were matched by the individual queries, which is why we refer to this output type as `"features"`. If the user is only interested in matches at the level of documents, a reduced output can be selected by setting the `output` argument to `"documents"`. As a result, the `detect_sdg()` returns a `tibble` that includes only distinct matches of `document`, `system`, and `sdg` combinations and drops the columns `query_id` and `features`.  
+By default the output of the `detect_sdg()` function returns matches at the level of query. This means one SDG can be matched multiple times in one document which is possible because there multiple queries belonging to the same SDGs produce in all systems but Elsevier. On this level, it is meaningful to study the features (individual words) that were matched by the individual queries, which is why we refer to this output type as `"features"`. If the user is only interested in matches at the level of documents, a reduced output can be selected by setting the `output` argument to `"documents"`. As a result, the `detect_sdg()` returns a `tibble` that includes only distinct matches of `document`, `system`, and `sdg` combinations and drops the columns `query_id` and `features`.  
 
 The example below shows the alternative output resulting from setting `output = "documents"`. 
 
@@ -94,16 +94,15 @@ detect_sdg(projects, output = "documents")
 
 By default the `detect_sdg()` function prints messages whenever it begins running a search system. This can help track the progress of the function, which for large number of texts can take several minutes. To suppress these messages, the user can set the `verbose` argument to `FALSE`. 
 
-
 ## Custom search with `detect_any()`
 
-The `text2sdg` provides with `detect_any()` a fucntion that permits specification of custom search systems. The function operates similarity to `detect_sdg()`, but it requires an additional argument `queries` that specifies the queries to be employed. The `queries` argument expects a `tibble` with the following columns:
+The `text2sdg` provides with `detect_any()` a function that permits specification of custom search systems. The function operates similarly to `detect_sdg()`, but it requires an additional argument `queries` that specifies the queries to be employed. The `queries` argument expects a `tibble` with the following columns:
 
 - `system` (`character`) - names used to label search systems.
 - `queries` (`character`) - queries used in search. 
 - `sdg` (`integer`) - mapping of queries to SDGs. 
 
-The queries in the custom query set can be Lucene-style queries following the syntax of the `corpustools` package. See `vignette("corpustools")`. This is illustrated in the example below. First, a tibble of three queries is defined that includes a single system and three queries that are mapped onto two sdgs, 3 and 7. The first query represents a simple keyword search, whereas queries 2 and 3 rely are proper search queries using logical operators.  
+The queries in the custom query set can be Lucene-style queries following the syntax of the `corpustools` package. See `vignette("corpustools")`. This is illustrated in the example below. First, a tibble of three queries is defined that includes a single system and three queries that are mapped onto two sdgs, 3 and 7. The first query represents a simple keyword search, whereas queries 2 and 3 are proper search queries using logical operators.  
 
 
 ```{r}
@@ -120,11 +119,11 @@ detect_any(text = projects,
 
 ## Visualizing hits with `plot_sdg()`
 
-To visualize the hits produced by `detect_sdg`, the `text2sdg` package provides the function `plot_sdg()`. The function produces barplots illustrating either the hit frequencies produced by the different search systems. It is build on the `ggplot2` package, which provides high levels of flexibility for adapting and extending its visualizations.  
+To visualize the hits produced by `detect_sdg`, the `text2sdg` package provides the function `plot_sdg()`. The function produces barplots illustrating either the hit frequencies produced by the different search systems. It is built on the `ggplot2` package, which provides high levels of flexibility for adapting and extending its visualizations.  
 
 By default `plot_sdg()` produces a stacked barplot of absolute hit frequencies. Frequencies are determined on the document level for each system and sdgs present in the `tibble` that was provided to the function's `hits` argument. If multiple hits per document, system and SDG combination exist, the function returns a message of how many duplicate hits have been suppressed.  
 
-The example below produces the default visualizatin for the hits of all five systems. Since the object was created with `"output = features"`, the function informs that a total of 2490 duplicate hits were removed. 
+The example below produces the default visualization for the hits of all five systems. Since the object was created with `"output = features"`, the function informs that a total of 2490 duplicate hits were removed. 
 
 ```{r}
 # show stacked barplot of hits
@@ -171,9 +170,9 @@ The analysis reveals two noteworthy results. First, correlations between systems
 crosstab_sdg(hits_all) %>% round(2)
 ```
 
-When `crosstab_sdg()` evaluates the correspondence between search systems it does not distinguish between hits of different SDGs. Correlations for individual SDGs could be different from the overall correlations, and it is likely that they are higher, on average. To determine the correspondence between search systems for individual SDGs, the user can use the `sdgs` argument. For instance, `sdgs = 1` will only result in an comparisons of systems using only hits of SDG 1. 
+When `crosstab_sdg()` evaluates the correspondence between search systems it does not distinguish between hits of different SDGs. Correlations for individual SDGs could be different from the overall correlations, and it is likely that they are higher, on average. To determine the correspondence between search systems for individual SDGs, the user can use the `sdgs` argument. For instance, `sdgs = 1` will only result in a comparisons of systems using only hits of SDG 1. 
 
-### Correspondence between search systems
+### Correspondence between SDGs
 
 The `crosstab_sdg()` can also be used to analyze, in a similar fashion, the correspondence between SDGs. To do this, the `compare` argument must be set to `"sdgs"`. Again, correlations are calculated for distinct hits, while ignoring, in this case, the systems from which the hits originated. 
 

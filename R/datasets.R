@@ -1,6 +1,6 @@
 #' Descriptions of research projects
 #'
-#' 500 project descriptions of University of Basel research projects that were selecting for funding by the Swiss National Science Foundation. The data is a subset of the public \href{https://p3.snf.ch}{P3 project data base}.
+#' 500 project descriptions of University of Basel research projects that were funded by the Swiss National Science Foundation. The project descriptions were drawn randomly from University of Basel projects listed in the the public \href{https://p3.snf.ch}{P3 project data base}.
 #'
 #' @format A \code{character} vector of length 500.
 #' @source \url{https://p3.snf.ch/Pages/DataAndDocumentation.aspx}

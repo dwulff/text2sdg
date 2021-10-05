@@ -14,6 +14,6 @@ A \code{character} vector of length 500.
 projects
 }
 \description{
-500 project descriptions of University of Basel research projects that were selecting for funding by the Swiss National Science Foundation. The data is a subset of the public \href{https://p3.snf.ch}{P3 project data base}.
+500 project descriptions of University of Basel research projects that were funded by the Swiss National Science Foundation. The data is a random subset of the public \href{https://p3.snf.ch}{P3 project data base}.
 }
 \keyword{datasets}

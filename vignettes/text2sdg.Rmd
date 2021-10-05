@@ -36,7 +36,7 @@ The `detect_sdg()` identifies SDGs in texts that are provided via the `text` arg
 - `features` (`character`) - words in the document that were matched by the query
 - `hit` (`numeric`) - running index of matches for each search system
 
-The example below runs the `detect_sdg()` for the `projects` data set included in the package prints the results. The data set is character vector containing 500 descriptions of University of Basel research projects that were funded by the Swiss National Science Foundation (<a href="https://p3.snf.ch">https://p3.snf.ch</a>). The analysis produced a total of `462` matches using the three default search systems Aurora, Elsevier, and SIRIS.   
+The example below runs the `detect_sdg()` for the `projects` data set included in the package prints the results. The data set is character vector containing 500 descriptions of randomly selected University of Basel research projects that were funded by the Swiss National Science Foundation (<a href="https://p3.snf.ch">https://p3.snf.ch</a>). The analysis produced a total of `462` matches using the three default search systems Aurora, Elsevier, and SIRIS.   
 
 ```{r}
 # detecting SDGs in projects

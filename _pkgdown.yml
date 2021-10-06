@@ -1,0 +1,31 @@
+reference:
+  - title: Overview
+    contents:
+    - text2sdg
+  - title: text2sdg functions
+    contents:
+    - detect_sdg
+    - detect_any
+    - plot_sdg
+    - crosstab_sdg
+  - title: text2sdg data sets
+    contents:
+    - projects
+    - aurora_queries
+    - elsevier_queries
+    - siris_queries
+    - sdsn_queries
+    - ontology_queries
+navbar:
+  title: ~
+  type: default
+  left:
+  - text: Overview
+    href: reference/text2sdg.html
+  - text: Tutorial
+    href: articles/text2sdg.html
+  - text: Reference
+    href: reference/index.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/dwulff/text2sdg

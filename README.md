@@ -1,4 +1,3 @@
-
 <img src="man/figures/text2sdg.png" style="height:150px"></img>
 
 # text2sdg
@@ -23,15 +22,13 @@ An overview of elements of the package can accessed
 
 # Installation
 
-The current stable version is available on CRAN and can be installed via
-`install.packages("text2sdg")`.
+The current stable version is available on CRAN and can be installed via `install.packages("text2sdg")`.
 
 The latest development version on GitHub can be installed via `devtools::install_github("dwulff/text2sdg")`. Note that this requires prior installation of the `devtools` package.  
 
 ## Citation
 
-If you use the `text2sdg` package in published analyses, we kindly
-ask that you cite it as follows:
+If you publish analyzes carried out using the `text2sdg` package, we kindly ask that you cite the package as follows:
 
 Wulff, Dirk U. & Meier, D. (2021). text2sdg: Detecting UN Sustainable Development Goals in Text (0.1.0). Zenodo. https://doi.org/10.5281/zenodo.1478772
 

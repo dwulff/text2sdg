@@ -1,5 +1,5 @@
 ---
-title: "text2sdg: An open-source solution to monitoring sustainable development goals from text"
+title: "text2sdg: Detecting UN Sustainable Development Goals in Text"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{text2sdg}

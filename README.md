@@ -1,11 +1,11 @@
-<img src="man/figures/text2sdg.png" style="height:150px"></img>
-
-# text2sdg
-
 [![cran
 version](http://www.r-pkg.org/badges/version/mousetrap)](https://CRAN.R-project.org/package=mousetrap)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596640.svg)](https://doi.org/10.5281/zenodo.596640)
 [![downloads](https://cranlogs.r-pkg.org/badges/grand-total/mousetrap?color=yellow)](https://CRAN.R-project.org/package=mousetrap)
+
+<img src="man/figures/text2sdg.png" style="height:150px"></img>
+
+# text2sdg
 
 The United Nations’ Sustainable Development Goals (SDGs) have become an important guideline for higher-education and research institutions to monitor and plan their contributions to social, economic, and environmental transformations.
 

@@ -2,13 +2,13 @@ reference:
   - title: Overview
     contents:
     - text2sdg
-  - title: text2sdg functions
+  - title: Functions
     contents:
     - detect_sdg
     - detect_any
     - plot_sdg
     - crosstab_sdg
-  - title: text2sdg data sets
+  - title: Data sets
     contents:
     - projects
     - aurora_queries

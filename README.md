@@ -13,8 +13,8 @@ The `text2sdg` package is the first open-source, multi-system analysis package t
 
 The `text2sdg` package is developed by Dirk Wulff and Dominik Meier. It is published under the GNU General Public License (version 3).
 
-An overview of elements of the package can accessed
-[online](http://dwulff.github.io/text2sdg/reference/text2sdg.html) or from within R using `?text2sdg`. A tutorial illustrating the use of the package can accessed
+An overview of elements of the package can be accessed
+[online](http://dwulff.github.io/text2sdg/reference/text2sdg.html) or from within R using `?text2sdg`. A tutorial illustrating the use of the package can be accessed
 [online](http://dwulff.github.io/text2sdg/articles/text2sdg.html) or from within R using `vignette(text2sdg)`.
 
 # Installation

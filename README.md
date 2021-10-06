@@ -1,7 +1,6 @@
-[![cran
-version](http://www.r-pkg.org/badges/version/mousetrap)](https://CRAN.R-project.org/package=mousetrap)
+[![cran version](http://www.r-pkg.org/badges/version/text2sdg)](https://CRAN.R-project.org/package=text2sdg)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596640.svg)](https://doi.org/10.5281/zenodo.596640)
-[![downloads](https://cranlogs.r-pkg.org/badges/grand-total/mousetrap?color=yellow)](https://CRAN.R-project.org/package=mousetrap)
+[![downloads](https://cranlogs.r-pkg.org/badges/grand-total/text2sdg?color=yellow)](https://CRAN.R-project.org/package=text2sdg)
 
 <img src="man/figures/text2sdg.png" style="height:150px"></img>
 
@@ -17,8 +16,8 @@ The `text2sdg` package is the first open-source, multi-system analysis package t
 The `text2sdg` package is developed by Dirk Wulff and Dominik Meier. It is published under the GNU General Public License (version 3).
 
 An overview of elements of the package can accessed
-[online](http://pascalkieslich.github.io/mousetrap/reference/mousetrap.html) or from within R using `?text2sdg`. A tutorial illustrating the use of the package can accessed
-[online](http://pascalkieslich.github.io/mousetrap/reference/mousetrap.html) or from within R using `vignette(text2sdg)`.
+[online](http://dwfulff.github.io/text2sdg/reference/text2sdg.html) or from within R using `?text2sdg`. A tutorial illustrating the use of the package can accessed
+[online](http://dwfulff.github.io/text2sdg/articles/text2sdg.html) or from within R using `vignette(text2sdg)`.
 
 # Installation
 

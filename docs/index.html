@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Detecting UN Sustainable Development Goals in Text • text2sdg</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -13,6 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Detecting UN Sustainable Development Goals in Text">
 <meta property="og:description" content="The United Nations’ Sustainable Development Goals (SDGs) have become an important guideline for organisations to monitor and plan their contributions to social, economic, and environmental transformations. The text2sdg package is an open-source analysis package that identifies SDGs in text using scientifically developed query systems, opening up the opportunity to monitor any type of text-based data, such as scientific output or corporate publications.">
+<meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -78,7 +85,7 @@
 <h2 class="hasAnchor">
 <a href="#general-information" class="anchor"></a>General Information</h2>
 <p>The <code>text2sdg</code> package is developed by Dirk Wulff and Dominik Meier. It is published under the GNU General Public License (version 3).</p>
-<p>An overview of elements of the package can accessed <a href="http://pascalkieslich.github.io/mousetrap/reference/mousetrap.html">online</a> or from within R using <code><a href="reference/text2sdg.html">?text2sdg</a></code>. A tutorial illustrating the use of the package can accessed <a href="http://pascalkieslich.github.io/mousetrap/reference/mousetrap.html">online</a> or from within R using <code>vignette(text2sdg)</code>.</p>
+<p>An overview of elements of the package can accessed <a href="http://dwfulff.github.io/text2sdg/reference/text2sdg.html">online</a> or from within R using <code><a href="reference/text2sdg.html">?text2sdg</a></code>. A tutorial illustrating the use of the package can accessed <a href="http://dwfulff.github.io/text2sdg/articles/text2sdg.html">online</a> or from within R using <code>vignette(text2sdg)</code>.</p>
 </div>
 </div>
 <div id="installation" class="section level1">
@@ -129,9 +136,9 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://CRAN.R-project.org/package=mousetrap"><img src="http://www.r-pkg.org/badges/version/mousetrap" alt="cran version"></a></li>
+<li><a href="https://CRAN.R-project.org/package=text2sdg"><img src="http://www.r-pkg.org/badges/version/text2sdg" alt="cran version"></a></li>
 <li><a href="https://doi.org/10.5281/zenodo.596640"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.596640.svg" alt="DOI"></a></li>
-<li><a href="https://CRAN.R-project.org/package=mousetrap"><img src="https://cranlogs.r-pkg.org/badges/grand-total/mousetrap?color=yellow" alt="downloads"></a></li>
+<li><a href="https://CRAN.R-project.org/package=text2sdg"><img src="https://cranlogs.r-pkg.org/badges/grand-total/text2sdg?color=yellow" alt="downloads"></a></li>
 </ul>
 </div>
 </div>

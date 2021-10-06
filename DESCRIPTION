@@ -1,6 +1,6 @@
 Package: text2sdg
 Type: Package
-Title: Detect UN Sustainable Development Goals in Natural Language
+Title: Detecting UN Sustainable Development Goals in Text
 Version: 0.1.0
 Maintainer: Dominik Meier <dominikmeier@outlook.com>
 Authors@R: c(
@@ -14,7 +14,9 @@ Authors@R: c(
         email= "rui.mata@unibas.ch",
         comment = c(ORCID = "0000-0002-1679-906X"))
     )
-Description: The United Nations’ Sustainable Development Goals (SDGs) have become an important guideline for organisations to monitor and plan their contributions to social, economic, and environmental transformations. The text2sdg package is an open-source analysis package that identifies SDGs in text using scientifically developed query systems, opening up the opportunity to monitor any type of text-based data, such as scientific output or corporate publications.  
+Description: The United Nations’ Sustainable Development Goals (SDGs) have become an important guideline for organisations to monitor and plan their contributions to social, economic, and environmental transformations. The text2sdg package is an open-source analysis package that identifies SDGs in text using scientifically developed query systems, opening up the opportunity to monitor any type of text-based data, such as scientific output or corporate publications.
+URL: https://github.com/dwulff/text2sdg
+BugReports: https://github.com/dwulff/text2sdg/issues  
 License: GPL-3
 Encoding: UTF-8
 Depends: R (>= 3.5.0)

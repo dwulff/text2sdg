@@ -10,7 +10,7 @@
 #' @param normalize \code{character} specifying whether results should be presented as frequencies (\code{normalize = "none"}), the default, or whether the frequencies should be normalized using either the total frequencies of each system (\code{normalize = "systems"}) or the total number of documents (\code{normalize = "documents"}).
 #' @param color \code{character} vector used to color the bars according to systems. The default, \code{"unibas"}, uses three colors of University of Basel's corporate design. Alternatively, \code{color} must specified using \link{color} names or color hex values. \code{color} will be interpolated to match the length of \code{systems}.
 #' @param sdg_titles \code{logical} specifying whether the titles of the SDG should added to the axis annotation.
-#' @param remove_duplicates \code{logical} specifying the handling of multiple hits of the same SDG for a given document and system. Defaults to \code{TRUE} impliyng that no more than one hit is counted per SDG, system, and document.
+#' @param remove_duplicates \code{logical} specifying the handling of multiple hits of the same SDG for a given document and system. Defaults to \code{TRUE} implying that no more than one hit is counted per SDG, system, and document.
 #' @param ... arguments passed to \code{\link[ggplot2]{geom_bar}}.
 #'
 #' @return The function returns a \code{\link[ggplot2]{ggplot}} object that can either be stored in an object or printed to produce the plot.

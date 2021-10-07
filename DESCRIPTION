@@ -24,7 +24,7 @@ Depends: R (>= 3.5.0)
 Imports: 
     magrittr,
     dplyr,
-    corpustools,
+    corpustools (>= 0.4.2),
     tidyr,
     tibble,
     stringr,

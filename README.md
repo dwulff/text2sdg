@@ -27,7 +27,7 @@ The latest development version on GitHub can be installed via `devtools::install
 
 If you publish analyzes carried out using the `text2sdg` package, we kindly ask that you cite the package as follows:
 
-Wulff, Dirk U. & Meier, Dominik S. (2021). text2sdg: Detecting UN Sustainable Development Goals in Text (0.1.0). Zenodo. https://doi.org/10.5281/zenodo.1478772
+Wulff, Dirk U. & Meier, Dominik S. (2021). text2sdg: Detecting UN Sustainable Development Goals in Text (0.1.0). Zenodo. https://doi.org/10.5281/zenodo.5553980
 
 ## Acknowledgments
 

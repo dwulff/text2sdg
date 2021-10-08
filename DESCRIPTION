@@ -16,8 +16,8 @@ Authors@R: c(
         email= "rui.mata@unibas.ch",
         comment = c(ORCID = "0000-0002-1679-906X"))
     )
-URL: http://github.com/dwulff/text2sdg
-BugReports: http://github.com/dwulff/text2sdg/issues  
+URL: https://github.com/dwulff/text2sdg
+BugReports: https://github.com/dwulff/text2sdg/issues  
 License: GPL-3
 Encoding: UTF-8
 Depends: R (>= 3.5.0)

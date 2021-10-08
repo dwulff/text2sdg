@@ -11,11 +11,11 @@ The `text2sdg` package is the first open-source, multi-system analysis package t
 
 ## General Information
 
-The `text2sdg` package is developed by Dirk U. Wulff and Dominik S. Meier. It is published under the GNU General Public License (version 3).
+The `text2sdg` package is developed by Dirk U. Wulff and Dominik S. Meier, with contributions from Rui Mata and the <a href="https://cds.unibas.ch/">Center for Cognitive and Decision Sciences</a>. It is published under the GNU General Public License.
 
 An overview of elements of the package can be accessed
 [online](http://dwulff.github.io/text2sdg/reference/text2sdg.html) or from within R using `?text2sdg`. A tutorial illustrating the use of the package can be accessed
-[online](http://dwulff.github.io/text2sdg/articles/text2sdg.html) or from within R using `vignette(text2sdg)`.
+[online](http://dwulff.github.io/text2sdg/articles/text2sdg.html) or from within R using `vignette("text2sdg")`.
 
 # Installation
 
@@ -27,8 +27,8 @@ The latest development version on GitHub can be installed via `devtools::install
 
 If you publish analyzes carried out using the `text2sdg` package, we kindly ask that you cite the package as follows:
 
-Wulff, Dirk U. & Meier, Dominik S. (2021). text2sdg: Detecting UN Sustainable Development Goals in Text (0.1.0). Zenodo. https://doi.org/10.5281/zenodo.1478772
+Wulff, Dirk U. & Meier, Dominik S. (2021). text2sdg: Detecting UN Sustainable Development Goals in Text (0.1.0). Zenodo. https://doi.org/10.5281/zenodo.5553980
 
 ## Acknowledgments
 
-We thank Laura Wiles editing the tutorial.
+We thank Laura Wiles for editing the tutorial.

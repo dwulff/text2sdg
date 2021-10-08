@@ -15,7 +15,7 @@ The `text2sdg` package is developed by Dirk U. Wulff and Dominik S. Meier, with 
 
 An overview of elements of the package can be accessed
 [online](http://dwulff.github.io/text2sdg/reference/text2sdg.html) or from within R using `?text2sdg`. A tutorial illustrating the use of the package can be accessed
-[online](http://dwulff.github.io/text2sdg/articles/text2sdg.html) or from within R using `vignette(text2sdg)`.
+[online](http://dwulff.github.io/text2sdg/articles/text2sdg.html) or from within R using `vignette("text2sdg")`.
 
 # Installation
 

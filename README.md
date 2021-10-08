@@ -31,4 +31,4 @@ Wulff, Dirk U. & Meier, Dominik S. (2021). text2sdg: Detecting UN Sustainable De
 
 ## Acknowledgments
 
-We thank Laura Wiles editing the tutorial.
+We thank Laura Wiles for editing the tutorial.

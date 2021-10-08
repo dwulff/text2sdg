@@ -13,7 +13,7 @@
 #'
 #' @examples
 #'
-#' ## Not run:
+#' \dontrun{
 #' # run sdg detection
 #' hits <- detect_sdg(projects)
 #'
@@ -22,7 +22,7 @@
 #'
 #' # create cross table of systems
 #' crosstab_sdg(hits, compare = "sdgs")
-#' ## End(Not run)
+#' }
 #' @export
 crosstab_sdg <- function(hits,
                          compare = c("systems", "sdgs"),

@@ -16,7 +16,7 @@
 #' @return The function returns a \code{\link[ggplot2]{ggplot}} object that can either be stored in an object or printed to produce the plot.
 #'
 #' @examples
-#' ## Not run:
+#' \dontrun{
 #' # run sdg detection
 #' hits <- detect_sdg(projects)
 #'
@@ -25,7 +25,8 @@
 #'
 #' # create barplot with facets
 #' plot_sdg(hits) + ggplot2::facet_wrap(~system)
-#' ## End(Not run)
+#' }
+#'
 #' @export
 plot_sdg = function(hits,
                     systems = NULL,

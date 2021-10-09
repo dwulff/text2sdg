@@ -16,7 +16,7 @@
 #' @return The function returns a \code{\link[ggplot2]{ggplot}} object that can either be stored in an object or printed to produce the plot.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # run sdg detection
 #' hits <- detect_sdg(projects)
 #'

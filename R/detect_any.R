@@ -19,7 +19,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # create data frame with query system
 #' my_queries <- tibble::tibble(system = "my_system",
 #'                              query = c("theory",

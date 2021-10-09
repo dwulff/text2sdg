@@ -23,7 +23,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # run sdg detection
 #' hits <- detect_sdg(projects)
 #'

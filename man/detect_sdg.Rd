@@ -43,7 +43,7 @@ The function returns a tibble containing the SDG hits found in the vector of doc
 By default, \code{detect_sdg} runs only the three query systems, as they are considerably less liberal than the keyword-based Ontology and therefore likely produce more valid SDG classifications. Users should be aware that systematic validations and comparison between the systems are still largely lacking. Consequently, any results should be interpreted with a high level caution.
 }
 \examples{
-\dontrun{
+\donttest{
 # run sdg detection
 hits <- detect_sdg(projects)
 

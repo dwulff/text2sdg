@@ -42,7 +42,7 @@ The function returns a \code{\link[ggplot2]{ggplot}} object that can either be s
 The function is built using \code{\link[ggplot2]{ggplot}} and can thus be flexibly extended. See examples.
 }
 \examples{
-\dontrun{
+\donttest{
 # run sdg detection
 hits <- detect_sdg(projects)
 

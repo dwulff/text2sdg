@@ -38,7 +38,7 @@ The function returns a \code{tibble} containing the SDG hits found in the vector
 \code{detect_any} identifies SDGs in text using user provided query systems. Works like \code{\link{detect_sdg}} but uses a user specified query system instead of an existing one like \code{\link{detect_sdg}} does.
 }
 \examples{
-\dontrun{
+\donttest{
 # create data frame with query system
 my_queries <- tibble::tibble(system = "my_system",
                              query = c("theory",

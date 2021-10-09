@@ -26,7 +26,7 @@ crosstab_sdg(hits, compare = c("systems", "sdgs"), systems = NULL, sdgs = NULL)
 }
 \examples{
 
-\dontrun{
+\donttest{
 # run sdg detection
 hits <- detect_sdg(projects)
 

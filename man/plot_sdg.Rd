@@ -28,7 +28,7 @@ plot_sdg(
 
 \item{sdg_titles}{\code{logical} specifying whether the titles of the SDG should added to the axis annotation.}
 
-\item{remove_duplicates}{\code{logical} specifying the handling of multiple hits of the same SDG for a given document and system. Defaults to \code{TRUE} impliyng that no more than one hit is counted per SDG, system, and document.}
+\item{remove_duplicates}{\code{logical} specifying the handling of multiple hits of the same SDG for a given document and system. Defaults to \code{TRUE} implying that no more than one hit is counted per SDG, system, and document.}
 
 \item{...}{arguments passed to \code{\link[ggplot2]{geom_bar}}.}
 }
@@ -42,7 +42,7 @@ The function returns a \code{\link[ggplot2]{ggplot}} object that can either be s
 The function is built using \code{\link[ggplot2]{ggplot}} and can thus be flexibly extended. See examples.
 }
 \examples{
-
+\dontrun{
 # run sdg detection
 hits <- detect_sdg(projects)
 
@@ -51,5 +51,6 @@ plot_sdg(hits)
 
 # create barplot with facets
 plot_sdg(hits) + ggplot2::facet_wrap(~system)
+}
 
 }

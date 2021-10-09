@@ -15,7 +15,7 @@ detect_sdg(
 \arguments{
 \item{text}{\code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.}
 
-\item{systems}{\code{character} vector specifying the query systems to be used. Can be one or more of \code{"aurora"}, \code{"siris"}, \code{"elsevier"}, \code{"sdsn"}, and \code{"ontology"}. By deafult all but \code{"sdsn"} and \code{"ontology"} are used.}
+\item{systems}{\code{character} vector specifying the query systems to be used. Can be one or more of \code{"aurora"}, \code{"siris"}, \code{"elsevier"}, \code{"sdsn"}, and \code{"ontology"}. By default all but \code{"sdsn"} and \code{"ontology"} are used.}
 
 \item{sdgs}{\code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.}
 
@@ -43,7 +43,7 @@ The function returns a tibble containing the SDG hits found in the vector of doc
 By default, \code{detect_sdg} runs only the three query systems, as they are considerably less liberal than the keyword-based Ontology and therefore likely produce more valid SDG classifications. Users should be aware that systematic validations and comparison between the systems are still largely lacking. Consequently, any results should be interpreted with a high level caution.
 }
 \examples{
-
+\dontrun{
 # run sdg detection
 hits <- detect_sdg(projects)
 
@@ -52,5 +52,5 @@ hits <- detect_sdg(projects, systems = "aurora")
 
 # run sdg detection for sdg 3 only
 hits <- detect_sdg(projects, sdgs = 3)
-
+}
 }

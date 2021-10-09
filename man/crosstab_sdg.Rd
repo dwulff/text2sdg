@@ -26,6 +26,7 @@ crosstab_sdg(hits, compare = c("systems", "sdgs"), systems = NULL, sdgs = NULL)
 }
 \examples{
 
+\dontrun{
 # run sdg detection
 hits <- detect_sdg(projects)
 
@@ -34,5 +35,5 @@ crosstab_sdg(hits)
 
 # create cross table of systems
 crosstab_sdg(hits, compare = "sdgs")
-
+}
 }

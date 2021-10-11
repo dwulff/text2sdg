@@ -1,8 +1,8 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* made the Maintainer and Author field consistent
-* prevented the examples with CPU (user + system) or elapsed time > 10s to be run on CRAN by wrapping them in donttest.
+* removed the @export tag from internal functions (in helper.R)
+* wrapped all examples with CPU (user + system) or elapsed time > 5s in donttest instead of dontrun
 
 ## R CMD check results
 There were no ERRORs or WARNINGs.

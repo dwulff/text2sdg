@@ -18,7 +18,7 @@ There was 1 NOTE:
     SDGs (6:65, 6:292)
     sdg (6:229)
   
-  This is a new submission and the misspelled words are false positives ("SDGs" at (6:65, 6:292) is the abbreaviation of "Sustainable Development Goals" and "sdg" at (6:229) is part of the package name "text2sdg" ((6:224) - (6:232)))
+  This is a new submission and the misspelled words are false positives ("SDGs" at (6:65, 6:292) is the abbreaviation of "Sustainable Development Goals" and "sdg" at (6:229) is part of the package name 'text2sdg' ((6:224) - (6:232)))
   
 
 

@@ -44,7 +44,7 @@ provides a brief overview of the contents of the package.
 }
 
 \examples{
-\dontrun{
+\donttest{
 # detect SDGs using default systems
 hits <- detect_sdg(projects)
 

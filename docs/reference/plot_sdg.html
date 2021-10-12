@@ -165,7 +165,7 @@
     </tr>
     <tr>
       <th>remove_duplicates</th>
-      <td><p><code>logical</code> specifying the handling of multiple hits of the same SDG for a given document and system. Defaults to <code>TRUE</code> impliyng that no more than one hit is counted per SDG, system, and document.</p></td>
+      <td><p><code>logical</code> specifying the handling of multiple hits of the same SDG for a given document and system. Defaults to <code>TRUE</code> implying that no more than one hit is counted per SDG, system, and document.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -181,7 +181,7 @@
     <p>The function is built using <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></code> and can thus be flexibly extended. See examples.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># run sdg detection</span>
 <span class='va'>hits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='detect_sdg.html'>detect_sdg</a></span><span class='op'>(</span><span class='va'>projects</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
@@ -193,7 +193,8 @@
 </div><div class='output co'>#&gt; <span class='message'>44 duplicate hits removed. Set remove_duplicates = FALSE to retain duplicates.</span></div><div class='img'><img src='plot_sdg-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># create barplot with facets</span>
 <span class='fu'>plot_sdg</span><span class='op'>(</span><span class='va'>hits</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>system</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>44 duplicate hits removed. Set remove_duplicates = FALSE to retain duplicates.</span></div><div class='img'><img src='plot_sdg-2.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>44 duplicate hits removed. Set remove_duplicates = FALSE to retain duplicates.</span></div><div class='img'><img src='plot_sdg-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

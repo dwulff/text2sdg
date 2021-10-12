@@ -142,7 +142,7 @@
     </tr>
     <tr>
       <th>systems</th>
-      <td><p><code>character</code> vector specifying the query systems to be used. Can be one or more of <code>"aurora"</code>, <code>"siris"</code>, <code>"elsevier"</code>, <code>"sdsn"</code>, and <code>"ontology"</code>. By deafult all but <code>"sdsn"</code> and <code>"ontology"</code> are used.</p></td>
+      <td><p><code>character</code> vector specifying the query systems to be used. Can be one or more of <code>"aurora"</code>, <code>"siris"</code>, <code>"elsevier"</code>, <code>"sdsn"</code>, and <code>"ontology"</code>. By default all but <code>"sdsn"</code> and <code>"ontology"</code> are used.</p></td>
     </tr>
     <tr>
       <th>sdgs</th>
@@ -176,7 +176,7 @@
 <p>By default, <code>detect_sdg</code> runs only the three query systems, as they are considerably less liberal than the keyword-based Ontology and therefore likely produce more valid SDG classifications. Users should be aware that systematic validations and comparison between the systems are still largely lacking. Consequently, any results should be interpreted with a high level caution.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># run sdg detection</span>
 <span class='va'>hits</span> <span class='op'>&lt;-</span> <span class='fu'>detect_sdg</span><span class='op'>(</span><span class='va'>projects</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
@@ -192,7 +192,7 @@
 </div><div class='output co'>#&gt; 
 #&gt; Running aurora queries
 #&gt; Running siris queries
-#&gt; Running elsevier queries</div><div class='input'>
+#&gt; Running elsevier queries</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

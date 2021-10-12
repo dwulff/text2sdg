@@ -164,23 +164,89 @@ provides a brief overview of the contents of the package.</p>
   as they are employed in the respective systems.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># detect SDGs using default systems</span>
 <span class='va'>hits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='detect_sdg.html'>detect_sdg</a></span><span class='op'>(</span><span class='va'>projects</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; 
+#&gt; Running aurora queries
+#&gt; Running siris queries
+#&gt; Running elsevier queries</div><div class='input'>
 <span class='co'>#' # detect SDGs using all five systems</span>
 <span class='va'>hits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='detect_sdg.html'>detect_sdg</a></span><span class='op'>(</span><span class='va'>projects</span>,
                    system <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"aurora"</span>, <span class='st'>"elsevier"</span>, <span class='st'>"siris"</span>, <span class='st'>"sdsn"</span>, <span class='st'>"ontology"</span><span class='op'>)</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; 
+#&gt; Running aurora queries
+#&gt; Running siris queries
+#&gt; Running elsevier queries
+#&gt; Running ontology queries
+#&gt; Running sdsn queries</div><div class='input'>
 <span class='co'># visualize SDG frequencies</span>
 <span class='fu'><a href='plot_sdg.html'>plot_sdg</a></span><span class='op'>(</span><span class='va'>hits</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='message'>2490 duplicate hits removed. Set remove_duplicates = FALSE to retain duplicates.</span></div><div class='img'><img src='text2sdg-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># correlations between systems</span>
 <span class='fu'><a href='crosstab_sdg.html'>crosstab_sdg</a></span><span class='op'>(</span><span class='va'>hits</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt;             Aurora  Elsevier     SIRIS      SDSN  Ontology
+#&gt; Aurora   1.0000000 0.2434814 0.3136179 0.1219316 0.1388011
+#&gt; Elsevier 0.2434814 1.0000000 0.2690456 0.2260648 0.2922152
+#&gt; SIRIS    0.3136179 0.2690456 1.0000000 0.1947320 0.1867123
+#&gt; SDSN     0.1219316 0.2260648 0.1947320 1.0000000 0.3528700
+#&gt; Ontology 0.1388011 0.2922152 0.1867123 0.3528700 1.0000000</div><div class='input'>
 <span class='co'># correlations between SDGs</span>
 <span class='fu'><a href='crosstab_sdg.html'>crosstab_sdg</a></span><span class='op'>(</span><span class='va'>hits</span>, compare <span class='op'>=</span> <span class='st'>"sdgs"</span><span class='op'>)</span>
-<span class='op'>}</span>
+</div><div class='output co'>#&gt;             SDG-01     SDG-02      SDG-03     SDG-04     SDG-05     SDG-06
+#&gt; SDG-01  1.00000000 0.47243260  0.05401006 0.05960021 0.11576577 0.16950741
+#&gt; SDG-02  0.47243260 1.00000000  0.08898982 0.06917626 0.06315330 0.17305144
+#&gt; SDG-03  0.05401006 0.08898982  1.00000000 0.22146448 0.16869080 0.03989581
+#&gt; SDG-04  0.05960021 0.06917626  0.22146448 1.00000000 0.13640968 0.07641925
+#&gt; SDG-05  0.11576577 0.06315330  0.16869080 0.13640968 1.00000000 0.10765095
+#&gt; SDG-06  0.16950741 0.17305144  0.03989581 0.07641925 0.10765095 1.00000000
+#&gt; SDG-07  0.07842569 0.12861946  0.01618856 0.09176819 0.05012237 0.19240139
+#&gt; SDG-08  0.15722789 0.16209480  0.22266620 0.17926297 0.09654799 0.15745607
+#&gt; SDG-09  0.31943345 0.29182177  0.17305176 0.14812000 0.14482147 0.18053424
+#&gt; SDG-10  0.17956575 0.15225795  0.34512507 0.26668702 0.19797765 0.10518995
+#&gt; SDG-11  0.20472781 0.22446817  0.22346155 0.20193163 0.15612507 0.32251016
+#&gt; SDG-12  0.23882648 0.27512454  0.09724016 0.05418890 0.06846951 0.29686332
+#&gt; SDG-13  0.05496570 0.07877807 -0.02826954 0.04285162 0.01362634 0.20853775
+#&gt; SDG-14  0.05442432 0.08850223  0.03409864 0.01954488 0.02287167 0.15048038
+#&gt; SDG-15  0.07523303 0.17914305  0.14167784 0.05065769 0.03087445 0.21729588
+#&gt; SDG-16  0.13650534 0.11018098  0.16612600 0.26168407 0.32894975 0.12896890
+#&gt; SDG-17 -0.01741154 0.01580426  0.25615079 0.24782207 0.04720103 0.03252809
+#&gt;              SDG-07     SDG-08     SDG-09     SDG-10    SDG-11     SDG-12
+#&gt; SDG-01  0.078425692 0.15722789 0.31943345 0.17956575 0.2047278 0.23882648
+#&gt; SDG-02  0.128619459 0.16209480 0.29182177 0.15225795 0.2244682 0.27512454
+#&gt; SDG-03  0.016188558 0.22266620 0.17305176 0.34512507 0.2234616 0.09724016
+#&gt; SDG-04  0.091768192 0.17926297 0.14812000 0.26668702 0.2019316 0.05418890
+#&gt; SDG-05  0.050122370 0.09654799 0.14482147 0.19797765 0.1561251 0.06846951
+#&gt; SDG-06  0.192401393 0.15745607 0.18053424 0.10518995 0.3225102 0.29686332
+#&gt; SDG-07  1.000000000 0.12747932 0.28530409 0.10472055 0.2151878 0.27587686
+#&gt; SDG-08  0.127479323 1.00000000 0.35034009 0.33051644 0.2701143 0.13457737
+#&gt; SDG-09  0.285304087 0.35034009 1.00000000 0.31261526 0.3133000 0.30713655
+#&gt; SDG-10  0.104720552 0.33051644 0.31261526 1.00000000 0.2845094 0.14301861
+#&gt; SDG-11  0.215187840 0.27011434 0.31330000 0.28450940 1.0000000 0.31076793
+#&gt; SDG-12  0.275876855 0.13457737 0.30713655 0.14301861 0.3107679 1.00000000
+#&gt; SDG-13  0.397037368 0.06693026 0.15310965 0.03730426 0.1658633 0.12959628
+#&gt; SDG-14  0.154203297 0.08791454 0.09484013 0.08586034 0.1173994 0.09775298
+#&gt; SDG-15  0.135375946 0.18073644 0.21235978 0.13582374 0.1912169 0.19131227
+#&gt; SDG-16  0.038289774 0.22900007 0.16809241 0.24454931 0.2567993 0.08213455
+#&gt; SDG-17 -0.009755392 0.13735910 0.03433588 0.20570856 0.1761479 0.06846304
+#&gt;              SDG-13       SDG-14     SDG-15       SDG-16       SDG-17
+#&gt; SDG-01  0.054965704  0.054424319 0.07523303  0.136505340 -0.017411542
+#&gt; SDG-02  0.078778070  0.088502232 0.17914305  0.110180978  0.015804265
+#&gt; SDG-03 -0.028269542  0.034098637 0.14167784  0.166126002  0.256150787
+#&gt; SDG-04  0.042851617  0.019544879 0.05065769  0.261684065  0.247822074
+#&gt; SDG-05  0.013626344  0.022871666 0.03087445  0.328949753  0.047201035
+#&gt; SDG-06  0.208537753  0.150480378 0.21729588  0.128968903  0.032528086
+#&gt; SDG-07  0.397037368  0.154203297 0.13537595  0.038289774 -0.009755392
+#&gt; SDG-08  0.066930264  0.087914542 0.18073644  0.229000069  0.137359096
+#&gt; SDG-09  0.153109652  0.094840132 0.21235978  0.168092413  0.034335883
+#&gt; SDG-10  0.037304257  0.085860337 0.13582374  0.244549312  0.205708557
+#&gt; SDG-11  0.165863338  0.117399433 0.19121694  0.256799263  0.176147888
+#&gt; SDG-12  0.129596280  0.097752977 0.19131227  0.082134545  0.068463040
+#&gt; SDG-13  1.000000000  0.292688371 0.26786709  0.008503651 -0.003516404
+#&gt; SDG-14  0.292688371  1.000000000 0.22977703 -0.006388333  0.010002345
+#&gt; SDG-15  0.267867089  0.229777030 1.00000000  0.069740833  0.112122130
+#&gt; SDG-16  0.008503651 -0.006388333 0.06974083  1.000000000  0.179953553
+#&gt; SDG-17 -0.003516404  0.010002345 0.11212213  0.179953553  1.000000000</div><div class='input'><span class='co'># }</span>
 
 </div></pre>
   </div>

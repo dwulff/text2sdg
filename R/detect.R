@@ -23,7 +23,7 @@
 #' }
 #'
 #' @examples
-#'
+#' \donttest{
 #' # run sdg detection
 #' hits <- detect_sdg(projects)
 #'
@@ -32,7 +32,7 @@
 #'
 #' # run sdg detection for sdg 3 only
 #' hits <- detect_sdg(projects, sdgs = 3)
-#'
+#' }
 #' @export
 
 detect_sdg = function(text, systems = c("aurora","siris","elsevier"), sdgs = 1:17, output = c("features","documents"), verbose = TRUE){

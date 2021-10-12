@@ -13,6 +13,7 @@
 #'
 #' @examples
 #'
+#' \donttest{
 #' # run sdg detection
 #' hits <- detect_sdg(projects)
 #'
@@ -21,7 +22,7 @@
 #'
 #' # create cross table of systems
 #' crosstab_sdg(hits, compare = "sdgs")
-#'
+#' }
 #' @export
 crosstab_sdg <- function(hits,
                          compare = c("systems", "sdgs"),

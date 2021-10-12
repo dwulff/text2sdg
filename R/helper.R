@@ -4,8 +4,8 @@
 #'
 #' @param txt character vector
 #' @param ... further arguments for corpustools::search_features
-#'
-#' @export
+#' @noRd
+
 
 make_corpus = function(txt, ...) corpustools::create_tcorpus(txt, ...)
 
@@ -16,8 +16,8 @@ make_corpus = function(txt, ...) corpustools::create_tcorpus(txt, ...)
 #' @param corpus object of class \code{tCorpus} containing text.
 #' @param queries character vector if queries
 #' @param ... further arguments for corpustools::search_features
-#'
-#' @export
+#' @noRd
+
 
 search_corpus = function(corpus, queries, ...) corpustools::search_features(corpus, queries, ...)$hit %>% tibble::as_tibble()
 
@@ -27,8 +27,8 @@ search_corpus = function(corpus, queries, ...) corpustools::search_features(corp
 #' Get hit code
 #'
 #' @param data data frame
-#'
-#' @export
+#' @noRd
+
 
 get_code = function(data) {
 

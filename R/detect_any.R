@@ -19,7 +19,7 @@
 #' }
 #'
 #' @examples
-#'
+#' \donttest{
 #' # create data frame with query system
 #' my_queries <- tibble::tibble(system = "my_system",
 #'                              query = c("theory",
@@ -32,7 +32,7 @@
 #'
 #' # run sdg detection for sdg 2 only
 #' hits <- detect_any(projects, my_queries, sdgs = 2)
-#'
+#'}
 #'
 #' @export
 

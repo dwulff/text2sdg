@@ -33,7 +33,7 @@
 #'   as they are employed in the respective systems.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # detect SDGs using default systems
 #' hits <- detect_sdg(projects)
 #'

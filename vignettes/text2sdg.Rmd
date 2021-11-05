@@ -181,7 +181,5 @@ The example below analyzes the correspondence of all SDGs across all systems. Th
 ```{r}
 # evaluate correspondence between systems 
 crosstab_sdg(hits_all, compare = "sdgs") %>% round(2)
-
 ```
-
 

@@ -77,7 +77,7 @@ detect_sdg = function(text, systems = c("aurora","siris","elsevier"), sdgs = 1:1
   hits <- do.call(rbind, hits)
 
   #return empty tibble if no SDGs were detected
-  if(is.null(hits)) return(tibble())
+  if(is.null(hits)) return(tibble::tibble())
 
 
 

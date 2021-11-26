@@ -1,8 +1,9 @@
 ## Resubmission
-This is a resubmission. I unfortunately didn't see the email from CRAN because it went to the spam folder. I made sure that this won't happen again. As last time the misspelled words are false positives ("SDGs" at (6:65, 6:292) is the abbreaviation of "Sustainable Development Goals". In this version I tried to replace the invalid UTF-8 byte sequence that was detected in the 'text2sdg.Rmd' vignette on the Linux machine using LANG=en_US.iso88591.
+This is a resubmission. The vignette failed to rebuild on r-devel-linux-x86_64-debian-clang (LANG=en_US.iso88591). This was because of an internal dataset where not all text was encoded in ASCII. This is now fixed in this version. 
+
 
 ## R CMD check results
-There were no ERRORs or WARNINGs.
+There were no ERRORs or WARNINGs or NOTEs.
 
 There was 1 NOTE:
 

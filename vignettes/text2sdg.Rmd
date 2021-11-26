@@ -27,7 +27,7 @@ The `text2sdg` package consists of four functions: `detect_sdg()`, `detect_any()
 
 ## Detecting SDGs using `detect_sdg()`
 
-The `detect_sdg()` identifies SDGs in texts that are provided via the `text` argument. Inputs to `text` must either be a character vector or an object of `tCorpus` from package `corpustools`. `text` is the only non-default argument of the function, which means that the function can be run with only the texts as input. The output of the function is a `tibble` with one row per match including the following columns (and types):
+The `detect_sdg()` function identifies SDGs in texts that are provided via the `text` argument. Inputs to `text` must either be a character vector or an object of `tCorpus` from package `corpustools`. `text` is the only non-default argument of the function, which means that the function can be run with only the texts as input. The output of the function is a `tibble` with one row per match including the following columns (and types):
 
 - `document` (`factor`) - index of element in the character vector or corpus supply for `text`
 - `sdg` (`character`) - labels indicating the matched SDGs
@@ -36,7 +36,7 @@ The `detect_sdg()` identifies SDGs in texts that are provided via the `text` arg
 - `features` (`character`) - words in the document that were matched by the query
 - `hit` (`numeric`) - running index of matches for each query system
 
-The example below runs the `detect_sdg()` for the `projects` data set included in the package prints the results. The data set is character vector containing 500 descriptions of randomly selected University of Basel research projects that were funded by the Swiss National Science Foundation (<a href="https://p3.snf.ch">https://p3.snf.ch</a>). The analysis produced a total of `462` matches using the three default query systems Aurora, Elsevier, and SIRIS.   
+The example below runs the `detect_sdg()` function for the `projects` data set included in the package prints the results. The data set is character vector containing 500 descriptions of randomly selected University of Basel research projects that were funded by the Swiss National Science Foundation (<a href="https://p3.snf.ch">https://p3.snf.ch</a>). The analysis produced a total of `461` matches using the three default query systems Aurora, Elsevier, and SIRIS.   
 
 ```{r, eval=FALSE}
 # detecting SDGs in projects

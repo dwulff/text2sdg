@@ -76,6 +76,11 @@ detect_sdg = function(text, systems = c("aurora","siris","elsevier"), sdgs = 1:1
   #combine lists to df
   hits <- do.call(rbind, hits)
 
+  #return empty tibble if no SDGs were detected
+  if(is.null(hits)) return(tibble::tibble())
+
+
+
   # reduce if requested
   if(output[1] == "documents"){
     hits = hits %>%

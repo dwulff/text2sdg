@@ -75,6 +75,9 @@ detect_any <- function(text, queries, sdgs = NULL, output = c("features","docs")
   # get hits
   hits = search_corpus(corpus, queries$query)
 
+  #return empty tibble if no SDGs were detected
+  if(nrow(hits) == 0) return(tibble::tibble())
+
   # process hits
   hits = hits %>%
     dplyr::mutate(sdg = queries$sdg[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))],

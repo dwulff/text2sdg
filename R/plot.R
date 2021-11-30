@@ -75,19 +75,11 @@ plot_sdg = function(hits,
   # handle sdgs
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
 
-  # prepare system labels
-  labels = c("aurora" = "Aurora",
-             "elsevier" = "Elsevier",
-             "siris" = "SIRIS",
-             "sdsn" = "SDSN",
-             "ontology" = "Ontology")
-
   # prepare data
   hits = hits %>%
     dplyr::filter(sdg %in% sdgs,
                   system %in% systems) %>%
     dplyr::mutate(sdg = factor(sdg, levels = sdgs),
-                  system = labels[system],
                   system = factor(system, levels = labels[labels %in% system]))
 
   # change to titles

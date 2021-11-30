@@ -71,18 +71,10 @@ crosstab_sdg <- function(hits,
   # handle selected sdgs
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
 
-  # prepare system labels
-  labels = c("aurora" = "Aurora",
-             "elsevier" = "Elsevier",
-             "siris" = "SIRIS",
-             "sdsn" = "SDSN",
-             "ontology" = "Ontology")
-
   # filter and process systems
   hits = hits %>%
     dplyr::filter(sdg %in% sdgs,
-                  system %in% systems) %>%
-    dplyr::mutate(system = labels[system])
+                  system %in% systems)
 
   # abort if no hits left
   if(nrow(hits) == 0) {

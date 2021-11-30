@@ -18,7 +18,7 @@ detect_ontology = function(corpus, sdgs, verbose = FALSE){
     dplyr::select(-sentence) %>%
     dplyr::mutate(document = as.numeric(as.character(doc_id)),
                   feature = as.character(feature),
-                  system = "ontology")  %>%
+                  system = "Ontology")  %>%
     dplyr::group_by(document, query_id) %>%
     #paste features together
     dplyr::summarise(matches = dplyr::n(),

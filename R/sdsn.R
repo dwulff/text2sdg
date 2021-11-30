@@ -19,7 +19,7 @@ detect_sdsn = function(corpus, sdgs, verbose = FALSE){
     dplyr::select(-sentence) %>%
     dplyr::mutate(document = as.numeric(as.character(doc_id)),
                   feature = as.character(feature),
-                  system = "sdsn") %>%
+                  system = "SDSN") %>%
     dplyr::group_by(document, query_id) %>%
     #paste features together
     dplyr::summarise(number_of_matches = dplyr::n(),

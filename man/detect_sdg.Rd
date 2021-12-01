@@ -6,7 +6,7 @@
 \usage{
 detect_sdg(
   text,
-  systems = c("aurora", "siris", "elsevier"),
+  systems = c("Aurora", "Elsevier", "SIRIS"),
   sdgs = 1:17,
   output = c("features", "documents"),
   verbose = TRUE
@@ -47,8 +47,8 @@ By default, \code{detect_sdg} runs only the three query systems, as they are con
 # run sdg detection
 hits <- detect_sdg(projects)
 
-# run sdg detection with aurora only
-hits <- detect_sdg(projects, systems = "aurora")
+# run sdg detection with Aurora only
+hits <- detect_sdg(projects, systems = "Aurora")
 
 # run sdg detection for sdg 3 only
 hits <- detect_sdg(projects, sdgs = 3)

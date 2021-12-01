@@ -27,15 +27,19 @@
 #' # run sdg detection
 #' hits <- detect_sdg(projects)
 #'
-#' # run sdg detection with aurora only
-#' hits <- detect_sdg(projects, systems = "aurora")
+#' # run sdg detection with Aurora only
+#' hits <- detect_sdg(projects, systems = "Aurora")
 #'
 #' # run sdg detection for sdg 3 only
 #' hits <- detect_sdg(projects, sdgs = 3)
 #' }
 #' @export
 
-detect_sdg = function(text, systems = c("aurora","siris","elsevier"), sdgs = 1:17, output = c("features","documents"), verbose = TRUE){
+detect_sdg = function(text,
+                      systems = c("Aurora", "Elsevier", "SIRIS"),
+                      sdgs = 1:17,
+                      output = c("features","documents"),
+                      verbose = TRUE){
 
   # make corpus
   if(class(text)[1] == "character"){
@@ -54,24 +58,24 @@ detect_sdg = function(text, systems = c("aurora","siris","elsevier"), sdgs = 1:1
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
 
   # run sdg
-  if (!all(systems %in% c("aurora","elsevier","siris", "ontology", "sdsn"))){
-    stop("Argument system must be aurora, elsevier, siris or ontology.")
+  if (!all(systems %in% c("Aurora", "Elsevier", "SIRIS", "Ontology", "SDSN"))){
+    stop("Argument systems must be Aurora, Elsevier, SIRIS, Ontology, or SDSN.")
     }
-  if("aurora" %in% systems){
-    if(verbose) cat("\nRunning aurora queries",sep = '')
-    hits[["aurora"]] = detect_aurora(corpus, sdgs)}
-  if("siris" %in% systems) {
-    if(verbose) cat("\nRunning siris queries",sep = '')
-    hits[["siris"]] = detect_siris(corpus, sdgs)}
-  if("elsevier" %in% systems){
-    if(verbose) cat("\nRunning elsevier queries",sep = '')
-    hits[["elsevier"]] = detect_elsevier(corpus, sdgs)}
-  if("ontology" %in% systems) {
-    if(verbose) cat("\nRunning ontology queries",sep = '')
-    hits[["ontology"]] = detect_ontology(corpus, sdgs)}
-  if("sdsn" %in% systems) {
-    if(verbose) cat("\nRunning sdsn queries",sep = '')
-    hits[["sdsn"]] = detect_sdsn(corpus, sdgs)}
+  if("Aurora" %in% systems){
+    if(verbose) cat("\nRunning Aurora queries",sep = '')
+    hits[["Aurora"]] = detect_aurora(corpus, sdgs)}
+  if("SIRIS" %in% systems) {
+    if(verbose) cat("\nRunning SIRIS queries",sep = '')
+    hits[["SIRIS"]] = detect_siris(corpus, sdgs)}
+  if("Elsevier" %in% systems){
+    if(verbose) cat("\nRunning Elsevier queries",sep = '')
+    hits[["Elsevier"]] = detect_elsevier(corpus, sdgs)}
+  if("Ontology" %in% systems) {
+    if(verbose) cat("\nRunning Ontology queries",sep = '')
+    hits[["Ontology"]] = detect_ontology(corpus, sdgs)}
+  if("SDSN" %in% systems) {
+    if(verbose) cat("\nRunning SDSN queries",sep = '')
+    hits[["SDSN"]] = detect_sdsn(corpus, sdgs)}
 
   #combine lists to df
   hits <- do.call(rbind, hits)

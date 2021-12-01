@@ -99,7 +99,7 @@ detect_aurora = function(corpus, sdgs, verbose = FALSE){
         dplyr::filter(w_n(token_id[code == "query_1"], token_id[code == "query_2"]),
                       w_n(token_id[code == "query_3"], token_id[code %in% c("query_1","query_2")]))
     }
-    s2_hits$query = '( ("reduce" OR "end" OR "ending" OR "prevent*" OR "ratio*") W/3 (("neonatal" OR "under-five" OR ( "under" W/2 ("5" OR "five") ) OR "before fifth") W/3 ("mortality" OR "death*") ) )'
+    s2_hits$query = '( (\"reduce\" OR \"end\" OR \"ending\" OR \"prevent*\" OR \"ratio*\") W/3 ((\"neonatal\" OR \"under-five\" OR ( \"under\" W/2 (\"5\" OR \"five\") ) OR \"before fifth\") W/3 (\"mortality\" OR “death*”) ) )'
 
     # handle special 3
     s3 = c("( <(<tobacco>) (<control*>)>~6 ) OR ( <(<health>) (<smoking>)>~3 )",
@@ -110,7 +110,7 @@ detect_aurora = function(corpus, sdgs, verbose = FALSE){
       dplyr::group_by(doc_id) %>%
       dplyr::filter("query_1" %in% code || ("query_2" %in% code & "query_3" %in% code)) %>%
       dplyr::ungroup()
-    s3_hits$query = '( "tobacco" W/6 "control*" ) OR ( "health" W/3 "smoking" ) OR (("smoking") W/3 ("cessation" OR "quit*") W/3 ( "health"  OR  "benefit*" ))'
+    s3_hits$query = '( \"tobacco\" W/6 \"control*\" ) OR ( \"health\" W/3 \"smoking\" ) OR ((\"smoking\") W/3 (“cessation\" OR \"quit*”) W/3 ( \"health\"  OR  \"benefit*\" ))'
 
 
     } else {

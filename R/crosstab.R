@@ -38,7 +38,7 @@ crosstab_sdg <- function(hits,
   }
 
   # replace NULLs
-  if(is.null(systems)) systems = unique(hits$system)
+  if(is.null(systems)) systems = hits %>% arrange(system) %>% pull(system) %>% as.character() %>% unique()
   if(is.null(sdgs)) sdgs = unique(stringr::str_extract(hits$sdg,"[:digit:]{2}") %>% as.numeric())
 
   # check compare
@@ -64,7 +64,6 @@ crosstab_sdg <- function(hits,
     }
   }
 
-
   # handle duplicates
   hits <- hits %>% dplyr::distinct(document, sdg, system)
 
@@ -85,7 +84,7 @@ crosstab_sdg <- function(hits,
   if(compare[[1]] == "systems") {
 
       # do something
-      phi_dat <- tidyr::expand_grid(document = 1:length(levels(hits$document)), system = labels[systems], sdg = sdgs) %>%
+      phi_dat <- tidyr::expand_grid(document = 1:length(levels(hits$document)), system = systems, sdg = sdgs) %>%
         dplyr::mutate(document = as.factor(document)) %>%
         dplyr::left_join(hits %>%
                            dplyr::mutate(hit = 1) %>%
@@ -103,14 +102,12 @@ crosstab_sdg <- function(hits,
         cor(.) %>% suppressWarnings()
 
       # reorder
-      correlations <-
-        correlations[labels[labels %in% rownames(correlations)],
-                     labels[labels %in% colnames(correlations)]]
+      correlations <- correlations[systems, systems]
 
   } else {
 
     # do something
-    phi_dat <- tidyr::expand_grid(document = 1:length(levels(hits$document)), system = labels[systems], sdg = sdgs) %>%
+    phi_dat <- tidyr::expand_grid(document = 1:length(levels(hits$document)), system = systems, sdg = sdgs) %>%
       dplyr::mutate(document = as.factor(document)) %>%
       dplyr::left_join(hits %>%
                          dplyr::mutate(hit = 1),

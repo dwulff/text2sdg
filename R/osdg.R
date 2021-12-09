@@ -1,13 +1,13 @@
-# Detect ontology SDG
-detect_ontology = function(corpus, sdgs, verbose = FALSE){
+# Detect OSDG SDG
+detect_osdg = function(corpus, sdgs, verbose = FALSE){
 
   #filter queries based on selected sdgs
-  ontology_queries <- ontology_queries %>%
+  osdg_queries <- osdg_queries %>%
     dplyr::filter(sdg %in% sdgs)
 
   # get hits
-  hits = search_corpus(corpus, ontology_queries$query)
-  hits$sdg = ontology_queries$sdg[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))]
+  hits = search_corpus(corpus, osdg_queries$query)
+  hits$sdg = osdg_queries$sdg[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))]
   hits$query_id = as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))
 
   # exit if no hits
@@ -18,7 +18,7 @@ detect_ontology = function(corpus, sdgs, verbose = FALSE){
     dplyr::select(-sentence) %>%
     dplyr::mutate(document = as.numeric(as.character(doc_id)),
                   feature = as.character(feature),
-                  system = "Ontology")  %>%
+                  system = "OSDG")  %>%
     dplyr::group_by(document, query_id) %>%
     #paste features together
     dplyr::summarise(matches = dplyr::n(),

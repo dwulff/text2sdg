@@ -13,7 +13,7 @@ provides a brief overview of the contents of the package.
 
 
   \code{\link{detect_sdg}} detects SDGs in text using up to five different
-  query systems: Aurora, Elsevier, SIRIS, SDSN, and Ontology.
+  query systems: Aurora, Elsevier, SIRIS, SDSN, and OSDG
 
   \code{\link{detect_any}} detects SDGs in text using self-specified queries
   utilizing the lucene-style syntax of the
@@ -39,7 +39,7 @@ provides a brief overview of the contents of the package.
 
   \code{\link{aurora_queries}}, \code{\link{elsevier_queries}},
   \code{\link{siris_queries}}, \code{\link{sdsn_queries}}, and
-  \code{\link{ontology_queries}} contain a mapping of SDGs and search queries
+  \code{\link{osdg_queries}} contain a mapping of SDGs and search queries
   as they are employed in the respective systems.
 }
 
@@ -50,7 +50,7 @@ hits <- detect_sdg(projects)
 
 #' # detect SDGs using all five systems
 hits <- detect_sdg(projects,
-                   system = c("Aurora", "Elsevier", "SIRIS", "SDSN", "Ontology"))
+                   system = c("Aurora", "Elsevier", "SIRIS", "SDSN", "OSDG"))
 
 # visualize SDG frequencies
 plot_sdg(hits)

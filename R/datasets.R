@@ -68,7 +68,7 @@
 #'   \item{query}{SDG query}
 #' }
 #' @source \url{https://figshare.com/articles/dataset/SDG_ontology/11106113/1}
-"ontology_queries"
+"osdg_queries"
 
 #' SDG keywords by SDSN
 #'

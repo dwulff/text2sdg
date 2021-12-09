@@ -2,12 +2,12 @@
 #'
 #' \code{detect_sdg} identifies SDGs in text using SDG query systems developed by the Aurora Universities Network, SIRIS Academic, and Elsevier.
 #'
-#' \code{detect_sdg} implements three SDG query systems developed by the Arora Universities Network (see \code{\link{aurora_queries}}), SIRIS Academic (see \code{\link{siris_queries}}), and Elsevier (see \code{\link{elsevier_queries}}), and one keyword-based system by Bautista-Puig and Mauleón labeled Ontology (see \code{\link{ontology_queries}}). `detect_sdg` calls dedicated \code{detect_*} for each of the four system. Search of the Lucene-style Boolean queries and the keywords is implemented using the \code{\link[corpustools]{search_features}} function from the \href{https://cran.r-project.org/package=corpustools}{\code{corpustools}} package.
+#' \code{detect_sdg} implements three SDG query systems developed by the Arora Universities Network (see \code{\link{aurora_queries}}), SIRIS Academic (see \code{\link{siris_queries}}), and Elsevier (see \code{\link{elsevier_queries}}), and one keyword-based system by Bautista-Puig and Mauleón labeled OSDG (see \code{\link{osdg_queries}}). `detect_sdg` calls dedicated \code{detect_*} for each of the four system. Search of the Lucene-style Boolean queries and the keywords is implemented using the \code{\link[corpustools]{search_features}} function from the \href{https://cran.r-project.org/package=corpustools}{\code{corpustools}} package.
 #'
 #' By default, \code{detect_sdg} runs only the three query systems, as they are considerably less liberal than the keyword-based Ontology and therefore likely produce more valid SDG classifications. Users should be aware that systematic validations and comparison between the systems are still largely lacking. Consequently, any results should be interpreted with a high level caution.
 #'
 #' @param text \code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.
-#' @param systems \code{character} vector specifying the query systems to be used. Can be one or more of \code{"Aurora"}, \code{"SIRIS"}, \code{"Elsevier"}, \code{"SDSN"}, and \code{"Ontology"}. By default all but \code{"SDSN"} and \code{"Ontology"} are used.
+#' @param systems \code{character} vector specifying the query systems to be used. Can be one or more of \code{"Aurora"}, \code{"SIRIS"}, \code{"Elsevier"}, \code{"SDSN"}, and \code{"OSDG"}. By default all but \code{"SDSN"} and \code{"OSDG"} are used.
 #' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.
 #' @param output \code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"documents"} returns an aggregated \code{tibble} with one row per matched sdg, without information on the features.
 #' @param verbose \code{logical} specifying whether messages on the function's progress should be printed.
@@ -58,8 +58,8 @@ detect_sdg = function(text,
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
 
   # run sdg
-  if (!all(systems %in% c("Aurora", "Elsevier", "SIRIS", "Ontology", "SDSN"))){
-    stop("Argument systems must be Aurora, Elsevier, SIRIS, Ontology, or SDSN.")
+  if (!all(systems %in% c("Aurora", "Elsevier", "SIRIS", "OSDG", "SDSN"))){
+    stop("Argument systems must be Aurora, Elsevier, SIRIS, OSDG, or SDSN.")
     }
   if("Aurora" %in% systems){
     if(verbose) cat("\nRunning Aurora queries",sep = '')
@@ -70,9 +70,9 @@ detect_sdg = function(text,
   if("Elsevier" %in% systems){
     if(verbose) cat("\nRunning Elsevier queries",sep = '')
     hits[["Elsevier"]] = detect_elsevier(corpus, sdgs)}
-  if("Ontology" %in% systems) {
-    if(verbose) cat("\nRunning Ontology queries",sep = '')
-    hits[["Ontology"]] = detect_ontology(corpus, sdgs)}
+  if("OSDG" %in% systems) {
+    if(verbose) cat("\nRunning OSDG queries",sep = '')
+    hits[["OSDG"]] = detect_osdg(corpus, sdgs)}
   if("SDSN" %in% systems) {
     if(verbose) cat("\nRunning SDSN queries",sep = '')
     hits[["SDSN"]] = detect_sdsn(corpus, sdgs)}

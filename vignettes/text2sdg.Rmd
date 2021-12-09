@@ -57,7 +57,7 @@ options(tibble.print_min = 5)
 ```{r}
 # detecting SDGs using all available query systems
 hits_all <- detect_sdg(projects, 
-                       system = c("Aurora", "Elsevier", "SIRIS", "SDSN", "OSDG"))
+                       system = c("Aurora", "Elsevier", "SIRIS", "OSDG", "SDSN"))
 
 # count hits of systems
 table(hits_all$system)

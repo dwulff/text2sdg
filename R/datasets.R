@@ -52,9 +52,9 @@
 #' @source \url{https://data.mendeley.com/datasets/87txkw7khs/1}
 "elsevier_queries"
 
-#' SDG keyword ontology of Bautista-Puig and Mauleón
+#' SDG keyword ontology by OSDG
 #'
-#' A dataset containing the SDG queries based on the keyword ontology of Bautista-Puig and Mauleón. The queries are available from \href{https://figshare.com/articles/dataset/SDG_ontology/11106113/1}{figshare.com}.
+#' A dataset containing the SDG queries based on the keyword ontology by OSDG. The queries are available from \href{https://figshare.com/articles/dataset/SDG_ontology/11106113/1}{figshare.com}.
 #'
 #' Bautista-Puig, N.; Mauleón E. (2019). Unveiling the path towards sustainability: is there a research interest on sustainable goals? In the 17th International Conference on Scientometrics & Informetrics (ISSI 2019), Rome (Italy), Volume II, ISBN 978-88-3381-118-5, p.2770-2771. The authors of these queries first created an ontology from central keywords in the SDG UN description and expanded these keywords with keywords they identified in SDG related research output. There are multiple queries per SDG. All SDGs (1-17) are covered.
 #'

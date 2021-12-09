@@ -45,7 +45,7 @@ plot_sdg = function(hits,
   }
 
   # replace NULLs
-  if(is.null(systems)) systems = hits %>% dplyr::arrange(system) %>% dplyr::pull(system) %>% as.character() %>% unique()
+  if(is.null(systems)) systems = hits %>% arrange(system) %>% pull(system) %>% as.character() %>% unique()
   if(is.null(sdgs)) sdgs = unique(stringr::str_extract(hits$sdg,"[:digit:]{2}") %>% as.numeric())
 
   # check sdg and system

@@ -15,7 +15,7 @@ detect_sdg(
 \arguments{
 \item{text}{\code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.}
 
-\item{systems}{\code{character} vector specifying the query systems to be used. Can be one or more of \code{"aurora"}, \code{"siris"}, \code{"elsevier"}, \code{"sdsn"}, and \code{"ontology"}. By default all but \code{"sdsn"} and \code{"ontology"} are used.}
+\item{systems}{\code{character} vector specifying the query systems to be used. Can be one or more of \code{"Aurora"}, \code{"SIRIS"}, \code{"Elsevier"}, \code{"SDSN"}, and \code{"Ontology"}. By default all but \code{"SDSN"} and \code{"Ontology"} are used.}
 
 \item{sdgs}{\code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.}
 

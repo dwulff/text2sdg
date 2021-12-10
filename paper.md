@@ -6,13 +6,13 @@ tags:
   - NLP
 authors:
   - name: Dominik S. Meier
-    orcid: 0000-0003-0872-7098
+    orcid: 0000-0002-3999-1388
     affiliation: 1
   - name: Rui Mata
-    orcid: 0000-0003-0872-7098
+    orcid: 0000-0002-1679-906X
     affiliation: "1, 2"
   - name: Dirk U. Wulff
-    orcid: 0000-0003-0872-7098
+    orcid: 0000-0002-4008-8022
     affiliation: "1, 2"
 affiliations:
  - name: University of Basel

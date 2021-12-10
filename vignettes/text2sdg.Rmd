@@ -46,7 +46,7 @@ hits_default
 
 ### Selecting query systems 
 
-By default `sdg_detect()` runs the three query systems, Aurora, Elsevier, and SIRIS. Using the function's `system` argument the user can control which systems are run. There are two additional query systems that can be selected, OSDG and SDSN. In comparison, these two systems are much simpler and less restrictive than the former three as they only rely on logical ORs to combine keywords, which results much larger numbers of SDGs. Systematic validations are outstanding; however, it is likely that OSDG and SDSN therefore also produce a larger number of false positives, which is the reason they are not included in the function's default query system set. More information about the systems can be gathered from the help files of the respective query data frames, `aurora_queries`, `elsevier_queries`, `siris_queries`, `sdsn_queries`, and `osdg_queries`.
+By default `sdg_detect()` runs the three query systems, Aurora, Elsevier, and SIRIS. Using the function's `system` argument the user can control which systems are run. There are two additional query systems that can be selected, SDSN and OSDG. In comparison, these two systems are much simpler and less restrictive than the former three as they only rely on logical ORs to combine keywords, which results much larger numbers of SDGs. Systematic validations are outstanding; however, it is likely that SDSN and OSDG therefore also produce a larger number of false positives, which is the reason they are not included in the function's default query system set. More information about the systems can be gathered from the help files of the respective query data frames, `aurora_queries`, `elsevier_queries`, `siris_queries`, `sdsn_queries`, and `osdg_queries`.
 
 The example below runs the `detect_sdg()` on the `projects` for each query system individually, including the two keyword-based systems. The resulting `tibble`s reveal that Aurora is most conservative (60 hits), followed by SIRIS (167), Elsevier (235), and then by large margin the two keyword-based systems SDSN (2,575) and OSDG (3,617). Note that the high numbers for the two keyword-based systems imply that, on average, 5 and 7 SDGs, respectively, are identified per document. 
 
@@ -57,7 +57,7 @@ options(tibble.print_min = 5)
 ```{r}
 # detecting SDGs using all available query systems
 hits_all <- detect_sdg(projects, 
-                       system = c("Aurora", "Elsevier", "SIRIS", "OSDG", "SDSN"))
+                       system = c("Aurora", "Elsevier", "SIRIS", "SDSN", "OSDG"))
 
 # count hits of systems
 table(hits_all$system)
@@ -69,7 +69,7 @@ options(tibble.print_min = 10)
 
 ### Selecting SDGs
 
-By default the `detect_sdg()` function aims to detect all SDGs covered by the different systems, which is 17 for Aurora, OSDG, and SDSN, and 16 for Elsevier and Siris. The latter two do not include queries for goal 17 - Global Partnerships for the Goals. If the user is only interested in a subset of SDGs or wants to reduce runtime, the `sdgs` argument can be used to run subsets of SDGs. The argument takes a numeric vector with integers in [1,17] indicating the SDGs that shall be detected. 
+By default the `detect_sdg()` function aims to detect all SDGs covered by the different systems, which is 17 for Aurora, SDSN, and OSDG, and 16 for Elsevier and SIRIS. The latter two do not include queries for goal 17 - Global Partnerships for the Goals. If the user is only interested in a subset of SDGs or wants to reduce runtime, the `sdgs` argument can be used to run subsets of SDGs. The argument takes a numeric vector with integers in [1,17] indicating the SDGs that shall be detected. 
 
 The example below runs the `detect_sdg()` function only for SDGs 1, 2, 3, 4, and 5. 
 

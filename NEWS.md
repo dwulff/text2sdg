@@ -1,3 +1,8 @@
+# text2sdg 0.1.3
+
+* rename ontology to OSDG
+
+
 # text2sdg 0.1.2
 
 * fix debian-clang-devel encoding issue

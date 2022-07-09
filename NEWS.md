@@ -1,3 +1,9 @@
+# text2sdg 0.1.4
+
+* In the SDSN queries, replaced "\"World\x92s hungry\"" with "\"World's hungry\"", to comply with the new CRAN checks
+
+
+
 # text2sdg 0.1.3
 
 * rename ontology to OSDG

@@ -5,22 +5,6 @@ detect_sdsn = function(corpus, sdgs, verbose = FALSE){
   sdsn_queries <- sdsn_queries %>%
     dplyr::filter(sdg %in% sdgs)
 
-  # Encoding(sdsn_queries$query) <- "latin1"
-  # sdsn_queries$query <- iconv(sdsn_queries$query, from = "UTF-8", to = "latin1")
-  #
-  # all(stri_enc_isutf8(sdsn_queries$query))
-  #
-  # load("data/sdsn_queries.RData", encodi)
-  #
-  # sdsn_queries$query[728] <- "\"World's hungry\""
-  #
-  # save(sdsn_queries, file = "data/sdsn_queries.RData")
-  #
-  # osdg_queries
-  #
-  # all(stri_enc_isutf8(osdg_queries$query))
-  # Encoding(osdg_queries$query)
-
 
   # get hits
   hits = search_corpus(corpus, sdsn_queries$query, mode = "unique_hits")

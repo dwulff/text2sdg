@@ -1,5 +1,5 @@
 ## Minor update
-The name of a system we use in the package changed, this naming change is reflected in this update. I also updated a dead link that popped up while running CMD check. 
+In the SDSN queries, replaced "\"World\x92s hungry\"" with "\"World's hungry\"", to comply with the new CRAN checks.
 
 
 ## R CMD check results

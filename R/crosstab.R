@@ -6,7 +6,7 @@
 #'
 #' @param hits \code{data frame} as returned by \code{\link{detect_sdg}}. Must include columns \code{document}, \code{sdg}, \code{system}, and \code{hit}.
 #' @param compare \code{character} specifying whether systems or SDGs should be cross tabulated.
-#' @param systems \code{character} vector specifying the query systems to be cross tabulated. Values must be available in the \code{system} column of \code{hits}. \code{systems} of length greater 1 result, by default, in a stacked barplot. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.
+#' @param systems \code{character} vector specifying the query systems to be cross tabulated. Values must be available in the \code{system} column of \code{hits}. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.
 #' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the SDGs to be cross tabluated. Values must be available in the \code{sdg} column of \code{hits}. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.
 #'
 #' @return \code{matrix} showing correlation coefficients for all pairs of query systems (if \code{compare = "systems"}) or SDGs (if \code{compare = "SDGs"}).

@@ -11,7 +11,7 @@ crosstab_sdg(hits, compare = c("systems", "sdgs"), systems = NULL, sdgs = NULL)
 
 \item{compare}{\code{character} specifying whether systems or SDGs should be cross tabulated.}
 
-\item{systems}{\code{character} vector specifying the query systems to be cross tabulated. Values must be available in the \code{system} column of \code{hits}. \code{systems} of length greater 1 result, by default, in a stacked barplot. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.}
+\item{systems}{\code{character} vector specifying the query systems to be cross tabulated. Values must be available in the \code{system} column of \code{hits}. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.}
 
 \item{sdgs}{\code{numeric} vector with integers between 1 and 17 specifying the SDGs to be cross tabluated. Values must be available in the \code{sdg} column of \code{hits}. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.}
 }

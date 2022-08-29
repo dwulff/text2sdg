@@ -1,3 +1,9 @@
+# text2sdg 0.1.5
+* In the SIRIS queries, replaced "niño" with "nino" to resolve encoding error on CRAN r-devel-linux-x86_64-debian-clang flavor. This affects the queries with the query_id 2635 and 2650.
+* Renamed the "queries" argument of the detect_any function to "system". 
+* Added arXiv preprint to Description field. 
+
+
 # text2sdg 0.1.4
 
 * In the SDSN queries, replaced "\"World\x92s hungry\"" with "\"World's hungry\"", to comply with the new CRAN checks

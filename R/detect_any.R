@@ -3,7 +3,8 @@
 #' \code{detect_any} identifies SDGs in text using user provided query systems. Works like \code{\link{detect_sdg}} but uses a user specified query system instead of an existing one like \code{\link{detect_sdg}} does.
 #'
 #' @param text \code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.
-#' @param queries a data frame that must contain the following variables: a \code{character} vector with queries, a \code{integer} vector specifying which SDG each query maps to (values must be between 1 and 17) and a \code{character} with one unique value specifying the name of the used query system (can be anything as long as it is unique).
+#' @param system a data frame that must contain the following variables: a \code{character} vector with queries, a \code{integer} vector specifying which SDG each query maps to (values must be between 1 and 17) and a \code{character} with one unique value specifying the name of the used query system (can be anything as long as it is unique).
+#' @param queries deprecated.
 #' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.
 #' @param output \code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"docs"} returns an aggregated \code{tibble} with one row per matched sdg, without information on the features.
 #' @param verbose \code{logical} specifying whether messages on the function's progress should be printed.
@@ -36,7 +37,14 @@
 #'
 #' @export
 
-detect_any <- function(text, queries, sdgs = NULL, output = c("features","docs"), verbose = TRUE) {
+detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = NULL, output = c("features","docs"), verbose = TRUE) {
+
+
+  #deprecated warning
+  if (lifecycle::is_present(queries)) {
+    lifecycle::deprecate_warn("0.1.5", "detect_any(queries)", "detect_any(system)")
+    system <- queries
+  }
 
 
   # make corpus
@@ -49,13 +57,13 @@ detect_any <- function(text, queries, sdgs = NULL, output = c("features","docs")
   }
 
   # replace NULLs
-  if(is.null(sdgs)) sdgs = unique(stringr::str_extract(queries$sdg,"[:digit:]+") %>% as.numeric())
+  if(is.null(sdgs)) sdgs = unique(stringr::str_extract(system$sdg,"[:digit:]+") %>% as.numeric())
 
   #check that selected subset of sdgs is in queries
-  if(all(!sdgs %in% unique(queries$sdg))) {stop("At least one of the selected SDGs needs to be present in the queries data frame.")}
+  if(all(!sdgs %in% unique(system$sdg))) {stop("At least one of the selected SDGs needs to be present in the queries data frame.")}
 
   #check query data
-  if (!all(names(queries) %in% c("sdg", "query", "system"))) {
+  if (!all(names(system) %in% c("sdg", "query", "system"))) {
     stop(paste0("Variables 'sdg', 'query' and 'system' must be present in quries dataset."))
   }
 
@@ -66,23 +74,23 @@ detect_any <- function(text, queries, sdgs = NULL, output = c("features","docs")
 
 
   #filter queries based on selected sdgs
-  queries <- queries %>%
-    dplyr::mutate(sdg = paste0("SDG-", ifelse(queries$sdg < 10, "0", ""),queries$sdg),
+  system <- system %>%
+    dplyr::mutate(sdg = paste0("SDG-", ifelse(sdg < 10, "0", ""),sdg),
                   query_id = 1:dplyr::n()) %>%
     dplyr::filter(sdg %in% sdgs)
 
 
   # get hits
-  hits = search_corpus(corpus, queries$query)
+  hits = search_corpus(corpus, system$query)
 
   #return empty tibble if no SDGs were detected
   if(nrow(hits) == 0) return(tibble::tibble())
 
   # process hits
   hits = hits %>%
-    dplyr::mutate(sdg = queries$sdg[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))],
+    dplyr::mutate(sdg = system$sdg[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))],
                   query_id = as.numeric(stringr::str_extract(hits$code, '[:digit:]+')),
-                  system = (queries %>% dplyr::pull(system, query_id))[query_id]) %>%
+                  system = (system %>% dplyr::pull(system, query_id))[query_id]) %>%
     dplyr::rename(document = doc_id) %>%
     dplyr::select(document, sdg, system, query_id, feature) %>%
     dplyr::group_by(document, sdg, system, query_id) %>%
@@ -112,7 +120,5 @@ detect_any <- function(text, queries, sdgs = NULL, output = c("features","docs")
 
 
 }
-
-
 
 

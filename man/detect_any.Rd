@@ -6,7 +6,8 @@
 \usage{
 detect_any(
   text,
-  queries,
+  system,
+  queries = lifecycle::deprecated(),
   sdgs = NULL,
   output = c("features", "docs"),
   verbose = TRUE
@@ -15,7 +16,9 @@ detect_any(
 \arguments{
 \item{text}{\code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.}
 
-\item{queries}{a data frame that must contain the following variables: a \code{character} vector with queries, a \code{integer} vector specifying which SDG each query maps to (values must be between 1 and 17) and a \code{character} with one unique value specifying the name of the used query system (can be anything as long as it is unique).}
+\item{system}{a data frame that must contain the following variables: a \code{character} vector with queries, a \code{integer} vector specifying which SDG each query maps to (values must be between 1 and 17) and a \code{character} with one unique value specifying the name of the used query system (can be anything as long as it is unique).}
+
+\item{queries}{deprecated.}
 
 \item{sdgs}{\code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.}
 

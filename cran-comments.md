@@ -1,16 +1,10 @@
 ## Minor update
-Renamed the "queries" argument of the detect_any() function to "system". Added lifecycle deprecation warning. 
-In the SIRIS queries, replaced "niño" with "nino" to comply with CRAN checks. 
-Added reference about the method as requested after last CRAN release. 
+Fixed bug in detect_any function (did not work as expected with argument output = "documents")
+Update method reference in description
+Removed unused test.R file
 
 ## R CMD check results
-There was one NOTE:
-
-Possibly misspelled words in DESCRIPTION:
-  Mata (6:533)
-  Wulff (6:540)
-  
-These are correctly spelled names. 
+There were no ERRORs or WARNINGs or NOTEs.
 
 
 ## Downstream dependencies

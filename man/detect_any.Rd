@@ -9,7 +9,7 @@ detect_any(
   system,
   queries = lifecycle::deprecated(),
   sdgs = NULL,
-  output = c("features", "docs"),
+  output = c("features", "documents"),
   verbose = TRUE
 )
 }
@@ -22,7 +22,7 @@ detect_any(
 
 \item{sdgs}{\code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.}
 
-\item{output}{\code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"docs"} returns an aggregated \code{tibble} with one row per matched sdg, without information on the features.}
+\item{output}{\code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"documents"} returns an aggregated \code{tibble} with one row per matched sdg, without information on the features.}
 
 \item{verbose}{\code{logical} specifying whether messages on the function's progress should be printed.}
 }

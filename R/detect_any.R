@@ -6,7 +6,7 @@
 #' @param system a data frame that must contain the following variables: a \code{character} vector with queries, a \code{integer} vector specifying which SDG each query maps to (values must be between 1 and 17) and a \code{character} with one unique value specifying the name of the used query system (can be anything as long as it is unique).
 #' @param queries deprecated.
 #' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.
-#' @param output \code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"docs"} returns an aggregated \code{tibble} with one row per matched sdg, without information on the features.
+#' @param output \code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"documents"} returns an aggregated \code{tibble} with one row per matched sdg, without information on the features.
 #' @param verbose \code{logical} specifying whether messages on the function's progress should be printed.
 #'
 #' @return The function returns a \code{tibble} containing the SDG hits found in the vector of documents. Depending on the value of \code{output} the tibble will contain all or some of the following columns:
@@ -37,7 +37,7 @@
 #'
 #' @export
 
-detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = NULL, output = c("features","docs"), verbose = TRUE) {
+detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = NULL, output = c("features","documents"), verbose = TRUE) {
 
 
   #deprecated warning
@@ -102,12 +102,12 @@ detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = N
 
     # reduce if requested
   if(output[1] == "documents"){
-    v = hits %>%
+    hits = hits %>%
       dplyr::group_by(document, sdg, system) %>%
       dplyr::summarize(hits = dplyr::n()) %>%
       dplyr::ungroup()
   } else {
-    if(output[1] != "features") stop('Argument output must be "features" or "docs"')
+    if(output[1] != "features") stop('Argument output must be "features" or "documents"')
   }
 
   #convert document to factor for downstream functions

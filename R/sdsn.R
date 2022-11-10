@@ -5,6 +5,7 @@ detect_sdsn = function(corpus, sdgs, verbose = FALSE){
   sdsn_queries <- sdsn_queries %>%
     dplyr::filter(sdg %in% sdgs)
 
+
   # get hits
   hits = search_corpus(corpus, sdsn_queries$query, mode = "unique_hits")
   hits$sdg = sdsn_queries$sdg[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))]

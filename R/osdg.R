@@ -1,13 +1,13 @@
-# Detect OSDG SDG
-detect_osdg = function(corpus, sdgs, verbose = FALSE){
+# Detect SDGO SDG
+detect_sdgo = function(corpus, sdgs, verbose = FALSE){
 
   #filter queries based on selected sdgs
-  osdg_queries <- osdg_queries %>%
+  sdgo_queries <- sdgo_queries %>%
     dplyr::filter(sdg %in% sdgs)
 
   # get hits
-  hits = search_corpus(corpus, osdg_queries$query)
-  hits$sdg = osdg_queries$sdg[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))]
+  hits = search_corpus(corpus, sdgo_queries$query)
+  hits$sdg = sdgo_queries$sdg[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))]
   hits$query_id = as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))
 
   # exit if no hits
@@ -18,7 +18,7 @@ detect_osdg = function(corpus, sdgs, verbose = FALSE){
     dplyr::select(-sentence) %>%
     dplyr::mutate(document = as.numeric(as.character(doc_id)),
                   feature = as.character(feature),
-                  system = "OSDG")  %>%
+                  system = "SDGO")  %>%
     dplyr::group_by(document, query_id) %>%
     #paste features together
     dplyr::summarise(matches = dplyr::n(),

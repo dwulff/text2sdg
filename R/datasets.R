@@ -52,7 +52,24 @@
 #' @source \url{https://data.mendeley.com/datasets/87txkw7khs/1}
 "elsevier_queries"
 
-#' SDG keyword ontology by OSDG
+#' SDG queries of the University of Auckland
+#'
+#' A dataset containing the SDG queries of \href{https://www.sdgmapping.auckland.ac.nz/}{University of Auckland} (version 1). The queries are available
+#' from \href{https://www.sdgmapping.auckland.ac.nz/}{https://www.sdgmapping.auckland.ac.nz/}. The Auckland queries were developed to build on the
+#' processes developed by the United Nations and the Times Higher Education Ranking in order to create an expanded list of keywords that can be
+#' used to identify SDG-relevant research. There is one query per SDG. There are no queries for SDG-17.
+#'
+#' @format A data frame with 16 rows and 4 columns
+#' \describe{
+#'   \item{system}{Name of system}
+#'   \item{sdg}{Label of the SDG}
+#'   \item{query_id}{Index of the query}
+#'   \item{query}{SDG query}
+#' }
+#' @source \url{https://www.sdgmapping.auckland.ac.nz/}
+"auckland_queries"
+
+#' SDG Ontology by OSDG
 #'
 #' A dataset containing the SDG queries based on the keyword ontology by OSDG. The queries are available from \href{https://figshare.com/articles/dataset/SDG_ontology/11106113/1}{figshare.com}.
 #'
@@ -68,7 +85,7 @@
 #'   \item{query}{SDG query}
 #' }
 #' @source \url{https://figshare.com/articles/dataset/SDG_ontology/11106113/1}
-"osdg_queries"
+"sdgo_queries"
 
 #' SDG keywords by SDSN
 #'

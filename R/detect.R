@@ -2,12 +2,12 @@
 #'
 #' \code{detect_sdg} identifies SDGs in text using SDG query systems developed by the Aurora Universities Network, SIRIS Academic, and Elsevier.
 #'
-#' \code{detect_sdg} implements five SDG query systems. Three systems developed by the Aurora Universities Network (see \code{\link{aurora_queries}}), SIRIS Academic (see \code{\link{siris_queries}}), and Elsevier (see \code{\link{elsevier_queries}}) rely on Lucene-style Boolean queries, whereas two query systems developed by OSDG (see \code{\link{osdg_queries}}) and SDSN (see \code{\link{sdsn_queries}}) rely on basic keyword matching. `detect_sdg` calls dedicated \code{detect_*} for each of the five system. Search of the queries is implemented using the \code{\link[corpustools]{search_features}} function from the \href{https://cran.r-project.org/package=corpustools}{\code{corpustools}} package.
+#' \code{detect_sdg} implements six SDG query systems. Four systems developed by the Aurora Universities Network (see \code{\link{aurora_queries}}),  Elsevier (see \code{\link{elsevier_queries}}), Auckland University (see \code{\link{elsevier_queries}}), and SIRIS Academic (see \code{\link{siris_queries}}) rely on Lucene-style Boolean queries, whereas two systems, namely SDGO (see \code{\link{sdgo_queries}}) and SDSN (see \code{\link{sdsn_queries}}) rely on basic keyword matching. `detect_sdg` calls dedicated \code{detect_*} for each of the five system. Search of the queries is implemented using the \code{\link[corpustools]{search_features}} function from the \href{https://cran.r-project.org/package=corpustools}{\code{corpustools}} package.
 #'
-#' By default, \code{detect_sdg} runs only the Aurora, SIRIS, and Elsevier query systems, as they are considerably less liberal than the SDSN and OSDG systems and therefore likely produce more valid SDG classifications. Users should be aware that systematic validations and comparison between the systems are largely lacking and that results should be interpreted with caution.
+#' By default, \code{detect_sdg} runs only the Aurora, Elsevier, Auckland, and Siris query systems, as they are considerably less liberal than the SDSN and SDGO systems and therefore likely produce more valid SDG classifications. Users should be aware that systematic validations and comparison between the systems are largely lacking and that results should be interpreted with caution.
 #'
 #' @param text \code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.
-#' @param systems \code{character} vector specifying the query systems to be used. Can be one or more of \code{"Aurora"}, \code{"SIRIS"}, \code{"Elsevier"}, \code{"SDSN"}, and \code{"OSDG"}. By default all systems except \code{"OSDG"} and \code{"SDSN"} are used.
+#' @param systems \code{character} vector specifying the query systems to be used. Can be one or more of \code{"Aurora"}, \code{"Elsevier"}, \code{"Auckland"}, \code{"SIRIS"} \code{"SDSN"}, and \code{"SDGO"}. By default all systems except \code{"SDGO"} and \code{"SDSN"} are used.
 #' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.
 #' @param output \code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"documents"} returns an aggregated \code{tibble} with one row per matched sdg, without information on the features.
 #' @param verbose \code{logical} specifying whether messages on the function's progress should be printed.
@@ -36,7 +36,7 @@
 #' @export
 
 detect_sdg = function(text,
-                      systems = c("Aurora", "Elsevier", "SIRIS"),
+                      systems = c("Aurora", "Elsevier", "Auckland", "SIRIS"),
                       sdgs = 1:17,
                       output = c("features","documents"),
                       verbose = TRUE){
@@ -57,25 +57,35 @@ detect_sdg = function(text,
   if(any(!sdgs %in% 1:17)) stop("show_sdg can only take numbers in 1:17.")
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
 
+  if("OSDG" %in% systems){
+    stop("OSDG has been renamed to SDGO (SDG Ontology).")
+  }
+
   # run sdg
-  if (!all(systems %in% c("Aurora", "Elsevier", "SIRIS", "SDSN", "OSDG"))){
-    stop("Argument systems must be Aurora, Elsevier, SIRIS, SDSN, or OSDG.")
+  if (!all(systems %in% c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"))){
+    stop("Argument systems must be Aurora, Elsevier, Auckland, SIRIS, SDSN, or SDGO.")
     }
   if("Aurora" %in% systems){
     if(verbose) cat("\nRunning Aurora",sep = '')
     hits[["Aurora"]] = detect_aurora(corpus, sdgs)}
-  if("SIRIS" %in% systems) {
-    if(verbose) cat("\nRunning SIRIS",sep = '')
-    hits[["SIRIS"]] = detect_siris(corpus, sdgs)}
   if("Elsevier" %in% systems){
     if(verbose) cat("\nRunning Elsevier",sep = '')
     hits[["Elsevier"]] = detect_elsevier(corpus, sdgs)}
+  if("Auckland" %in% systems){
+    if(verbose) cat("\nRunning Auckland",sep = '')
+    hits[["Auckland"]] = detect_auckland(corpus, sdgs)}
+  if("SIRIS" %in% systems) {
+    if(verbose) cat("\nRunning SIRIS",sep = '')
+    hits[["SIRIS"]] = detect_siris(corpus, sdgs)}
   if("SDSN" %in% systems) {
     if(verbose) cat("\nRunning SDSN",sep = '')
     hits[["SDSN"]] = detect_sdsn(corpus, sdgs)}
-  if("OSDG" %in% systems) {
-    if(verbose) cat("\nRunning OSDG",sep = '')
-    hits[["OSDG"]] = detect_osdg(corpus, sdgs)}
+  if("SDGO" %in% systems) {
+    if(verbose) cat("\nRunning SDGO",sep = '')
+    hits[["SDGO"]] = detect_sdgo(corpus, sdgs)}
+
+  # newline
+  cat("\n")
 
   #combine lists to df
   hits <- do.call(rbind, hits)
@@ -89,7 +99,8 @@ detect_sdg = function(text,
   if(output[1] == "documents"){
     hits = hits %>%
       dplyr::group_by(document, sdg, system) %>%
-      dplyr::summarize(hits = dplyr::n()) %>%
+      dplyr::summarize(hits = dplyr::n(),
+                       features = paste(features, collapse = ", ")) %>%
       dplyr::ungroup()
     } else {
     if(output[1] != "features") stop('Argument output must be "features" or "documents"')

@@ -1,6 +1,6 @@
 #' Detect SDGs in text
 #'
-#' \code{detect_sdg} identifies SDGs in text using SDG query systems developed by the Aurora Universities Network, SIRIS Academic, and Elsevier.
+#' \code{detect_sdg} identifies SDGs in text using multiple SDG query systems.
 #'
 #' \code{detect_sdg} implements six SDG query systems. Four systems developed by the Aurora Universities Network (see \code{\link{aurora_queries}}),  Elsevier (see \code{\link{elsevier_queries}}), Auckland University (see \code{\link{elsevier_queries}}), and SIRIS Academic (see \code{\link{siris_queries}}) rely on Lucene-style Boolean queries, whereas two systems, namely SDGO (see \code{\link{sdgo_queries}}) and SDSN (see \code{\link{sdsn_queries}}) rely on basic keyword matching. `detect_sdg` calls dedicated \code{detect_*} for each of the five system. Search of the queries is implemented using the \code{\link[corpustools]{search_features}} function from the \href{https://cran.r-project.org/package=corpustools}{\code{corpustools}} package.
 #'
@@ -54,7 +54,7 @@ detect_sdg = function(text,
   hits = list()
 
   #handle selected SDGs
-  if(any(!sdgs %in% 1:17)) stop("show_sdg can only take numbers in 1:17.")
+  if(any(!sdgs %in% 1:17)) stop("sdgs can only take numbers in 1:17.")
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
 
   if("OSDG" %in% systems){

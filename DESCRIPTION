@@ -29,11 +29,12 @@ Imports:
     tibble,
     stringr,
     ggplot2,
-    lifecycle
+    lifecycle,
+    ranger
 Suggests: 
     testthat,
     knitr,
     rmarkdown
 LazyData: TRUE
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 VignetteBuilder: knitr

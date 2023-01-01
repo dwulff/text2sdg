@@ -6,7 +6,7 @@
 \usage{
 detect_sdg(
   text,
-  systems = c("Aurora", "Elsevier", "SIRIS"),
+  systems = c("Aurora", "Elsevier", "Auckland", "SIRIS"),
   sdgs = 1:17,
   output = c("features", "documents"),
   verbose = TRUE
@@ -15,7 +15,7 @@ detect_sdg(
 \arguments{
 \item{text}{\code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.}
 
-\item{systems}{\code{character} vector specifying the query systems to be used. Can be one or more of \code{"Aurora"}, \code{"SIRIS"}, \code{"Elsevier"}, \code{"SDSN"}, and \code{"OSDG"}. By default all systems except \code{"OSDG"} and \code{"SDSN"} are used.}
+\item{systems}{\code{character} vector specifying the query systems to be used. Can be one or more of \code{"Aurora"}, \code{"Elsevier"}, \code{"Auckland"}, \code{"SIRIS"} \code{"SDSN"}, and \code{"SDGO"}. By default all systems except \code{"SDGO"} and \code{"SDSN"} are used.}
 
 \item{sdgs}{\code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.}
 
@@ -35,12 +35,12 @@ The function returns a tibble containing the SDG hits found in the vector of doc
 }
 }
 \description{
-\code{detect_sdg} identifies SDGs in text using SDG query systems developed by the Aurora Universities Network, SIRIS Academic, and Elsevier.
+\code{detect_sdg} identifies SDGs in text using multiple SDG query systems.
 }
 \details{
-\code{detect_sdg} implements five SDG query systems. Three systems developed by the Aurora Universities Network (see \code{\link{aurora_queries}}), SIRIS Academic (see \code{\link{siris_queries}}), and Elsevier (see \code{\link{elsevier_queries}}) rely on Lucene-style Boolean queries, whereas two query systems developed by OSDG (see \code{\link{osdg_queries}}) and SDSN (see \code{\link{sdsn_queries}}) rely on basic keyword matching. `detect_sdg` calls dedicated \code{detect_*} for each of the five system. Search of the queries is implemented using the \code{\link[corpustools]{search_features}} function from the \href{https://cran.r-project.org/package=corpustools}{\code{corpustools}} package.
+\code{detect_sdg} implements six SDG query systems. Four systems developed by the Aurora Universities Network (see \code{\link{aurora_queries}}),  Elsevier (see \code{\link{elsevier_queries}}), Auckland University (see \code{\link{elsevier_queries}}), and SIRIS Academic (see \code{\link{siris_queries}}) rely on Lucene-style Boolean queries, whereas two systems, namely SDGO (see \code{\link{sdgo_queries}}) and SDSN (see \code{\link{sdsn_queries}}) rely on basic keyword matching. `detect_sdg` calls dedicated \code{detect_*} for each of the five system. Search of the queries is implemented using the \code{\link[corpustools]{search_features}} function from the \href{https://cran.r-project.org/package=corpustools}{\code{corpustools}} package.
 
-By default, \code{detect_sdg} runs only the Aurora, SIRIS, and Elsevier query systems, as they are considerably less liberal than the SDSN and OSDG systems and therefore likely produce more valid SDG classifications. Users should be aware that systematic validations and comparison between the systems are largely lacking and that results should be interpreted with caution.
+By default, \code{detect_sdg} runs only the Aurora, Elsevier, Auckland, and Siris query systems, as they are considerably less liberal than the SDSN and SDGO systems and therefore likely produce more valid SDG classifications. Users should be aware that systematic validations and comparison between the systems are largely lacking and that results should be interpreted with caution.
 }
 \examples{
 \donttest{

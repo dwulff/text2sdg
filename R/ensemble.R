@@ -15,6 +15,8 @@
 #' \describe{
 #'  \item{document}{Index of the element in \code{text} where match was found. Formatted as a factor with the number of levels matching the original number of documents.}
 #'  \item{sdg}{Label of the SDG found in document.}
+#'  \item{system}{The name of the system that produced the match. In this case \code{"Ensemble"}.}
+#'  \item{hit}{Index of hit for the Ensemble model.}
 #' }
 #'
 #' @references Wulff, D. U., Meier, D., & Mata, R. (2023). Using novel data and ensemble models to improve automated SDG-labeling. arXiv
@@ -99,7 +101,8 @@ detect_sdg_ensemble = function(text,
   hits %>%
     dplyr::filter(pred == 1) %>%
     dplyr::select(-pred) %>%
-    dplyr::mutate(system = "ensemble") %>%
+    dplyr::mutate(system = "Ensemble",
+                  hit = 1:dplyr::n()) %>%
     dplyr::arrange(document, sdg, system)
 
   }

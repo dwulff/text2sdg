@@ -16,7 +16,7 @@
 #' \describe{
 #'  \item{document}{Index of the element in \code{text} where match was found. Formatted as a factor with the number of levels matching the original number of documents.}
 #'  \item{sdg}{Label of the SDG found in document.}
-#'  \item{systems}{The name of the query system that produced the match.}
+#'  \item{system}{The name of the query system that produced the match.}
 #'  \item{query_id}{Index of the query within the query system that produced the match.}
 #'  \item{features}{Concatenated list of words that caused the query to match.}
 #'  \item{hit}{Index of hit for a given system.}

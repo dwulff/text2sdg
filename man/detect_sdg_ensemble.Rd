@@ -20,6 +20,8 @@ The function returns a tibble containing the SDG hits found in the vector of doc
 \describe{
  \item{document}{Index of the element in \code{text} where match was found. Formatted as a factor with the number of levels matching the original number of documents.}
  \item{sdg}{Label of the SDG found in document.}
+ \item{system}{The name of the system that produced the match. In this case \code{"Ensemble"}.}
+ \item{hit}{Index of hit for the Ensemble model.}
 }
 }
 \description{

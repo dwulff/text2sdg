@@ -16,7 +16,7 @@
 #'  \item{document}{Index of the element in \code{text} where match was found. Formatted as a factor with the number of levels matching the original number of documents.}
 #'  \item{sdg}{Label of the SDG found in document.}
 #'  \item{system}{The name of the system that produced the match. In this case \code{"Ensemble"}.}
-#'  \item{hit}{Index of hit for the Ensemble model.}
+#'  \item{hit/hits}{hit (when output = "features"): Index of hit for a given system; hits (when output = "documents"): number of hits per document, sdg and query system (indicator variable in the case of the ensemble model)}
 #' }
 #'
 #' @references Wulff, D. U., Meier, D., & Mata, R. (2023). Using novel data and ensemble models to improve automated SDG-labeling. arXiv
@@ -54,7 +54,7 @@ detect_sdg_ensemble = function(text,
   if(verbose) cat("\nRunning systems",sep = '')
 
   # run detect sdg
-  hits = detect_sdg(text = corpus,
+  hits_queries = detect_sdg(text = corpus,
                     sdgs = sdgs,
                     systems = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"),
                     output = "documents",
@@ -69,7 +69,7 @@ detect_sdg_ensemble = function(text,
   # generate features
   if(verbose) cat("\nBuilding features",sep = '')
   tbl = tibble::tibble(document = factor(1:corpus$n_meta)) %>%
-    dplyr::left_join(hits %>%
+    dplyr::left_join(hits_queries %>%
                        dplyr::select(document, sdg, system) %>%
                        dplyr::mutate(hit = TRUE),
                      by = "document") %>%
@@ -98,11 +98,15 @@ detect_sdg_ensemble = function(text,
   hits = do.call(what = rbind, hits)
 
   #output
-  hits %>%
+  hits_ensemble <- hits %>%
     dplyr::filter(pred == 1) %>%
     dplyr::select(-pred) %>%
     dplyr::mutate(system = "Ensemble",
-                  hit = 1:dplyr::n()) %>%
+                  hits = 1) %>%
+    dplyr::arrange(document, sdg, system)
+
+  hits_ensemble %>%
+    dplyr::bind_rows(hits_queries) %>%
     dplyr::arrange(document, sdg, system)
 
   }

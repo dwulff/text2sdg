@@ -46,7 +46,7 @@ detect_sdg_ensemble = function(text,
   if(verbose) cat("\nRunning systems",sep = '')
 
   # run detect sdg
-  hits_queries = detect_sdg(text = corpus,
+  hits_queries = detect_sdg(text = text,
                     sdgs = sdgs,
                     systems = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"),
                     output = "documents",
@@ -54,13 +54,13 @@ detect_sdg_ensemble = function(text,
 
   # add lengths
   if(verbose) cat("\nObtaining text lengths",sep = '')
-  lens = table(corpus$tokens$doc_id)
+  lens = table(text$tokens$doc_id)
   lens = tibble::tibble(document = factor(names(lens)),
                         n_words = c(lens))
 
   # generate features
   if(verbose) cat("\nBuilding features",sep = '')
-  tbl = tibble::tibble(document = factor(1:corpus$n_meta)) %>%
+  tbl = tibble::tibble(document = factor(1:text$n_meta)) %>%
     dplyr::left_join(hits_queries %>%
                        dplyr::select(document, sdg, system) %>%
                        dplyr::mutate(hit = TRUE),

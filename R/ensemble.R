@@ -29,27 +29,19 @@
 #' # run sdg detection for sdg 3 only
 #' hits <- detect_sdg_ensemble(projects, sdgs = 3)
 #' }
-#' @export
 
 detect_sdg_ensemble = function(text,
                                sdgs = 1:17,
                                synthetic = "equal",
                                verbose = TRUE){
 
-  # make corpus
-  if(class(text)[1] == "character"){
-    corpus = make_corpus(text)
-    } else if(class(text)[1] == "tCorpus"){
-    corpus = text
-    } else {
-    stop("Argument text must be either class character or corpustools::tCorpus.")
-    }
-
   # select model
   if(any(!(synthetic[1] %in% c("none","third","equal","tripple")))){
     stop('Argument text must be "none","third","equal", or "tripple".')
     }
   ensemble_sel = ensembles[[synthetic]]
+
+  sdgs = as.numeric(gsub('.*-([0-9]+).*','\\1',sdgs))
 
   if(verbose) cat("\nRunning systems",sep = '')
 
@@ -58,7 +50,7 @@ detect_sdg_ensemble = function(text,
                     sdgs = sdgs,
                     systems = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"),
                     output = "documents",
-                    verbose = FALSE)
+                    verbose = verbose)
 
   # add lengths
   if(verbose) cat("\nObtaining text lengths",sep = '')

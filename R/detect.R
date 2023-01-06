@@ -111,7 +111,6 @@ detect_sdg = function(text,
   if(is.null(hits)) return(tibble::tibble())
 
   #return early if ensemble model was run
-  print(systems)
   if("ensemble" %in% systems) return(hits)
 
   # reduce if requested

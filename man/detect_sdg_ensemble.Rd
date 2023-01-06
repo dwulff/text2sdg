@@ -21,7 +21,7 @@ The function returns a tibble containing the SDG hits found in the vector of doc
  \item{document}{Index of the element in \code{text} where match was found. Formatted as a factor with the number of levels matching the original number of documents.}
  \item{sdg}{Label of the SDG found in document.}
  \item{system}{The name of the system that produced the match. In this case \code{"Ensemble"}.}
- \item{hit}{Index of hit for the Ensemble model.}
+ \item{hit/hits}{hit (when output = "features"): Index of hit for a given system; hits (when output = "documents"): number of hits per document, sdg and query system (indicator variable in the case of the ensemble model)}
 }
 }
 \description{

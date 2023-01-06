@@ -9,9 +9,10 @@
 #' @param text \code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.
 #' @param systems \code{character} vector specifying the query systems to be used. Can be one or more of \code{"Aurora"}, \code{"Elsevier"}, \code{"Auckland"}, \code{"SIRIS"} \code{"SDSN"}, and \code{"SDGO"}. By default all systems except \code{"SDGO"} and \code{"SDSN"} are used.
 #' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.
-#' @param output \code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"documents"} returns an aggregated \code{tibble} with one row per matched sdg, without information on the features.
+#' @param output \code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"documents"} returns an aggregated \code{tibble} with one row per matched sdg, with information about the features being collapsed into the "features" column. Must be 'documents' when running ensemble model
 #' @param verbose \code{logical} specifying whether messages on the function's progress should be printed.
-#'
+#' @param synthetic Only needed to specify when the ensemble model is run. \code{character} specifying the ensemble version in terms of the amount of synthetic data used in training (relative to the amount of expert-labeled data). Can be one of \code{"none"}, \code{"third"}, \code{"equal"}, and \code{"tripple"}. The default is \code{"equal"}.
+
 #' @return The function returns a tibble containing the SDG hits found in the vector of documents. Depending on the value of \code{output} the tibble will contain all or some of the following columns:
 #' \describe{
 #'  \item{document}{Index of the element in \code{text} where match was found. Formatted as a factor with the number of levels matching the original number of documents.}
@@ -39,7 +40,8 @@ detect_sdg = function(text,
                       systems = c("Aurora", "Elsevier", "Auckland", "SIRIS"),
                       sdgs = 1:17,
                       output = c("features","documents"),
-                      verbose = TRUE){
+                      verbose = TRUE,
+                      synthetic = "equal"){
 
   # make corpus
   if(class(text)[1] == "character"){
@@ -53,6 +55,7 @@ detect_sdg = function(text,
   #make output list
   hits = list()
 
+  #check arguments
   #handle selected SDGs
   if(any(!sdgs %in% 1:17)) stop("sdgs can only take numbers in 1:17.")
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
@@ -61,28 +64,42 @@ detect_sdg = function(text,
     stop("OSDG has been renamed to SDGO (SDG Ontology).")
   }
 
-  # run sdg
-  if (!all(systems %in% c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"))){
+  if (!all(systems %in% c("ensemble","Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"))){
     stop("Argument systems must be Aurora, Elsevier, Auckland, SIRIS, SDSN, or SDGO.")
+
+  if("ensemble" %in% systems & output == "features"){
+    stop("output argument must be 'documents' when running ensemble model")
+  }
+
+  # run sdg
+  }
+  if("ensemble" %in% systems){
+    if(verbose) cat("\nstart ensemble",sep = '')
+    hits[["ensemble"]] = detect_sdg_ensemble(corpus, sdgs, synthetic = synthetic, verbose = verbose)
+
+    } else {
+
+      if("Aurora" %in% systems){
+        if(verbose) cat("\nRunning Aurora",sep = '')
+        hits[["Aurora"]] = detect_aurora(corpus, sdgs)}
+      if("Elsevier" %in% systems){
+        if(verbose) cat("\nRunning Elsevier",sep = '')
+        hits[["Elsevier"]] = detect_elsevier(corpus, sdgs)}
+      if("Auckland" %in% systems){
+        if(verbose) cat("\nRunning Auckland",sep = '')
+        hits[["Auckland"]] = detect_auckland(corpus, sdgs)}
+      if("SIRIS" %in% systems) {
+        if(verbose) cat("\nRunning SIRIS",sep = '')
+        hits[["SIRIS"]] = detect_siris(corpus, sdgs)}
+      if("SDSN" %in% systems) {
+        if(verbose) cat("\nRunning SDSN",sep = '')
+        hits[["SDSN"]] = detect_sdsn(corpus, sdgs)}
+      if("SDGO" %in% systems) {
+        if(verbose) cat("\nRunning SDGO",sep = '')
+        hits[["SDGO"]] = detect_sdgo(corpus, sdgs)}
+
     }
-  if("Aurora" %in% systems){
-    if(verbose) cat("\nRunning Aurora",sep = '')
-    hits[["Aurora"]] = detect_aurora(corpus, sdgs)}
-  if("Elsevier" %in% systems){
-    if(verbose) cat("\nRunning Elsevier",sep = '')
-    hits[["Elsevier"]] = detect_elsevier(corpus, sdgs)}
-  if("Auckland" %in% systems){
-    if(verbose) cat("\nRunning Auckland",sep = '')
-    hits[["Auckland"]] = detect_auckland(corpus, sdgs)}
-  if("SIRIS" %in% systems) {
-    if(verbose) cat("\nRunning SIRIS",sep = '')
-    hits[["SIRIS"]] = detect_siris(corpus, sdgs)}
-  if("SDSN" %in% systems) {
-    if(verbose) cat("\nRunning SDSN",sep = '')
-    hits[["SDSN"]] = detect_sdsn(corpus, sdgs)}
-  if("SDGO" %in% systems) {
-    if(verbose) cat("\nRunning SDGO",sep = '')
-    hits[["SDGO"]] = detect_sdgo(corpus, sdgs)}
+
 
   # newline
   cat("\n")
@@ -93,7 +110,8 @@ detect_sdg = function(text,
   #return empty tibble if no SDGs were detected
   if(is.null(hits)) return(tibble::tibble())
 
-
+  #return early if ensemble model was run
+  if("ensemble" %in% systems) return(hits)
 
   # reduce if requested
   if(output[1] == "documents"){

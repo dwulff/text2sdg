@@ -37,7 +37,7 @@ detect_sdg_ensemble = function(text,
 
   # select model
   if(any(!(synthetic[1] %in% c("none","third","equal","tripple")))){
-    stop('Argument text must be "none","third","equal", or "tripple".')
+    stop('Argument synthetic must be "none","third","equal", or "tripple".')
     }
   ensemble_sel = ensembles[[synthetic]]
 

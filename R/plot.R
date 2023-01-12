@@ -1,10 +1,10 @@
 #' Plot distributions of SDGs identified in text
 #'
-#' \code{plot_sdg} creates a (stacked) barplot of the frequency distribution of SDGs identified via \link{detect_sdg}.
+#' \code{plot_sdg} creates a (stacked) barplot of the frequency distribution of SDGs identified via \link{detect_sdg} or \link{detect_sdg_systems}.
 #'
 #' The function is built using \code{\link[ggplot2]{ggplot}} and can thus be flexibly extended. See examples.
 #'
-#' @param hits \code{data frame} as returned by \code{\link{detect_sdg}}. Must include columns \code{sdg} and \code{system}.
+#' @param hits \code{data frame} as returned by \code{\link{detect_sdg}} or \code{\link{detect_sdg_systems}}. Must include columns \code{sdg} and \code{system}.
 #' @param systems \code{character} vector specifying the query systems to be visualized. Values must be available in the \code{system} column of \code{hits}. \code{systems} of length greater 1 result, by default, in a stacked barplot. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.
 #' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the SDGs to be visualized. Values must be available in the \code{sdg} column of \code{hits}. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.
 #' @param normalize \code{character} specifying whether results should be presented as frequencies (\code{normalize = "none"}), the default, or whether the frequencies should be normalized using either the total frequencies of each system (\code{normalize = "systems"}) or the total number of documents (\code{normalize = "documents"}).
@@ -18,7 +18,7 @@
 #' @examples
 #' \donttest{
 #' # run sdg detection
-#' hits <- detect_sdg(projects)
+#' hits <- detect_sdg_systems(projects)
 #'
 #' # create barplot
 #' plot_sdg(hits)

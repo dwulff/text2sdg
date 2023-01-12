@@ -7,7 +7,7 @@
 crosstab_sdg(hits, compare = c("systems", "sdgs"), systems = NULL, sdgs = NULL)
 }
 \arguments{
-\item{hits}{\code{data frame} as returned by \code{\link{detect_sdg}}. Must include columns \code{document}, \code{sdg}, \code{system}, and \code{hit}.}
+\item{hits}{\code{data frame} as returned by \code{\link{detect_sdg_systems}}. Must include columns \code{document}, \code{sdg}, \code{system}, and \code{hit}.}
 
 \item{compare}{\code{character} specifying whether systems or SDGs should be cross tabulated.}
 
@@ -19,7 +19,7 @@ crosstab_sdg(hits, compare = c("systems", "sdgs"), systems = NULL, sdgs = NULL)
 \code{matrix} showing correlation coefficients for all pairs of query systems (if \code{compare = "systems"}) or SDGs (if \code{compare = "SDGs"}).
 }
 \description{
-\code{crosstab_sdg} calculates cross tables (aka contingency tables) of SGSs or systems across hits identified via \link{detect_sdg}.
+\code{crosstab_sdg} calculates cross tables (aka contingency tables) of SGSs or systems across hits identified via \link{detect_sdg_systems}.
 }
 \details{
 \code{crosstab_sdg} determines correlations between either query systems or SDGs. The respectively other dimension will be ignored. Note that correlations between SDGs may vary between query systems.
@@ -28,7 +28,7 @@ crosstab_sdg(hits, compare = c("systems", "sdgs"), systems = NULL, sdgs = NULL)
 
 \donttest{
 # run sdg detection
-hits <- detect_sdg(projects)
+hits <- detect_sdg_systems(projects)
 
 # create cross table of systems
 crosstab_sdg(hits)

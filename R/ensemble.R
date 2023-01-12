@@ -16,7 +16,7 @@
 #'  \item{document}{Index of the element in \code{text} where match was found. Formatted as a factor with the number of levels matching the original number of documents.}
 #'  \item{sdg}{Label of the SDG found in document.}
 #'  \item{system}{The name of the system that produced the match. In this case \code{"Ensemble"}.}
-#'  \item{hit/hits}{hit (when output = "features"): Index of hit for a given system; hits (when output = "documents"): number of hits per document, sdg and query system (indicator variable in the case of the ensemble model)}
+#'  \item{hit}{Index of hit for the Ensemble model.}
 #' }
 #'
 #' @references Wulff, D. U., Meier, D., & Mata, R. (2023). Using novel data and ensemble models to improve automated SDG-labeling. arXiv
@@ -29,39 +29,40 @@
 #' # run sdg detection for sdg 3 only
 #' hits <- detect_sdg_ensemble(projects, sdgs = 3)
 #' }
-
+#' @export
 detect_sdg_ensemble = function(text,
                                sdgs = 1:17,
                                synthetic = "equal",
                                verbose = TRUE){
-
+  # make corpus
+  if(class(text)[1] == "character"){
+    corpus = make_corpus(text)
+  } else if(class(text)[1] == "tCorpus"){
+    corpus = text
+  } else {
+    stop("Argument text must be either class character or corpustools::tCorpus.")
+  }
   # select model
   if(any(!(synthetic[1] %in% c("none","third","equal","tripple")))){
     stop('Argument text must be "none","third","equal", or "tripple".')
-    }
+  }
   ensemble_sel = ensembles[[synthetic]]
-
-  sdgs = as.numeric(gsub('.*-([0-9]+).*','\\1',sdgs))
-
   if(verbose) cat("\nRunning systems",sep = '')
-
   # run detect sdg
-  hits_queries = detect_sdg(text = text,
+  hits = detect_sdg(text = corpus,
                     sdgs = sdgs,
                     systems = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"),
                     output = "documents",
-                    verbose = verbose)
-
+                    verbose = FALSE)
   # add lengths
   if(verbose) cat("\nObtaining text lengths",sep = '')
-  lens = table(text$tokens$doc_id)
+  lens = table(corpus$tokens$doc_id)
   lens = tibble::tibble(document = factor(names(lens)),
                         n_words = c(lens))
-
   # generate features
   if(verbose) cat("\nBuilding features",sep = '')
-  tbl = tibble::tibble(document = factor(1:text$n_meta)) %>%
-    dplyr::left_join(hits_queries %>%
+  tbl = tibble::tibble(document = factor(1:corpus$n_meta)) %>%
+    dplyr::left_join(hits %>%
                        dplyr::select(document, sdg, system) %>%
                        dplyr::mutate(hit = TRUE),
                      by = "document") %>%
@@ -70,7 +71,28 @@ detect_sdg_ensemble = function(text,
     dplyr::mutate(hit = dplyr::case_when(is.na(hit) ~ FALSE, TRUE ~ hit)) %>%
     tidyr::pivot_wider(names_from = system, values_from = hit) %>%
     dplyr::left_join(lens, by = "document")
+  if(verbose) cat("\nRunning ensemble",sep = '')
 
+
+
+
+    # add lengths
+    if(verbose) cat("\nObtaining text lengths",sep = '')
+  lens = table(corpus$tokens$doc_id)
+  lens = tibble::tibble(document = factor(names(lens)),
+                        n_words = c(lens))
+  # generate features
+  if(verbose) cat("\nBuilding features",sep = '')
+  tbl = tibble::tibble(document = factor(1:corpus$n_meta)) %>%
+    dplyr::left_join(hits %>%
+                       dplyr::select(document, sdg, system) %>%
+                       dplyr::mutate(hit = TRUE),
+                     by = "document") %>%
+    tidyr::complete(document, sdg, system) %>%
+    dplyr::filter(!is.na(system)) %>%
+    dplyr::mutate(hit = dplyr::case_when(is.na(hit) ~ FALSE, TRUE ~ hit)) %>%
+    tidyr::pivot_wider(names_from = system, values_from = hit) %>%
+    dplyr::left_join(lens, by = "document")
   if(verbose) cat("\nRunning ensemble",sep = '')
   hits = list()
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
@@ -80,28 +102,19 @@ detect_sdg_ensemble = function(text,
     tbl_sdg = tbl %>% dplyr::filter(sdg == sdgs[s])
     if(s == 17) {
       tbl_sdg = tbl_sdg %>% dplyr::select(document, dplyr::all_of(c("Aurora","SDGO","SDSN","n_words")))
-      }
+    }
     hits[[s]] = tibble::tibble(document = tbl_sdg %>% dplyr::pull(document),
                                sdg = sdgs[s],
                                pred = ranger:::predict.ranger(m, data = tbl_sdg)$predictions)
   }
-
   # combine hits
   hits = do.call(what = rbind, hits)
-
   #output
-  hits_ensemble <- hits %>%
+  hits %>%
     dplyr::filter(pred == 1) %>%
     dplyr::select(-pred) %>%
     dplyr::mutate(system = "Ensemble",
-                  hits = 1) %>%
+                  hit = 1:dplyr::n()) %>%
     dplyr::arrange(document, sdg, system)
 
-  hits_ensemble %>%
-    dplyr::bind_rows(hits_queries) %>%
-    dplyr::arrange(document, sdg, system)
-
-  }
-
-
-
+}

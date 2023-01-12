@@ -1,6 +1,6 @@
 #' Detect SDGs in text with own query system
 #'
-#' \code{detect_any} identifies SDGs in text using user provided query systems. Works like \code{\link{detect_sdg}} but uses a user specified query system instead of an existing one like \code{\link{detect_sdg}} does.
+#' \code{detect_any} identifies SDGs in text using user provided query systems. Works like \code{\link{detect_sdg_systems}} but uses a user specified query system instead of an existing one like \code{\link{detect_sdg_systems}} does.
 #'
 #' @param text \code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.
 #' @param system a data frame that must contain the following variables: a \code{character} vector with queries, a \code{integer} vector specifying which SDG each query maps to (values must be between 1 and 17) and a \code{character} with one unique value specifying the name of the used query system (can be anything as long as it is unique).

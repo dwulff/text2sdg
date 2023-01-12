@@ -1,10 +1,10 @@
 #' Compare query systems and SDGs
 #'
-#' \code{crosstab_sdg} calculates cross tables (aka contingency tables) of SGSs or systems across hits identified via \link{detect_sdg}.
+#' \code{crosstab_sdg} calculates cross tables (aka contingency tables) of SGSs or systems across hits identified via \link{detect_sdg_systems}.
 #'
 #' \code{crosstab_sdg} determines correlations between either query systems or SDGs. The respectively other dimension will be ignored. Note that correlations between SDGs may vary between query systems.
 #'
-#' @param hits \code{data frame} as returned by \code{\link{detect_sdg}}. Must include columns \code{document}, \code{sdg}, \code{system}, and \code{hit}.
+#' @param hits \code{data frame} as returned by \code{\link{detect_sdg_systems}}. Must include columns \code{document}, \code{sdg}, \code{system}, and \code{hit}.
 #' @param compare \code{character} specifying whether systems or SDGs should be cross tabulated.
 #' @param systems \code{character} vector specifying the query systems to be cross tabulated. Values must be available in the \code{system} column of \code{hits}. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.
 #' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the SDGs to be cross tabluated. Values must be available in the \code{sdg} column of \code{hits}. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.
@@ -15,7 +15,7 @@
 #'
 #' \donttest{
 #' # run sdg detection
-#' hits <- detect_sdg(projects)
+#' hits <- detect_sdg_systems(projects)
 #'
 #' # create cross table of systems
 #' crosstab_sdg(hits)

@@ -38,7 +38,7 @@ The function returns a \code{tibble} containing the SDG hits found in the vector
 }
 }
 \description{
-\code{detect_any} identifies SDGs in text using user provided query systems. Works like \code{\link{detect_sdg}} but uses a user specified query system instead of an existing one like \code{\link{detect_sdg}} does.
+\code{detect_any} identifies SDGs in text using user provided query systems. Works like \code{\link{detect_sdg_systems}} but uses a user specified query system instead of an existing one like \code{\link{detect_sdg_systems}} does.
 }
 \examples{
 \donttest{

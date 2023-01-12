@@ -16,7 +16,7 @@ plot_sdg(
 )
 }
 \arguments{
-\item{hits}{\code{data frame} as returned by \code{\link{detect_sdg}}. Must include columns \code{sdg} and \code{system}.}
+\item{hits}{\code{data frame} as returned by \code{\link{detect_sdg}} or \code{\link{detect_sdg_systems}}. Must include columns \code{sdg} and \code{system}.}
 
 \item{systems}{\code{character} vector specifying the query systems to be visualized. Values must be available in the \code{system} column of \code{hits}. \code{systems} of length greater 1 result, by default, in a stacked barplot. Defaults to \code{NULL} in which case available values are retrieved from \code{hits}.}
 
@@ -36,7 +36,7 @@ plot_sdg(
 The function returns a \code{\link[ggplot2]{ggplot}} object that can either be stored in an object or printed to produce the plot.
 }
 \description{
-\code{plot_sdg} creates a (stacked) barplot of the frequency distribution of SDGs identified via \link{detect_sdg}.
+\code{plot_sdg} creates a (stacked) barplot of the frequency distribution of SDGs identified via \link{detect_sdg} or \link{detect_sdg_systems}.
 }
 \details{
 The function is built using \code{\link[ggplot2]{ggplot}} and can thus be flexibly extended. See examples.
@@ -44,7 +44,7 @@ The function is built using \code{\link[ggplot2]{ggplot}} and can thus be flexib
 \examples{
 \donttest{
 # run sdg detection
-hits <- detect_sdg(projects)
+hits <- detect_sdg_systems(projects)
 
 # create barplot
 plot_sdg(hits)

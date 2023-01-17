@@ -23,11 +23,31 @@ library(text2sdg)
 
 The United Nations’ Sustainable Development Goals (SDGs) have become an important guideline for organizations to monitor and plan their contributions to social, economic, and environmental transformations. Existing approaches to identify efforts addressing each of the 17 goals rely on economic indicators or, in the case of academic output, on search engines of academic databases. `text2sdg` is the first open source, multi-system tool to detect SDGs in text.     
 
-The `text2sdg` package consists of five functions: `detect_sdg()`, `detect_sdg_systems()`, `detect_any()`, `plot_sdg()`, and `crosstab_sdg()`. The function `detect_sdg_systems()` carries out the detection of SDGs in text using up to six different established query systems. The function `detect_any()` enables search for custom search queries. Finally, the functions `plot_sdg()` and `crosstab_sdg()` help visualize and analyze the resulting SDG matches.
+The `text2sdg` package consists of five functions: `detect_sdg()`, `detect_sdg_systems()`, `detect_any()`, `plot_sdg()`, and `crosstab_sdg()`. The function `detect_sdg()` carries out the detection of SDGs in text using a trained machine learning model, whereas `detect_sdg_systems()` does so using up to six different query systems. The function `detect_any()` enables search for custom search queries. Finally, the functions `plot_sdg()` and `crosstab_sdg()` help visualize and analyze the resulting SDG matches.
+
+## Detecting SDGs using `detect_sdg()`
+
+The `detect_sdg()` function identifies SDGs in texts that are provided via the `text` argument. Inputs to `text` must either be a character vector or an object of `tCorpus` from package `corpustools`. `text` is the only non-default argument of the function, which means that the function can be run with only the texts as input. The output of the function is a `tibble` with one row per match including the following columns (and types):
+
+- `document` (`factor`) - index of element in the character vector or corpus supply for `text`
+- `sdg` (`character`) - labels indicating the matched SDGs
+- `system` (`character`) - the query system that produced the match
+- `hit` (`numeric`) - running index of matches
+
+The `detect_sdg()` function implements a ensemble model based on a random forest architecture that pools the predictions of six labeling systems generated using `detect_sdg_systems()` and also considers text length. The ensemble model can be run for any subset of the 17 SDGs by using the `sdgs` argument. Our research shows that the ensemble model implemented by `detect_sdg()` outperforms any individual labeling system and the OSDG tool developed by the UN SDG AI Lab (Wulff, Meier, & Mata, 2023).   
+
+The example below runs the `detect_sdg()` function for the `projects` data set included in the package and prints the results. The data set is a character vector containing 500 descriptions of randomly selected University of Basel research projects that were funded by the Swiss National Science Foundation (<a href="https://p3.snf.ch">https://p3.snf.ch</a>). The analysis produced a total of `62` matches.   
+
+```{r, eval=FALSE}
+# detecting SDGs in projects
+hits_default <- detect_sdg_systems(projects)
+hits_default
+```
+
 
 ## Detecting SDGs using `detect_sdg_systems()`
 
-The `detect_sdg_systems()` function identifies SDGs in texts that are provided via the `text` argument. Inputs to `text` must either be a character vector or an object of `tCorpus` from package `corpustools`. `text` is the only non-default argument of the function, which means that the function can be run with only the texts as input. The output of the function is a `tibble` with one row per match including the following columns (and types):
+The `detect_sdg_systems()` generates SDG labels by up to six different SDG labeling systems. The functions works similarly to `detect_sdg()` but has additional arguments to control which system are run and the aggregation of the output. The output is a `tibble` with one row per match including the following columns (and types):
 
 - `document` (`factor`) - index of element in the character vector or corpus supply for `text`
 - `sdg` (`character`) - labels indicating the matched SDGs
@@ -36,7 +56,7 @@ The `detect_sdg_systems()` function identifies SDGs in texts that are provided v
 - `features` (`character`) - words in the document that were matched by the query
 - `hit` (`numeric`) - running index of matches for each query system
 
-The example below runs the `detect_sdg_systems()` function for the `projects` data set included in the package and prints the results. The data set is a character vector containing 500 descriptions of randomly selected University of Basel research projects that were funded by the Swiss National Science Foundation (<a href="https://p3.snf.ch">https://p3.snf.ch</a>). The analysis produced a total of `461` matches using the three default query systems Aurora, Elsevier, and SIRIS.   
+The example below runs the `detect_sdg_systems()` function for the `projects` data. The analysis produced a total of `835` matches using the four default query systems Aurora, Elsevier, Auckland, and SIRIS.   
 
 ```{r, eval=FALSE}
 # detecting SDGs in projects
@@ -46,9 +66,9 @@ hits_default
 
 ### Selecting query systems 
 
-By default `sdg_detect()` runs the three query systems, Aurora, Elsevier, and SIRIS. Using the function's `system` argument the user can control which systems are run. There are two additional query systems that can be selected, SDSN and SDGO In comparison, these two systems are much simpler and less restrictive than the former three as they only rely on logical ORs to combine keywords, which results much larger numbers of SDGs. Systematic validations are outstanding; however, it is likely that SDSN and SDGO therefore also produce a larger number of false positives, which is the reason they are not included in the function's default query system set. More information about the systems can be gathered from the help files of the respective query data frames, `aurora_queries`, `elsevier_queries`, `siris_queries`, `sdsn_queries`, and `sdgo_queries`.
+By default `sdg_detect_systems()` runs the four query systems, Aurora, Elsevier, Auckland, and SIRIS. Using the function's `system` argument the user can control which systems are run. There are two additional query systems that can be selected, SDSN and SDGO. These two systems are much simpler and less restrictive than the former four as they only rely on basic keyword matching, whereas the four default systems are based on more complex search queries. As a result, the four default systems are more specific but also more prone to misses, whereas the two optional systems are more sensitive but also more prone to false alarms. Our research suggests that the four default systems are likely more accurate in balanced datasets including SDG-related and SDG-unrelated content (Wulff, Meier, & Mata, 2023). More information about the systems can be gathered from the help files of the respective query data frames, `aurora_queries`, `elsevier_queries`, `siris_queries`, `sdsn_queries`, and `sdgo_queries`.
 
-The example below runs the `detect_sdg_systems()` on the `projects` for each query system individually, including the two keyword-based systems. The resulting `tibble`s reveal that Aurora is most conservative (60 hits), followed by SIRIS (167), Elsevier (235), and then by large margin the two keyword-based systems SDSN (2,575) and SDGO (3,617). Note that the high numbers for the two keyword-based systems imply that, on average, 5 and 7 SDGs, respectively, are identified per document. 
+The example below runs the `detect_sdg_systems()` on the `projects` using all query systems, including the two keyword-based systems. The resulting `tibble`s reveal that Aurora is most conservative (60 hits), followed by SIRIS (166), Elsevier (235), Auckland (374), and then by large margin the two keyword-based systems SDSN (2,589) and SDGO (3,629). Note that the high numbers for the two keyword-based systems imply that, on average, 5 and 7 SDGs, respectively, are identified per document. 
 
 ```{r, echo = F}
 options(tibble.print_min = 5)
@@ -56,9 +76,9 @@ options(tibble.print_min = 5)
 
 
 ```{r}
-# detecting SDGs using all available query systems
+# detecting SDGs using all query systems
 hits_all <- detect_sdg_systems(projects,
-                       system = c("Aurora", "Elsevier", "SIRIS", "SDSN", "SDGO"))
+                       system = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"))
 
 # count hits of systems
 table(hits_all$system)
@@ -70,7 +90,7 @@ options(tibble.print_min = 10)
 
 ### Selecting SDGs
 
-By default the `detect_sdg_systems()` function aims to detect all SDGs covered by the different systems, which is 17 for Aurora, SDSN, and SDGO, and 16 for Elsevier and SIRIS. The latter two do not include queries for goal 17 - Global Partnerships for the Goals. If the user is only interested in a subset of SDGs or wants to reduce runtime, the `sdgs` argument can be used to run subsets of SDGs. The argument takes a numeric vector with integers in [1,17] indicating the SDGs that shall be detected. 
+By default the `detect_sdg()` and `detect_sdg_systems()` will try to detect all 17 SDGs. However, the user can limit the set of SDGs sought in text using the `sdgs` argument, which takes a numeric vector with integers in [1,17] as input. When using the `detect_sdg_systems()` function, the user should note that Elsevier and SIRIS contain queries only for the first 16 SDGs, exluding queries for goal 17 - Global Partnerships for the Goals.
 
 The example below runs the `detect_sdg_systems()` function only for SDGs 1, 2, 3, 4, and 5. 
 
@@ -82,7 +102,7 @@ hits_sdg_subset
 
 ### Controlling the output
 
-By default the output of the `detect_sdg_systems()` function returns matches at the level of query. This means one SDG can be matched multiple times in one document, which is possible because there are multiple queries belonging to the same SDGs produced in all systems except for Elsevier. On this level, it is meaningful to study the features (individual words) that were matched by the individual queries, which is why we refer to this output type as `"features"`. If the user is only interested in matches at the level of documents, a reduced output can be selected by setting the `output` argument to `"documents"`. As a result, the `detect_sdg()` returns a `tibble` that includes only distinct matches of `document`, `system`, and `sdg` combinations and drops the columns `query_id` and `features`.  
+By default, `detect_sdg_systems()` returns matches at the level of query. If a system has multiple queries for a single SDG, the output can include multiple hits (and rows) per document and system. Separating hits by queries can be useful because different queries typically capture different aspects of a given SDGs, which will be revealed through the keywords that were matched by the queries. These keyword matches are shown in the column `features` and, hence, we refer to thsi type of output as `"features"`. If the user is not interested in separating matches by queries and only cares about matches at the level of documents, a reduced output can be selected by setting the `output` argument to `"documents"`. In this case, the `detect_sdg_systems()` returns a `tibble` that includes only distinct matches of `document`, `system`, and `sdg` combinations, concatenates the values of `features` into a single character string, and drops the column `query_id`.  
 
 The example below shows the alternative output resulting from setting `output = "documents"`. 
 
@@ -93,11 +113,11 @@ detect_sdg_systems(projects, output = "documents")
 
 ### Keeping track of progress
 
-By default the `detect_sdg_systems()` function prints messages whenever it begins running a query system. This can help track the progress of the function, which for a large number of texts can take several minutes. To suppress these messages, the user can set the `verbose` argument to `FALSE`. 
+By default the `detect_sdg()` and `detect_sdg_systems()` function prints messages to communicate the progress of the underlying the SDG detection process, which can take several minutes. To suppress these messages, the user can set the `verbose` argument to `FALSE`. 
 
 ## Custom search with `detect_any()`
 
-The `text2sdg` provides with `detect_any()` a function that permits specification of custom query systems. The function operates similarly to `detect_sdg_systems()`, but it requires an additional argument `queries` that specifies the queries to be employed. The `queries` argument expects a `tibble` with the following columns:
+The `detect_any()` function permits specification of custom query systems. The function operates similarly to `detect_sdg_systems()`, but it requires an additional argument `queries` that specifies the queries to be employed. The `queries` argument expects a `tibble` with the following columns:
 
 - `system` (`character`) - names used to label query systems.
 - `queries` (`character`) - queries used in search. 
@@ -120,7 +140,7 @@ detect_any(text = projects,
 
 ## Visualizing hits with `plot_sdg()`
 
-To visualize the hits produced by `detect_sdg_systems`, the `text2sdg` package provides the function `plot_sdg()`. The function produces barplots illustrating either the hit frequencies produced by the different query systems. It is built on the `ggplot2` package, which provides high levels of flexibility for adapting and extending its visualizations.  
+To visualize the hits produced by the `detect_*` functions, the `text2sdg` package provides the function `plot_sdg()`. The function produces barplots illustrating either the hit frequencies produced by the different query systems. It is built on the `ggplot2` package, which provides high levels of flexibility for adapting and extending its visualizations.  
 
 By default `plot_sdg()` produces a stacked barplot of absolute hit frequencies. Frequencies are determined on the document level for each system and SDGs present in the `tibble` that was provided to the function's `hits` argument. If multiple hits per document, system and SDG combination exist, the function returns a message of how many duplicate hits have been suppressed.  
 
@@ -133,7 +153,7 @@ plot_sdg(hits_all)
 
 ### Adjusting visualizations
 
-The `detect_sdg_systems()` has several arguments that permit adjustment of the visualization. The `systems` and `sdgs` arguments can be used to visualize subsets of systems and/or SDGs. The `normalize` argument can be used to normalize the absolute frequency  by the number of documents (`normalize = "documents"`) or by the total number of hits within a system (`normalize = "systems"`). The `color` argument can be used to adapt the color set used for the systems. The `sdg_titles` argument can be used to add the full titles of the SDGs. The `remove duplicates` argument can be used to retain any duplicate hits of document, system, and SDG combinations. Finally, the `...` arguments can be used to pass on additional arguments to the `geom_bar()` function that underlies `detect_sdg_systems()`.      
+The `plot_sdg()` function has several arguments that permit adjustment of the visualization. The `systems` and `sdgs` arguments can be used to visualize subsets of systems and/or SDGs. The `normalize` argument can be used to normalize the absolute frequency  by the number of documents (`normalize = "documents"`) or by the total number of hits within a system (`normalize = "systems"`). The `color` argument can be used to adapt the color set used for the systems. The `sdg_titles` argument can be used to add the full titles of the SDGs. The `remove_duplicates` argument can be used to retain any duplicate hits of document, system, and SDG combinations. Finally, the `...` arguments can be used to pass on additional arguments to the `geom_bar()` function that underlies `detect_sdg_systems()`.      
 
 The example below uses some of the available arguments to make adjustments to the default visualization. With `normalize = "systems"` and `position = "dodge"`, an argument passed to `geom_bar()`, it shows the proportion of SDG hits per system with bars presented side-by-side rather than stacked. Furthermore, due to `sdg_titles = TRUE` the full titles are shown rather than SDG numbers.  
 
@@ -158,7 +178,7 @@ plot_sdg(hits_all) +
 
 ## Analyzing hits using `crosstab_sdg()`
 
-To assist the user in understanding the relationships among SDGs and query systems, the `text2sdg` package provides the `crosstab_sdg()` function. The function takes as input the `tibble` of hits produced by `detect_sdg_systems()` and compares hits between either systems or SDGs. Comparing hits by system means that correlations are determined across all documents and all SDGs for every pair of systems to produce a fully crossed table of system correlations. Conversely, comparing hits by SDG means that correlations are determined across all documents and all systems for every pair of SDGs to produce a fully crossed table of SDG correlations. 
+To assist the user in understanding the relationships among SDGs and query systems, the `text2sdg` package provides the `crosstab_sdg()` function. The function takes as input the `tibble` of hits produced by any of the detect functions and compares hits between either systems or SDGs. Comparing hits by system means that correlations are determined across all documents and all SDGs for every pair of systems to produce a fully crossed table of system correlations. Conversely, comparing hits by SDG means that correlations are determined across all documents and all systems for every pair of SDGs to produce a fully crossed table of SDG correlations. 
 
 ### Correspondence between query systems
 

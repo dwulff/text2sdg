@@ -1,3 +1,7 @@
+# text2sdg 0.2.0
+* changed hits to n_hits
+
+
 # text2sdg 0.1.6
 * Fixed bug in detect_any function (did not work as expected with argument output = "documents")
 

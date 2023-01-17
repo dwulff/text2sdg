@@ -12,7 +12,7 @@
 #' @param output \code{character} specifying the level of detail in the output. The default \code{"features"} returns a \code{tibble} with one row per matched query, include a variable containing the features of the query that were matched in the text. By contrast, \code{"documents"} returns an aggregated \code{tibble} with one row per matched sdg, without information on the features.
 #' @param verbose \code{logical} specifying whether messages on the function's progress should be printed.
 
-#' @return The function returns a tibble containing the SDG hits found in the vector of documents. Depending on the value of \code{output} the tibble will contain all or some of the following columns:
+#' @return The function returns a \code{tibble} containing the SDG hits found in the vector of documents. The columns of the \code{tibble} depend on the value of \code{output}. Possible columns are:
 #' \describe{
 #'  \item{document}{Index of the element in \code{text} where match was found. Formatted as a factor with the number of levels matching the original number of documents.}
 #'  \item{sdg}{Label of the SDG found in document.}
@@ -20,6 +20,7 @@
 #'  \item{query_id}{Index of the query within the query system that produced the match.}
 #'  \item{features}{Concatenated list of words that caused the query to match.}
 #'  \item{hit}{Index of hit for a given system.}
+#'  \item{n_hits}{Number of queries that produced a hit for a given system, sdg, and document.}
 #' }
 #'
 #' @examples
@@ -95,7 +96,7 @@ detect_sdg_systems = function(text,
   if(output[1] == "documents"){
     hits = hits %>%
       dplyr::group_by(document, sdg, system) %>%
-      dplyr::summarize(hits = dplyr::n(),
+      dplyr::summarize(n_hit = dplyr::n(),
                        features = paste(features, collapse = ", ")) %>%
       dplyr::ungroup()
   } else {
@@ -103,8 +104,9 @@ detect_sdg_systems = function(text,
   }
 
   #convert document to factor for downstream functions
-  hits <- hits %>%
+  hits = hits %>%
     dplyr::mutate(document = factor(document, levels = 1:length(corpus$doc_id_levels)))
+
   #output
   hits %>%
     dplyr::arrange(document, sdg, system)

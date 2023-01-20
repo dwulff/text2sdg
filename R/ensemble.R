@@ -94,6 +94,10 @@ detect_sdg = function(text,
 
   if(verbose) cat("\nRunning ensemble",sep = '')
 
+
+  # get around ::: warning
+  predict.ranger <- utils::getFromNamespace("predict.ranger", "ranger")
+
   # run ensemble
   hits = list()
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
@@ -105,7 +109,7 @@ detect_sdg = function(text,
       }
     hits[[s]] = tibble::tibble(document = tbl_sdg %>% dplyr::pull(document),
                                sdg = sdgs[s],
-                               pred = ranger:::predict.ranger(m, data = tbl_sdg)$predictions)
+                               pred = predict.ranger(m, data = tbl_sdg)$predictions)
     }
 
   # combine hits

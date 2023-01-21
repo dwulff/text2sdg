@@ -47,7 +47,7 @@ hits_default
 
 ## Detecting SDGs using `detect_sdg_systems()`
 
-The `detect_sdg_systems()` generates SDG labels by up to six different SDG labeling systems. The functions works similarly to `detect_sdg()` but has additional arguments to control which system are run and the aggregation of the output. The output is a `tibble` with one row per match including the following columns (and types):
+The `detect_sdg_systems()` function generates SDG labels by using up to six different SDG labeling systems. The function works similarly to `detect_sdg()` but has additional arguments to control which systems are run and the aggregation of the output. The output is a `tibble` with one row per match including the following columns (and types):
 
 - `document` (`factor`) - index of element in the character vector or corpus supply for `text`
 - `sdg` (`character`) - labels indicating the matched SDGs
@@ -66,7 +66,7 @@ hits_default
 
 ### Selecting query systems 
 
-By default `sdg_detect_systems()` runs the four query systems, Aurora, Elsevier, Auckland, and SIRIS. Using the function's `system` argument the user can control which systems are run. There are two additional query systems that can be selected, SDSN and SDGO. These two systems are much simpler and less restrictive than the former four as they only rely on basic keyword matching, whereas the four default systems are based on more complex search queries. As a result, the four default systems are more specific but also more prone to misses, whereas the two optional systems are more sensitive but also more prone to false alarms. Our research suggests that the four default systems are likely more accurate in balanced datasets including SDG-related and SDG-unrelated content (Wulff, Meier, & Mata, 2023). More information about the systems can be gathered from the help files of the respective query data frames, `aurora_queries`, `elsevier_queries`, `siris_queries`, `sdsn_queries`, and `sdgo_queries`.
+By default `sdg_detect_systems()` runs the four query systems, Aurora, Elsevier, Auckland, and SIRIS. Using the function's `system` argument the user can control which systems are run. There are two additional query systems that can be selected, SDSN and SDGO. These two systems are much simpler and less restrictive than the former four as they only rely on basic keyword matching, whereas the four default systems are based on more complex search queries. As a result, the four default systems are more specific but also more prone to misses, whereas the two optional systems are more sensitive but also more prone to false alarms. Our research suggests that the four default systems are likely more accurate in balanced datasets including SDG-related and SDG-unrelated content (Wulff, Meier, & Mata, 2023). More information about the systems can be gathered from the help files of the respective query data frames, `aurora_queries`, `elsevier_queries`, `auckland_queries`, `siris_queries`, `sdsn_queries`, and `sdgo_queries`.
 
 The example below runs the `detect_sdg_systems()` on the `projects` using all query systems, including the two keyword-based systems. The resulting `tibble`s reveal that Aurora is most conservative (60 hits), followed by SIRIS (166), Elsevier (235), Auckland (374), and then by large margin the two keyword-based systems SDSN (2,589) and SDGO (3,629). Note that the high numbers for the two keyword-based systems imply that, on average, 5 and 7 SDGs, respectively, are identified per document. 
 
@@ -77,8 +77,13 @@ options(tibble.print_min = 5)
 
 ```{r}
 # detecting SDGs using all query systems
+# hits_all <- detect_sdg_systems(projects,
+#                        system = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"))
 hits_all <- detect_sdg_systems(projects,
-                       system = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"))
+                       system = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN"))
+
+# hits_all <- detect_sdg_systems(projects,
+#                        system = c("SDGO"))
 
 # count hits of systems
 table(hits_all$system)
@@ -90,7 +95,7 @@ options(tibble.print_min = 10)
 
 ### Selecting SDGs
 
-By default the `detect_sdg()` and `detect_sdg_systems()` will try to detect all 17 SDGs. However, the user can limit the set of SDGs sought in text using the `sdgs` argument, which takes a numeric vector with integers in [1,17] as input. When using the `detect_sdg_systems()` function, the user should note that Elsevier and SIRIS contain queries only for the first 16 SDGs, exluding queries for goal 17 - Global Partnerships for the Goals.
+By default the `detect_sdg()` and `detect_sdg_systems()` will try to detect all 17 SDGs. However, the user can limit the set of SDGs sought in text using the `sdgs` argument, which takes a numeric vector with integers in [1,17] as input. When using the `detect_sdg_systems()` function, the user should note that Elsevier, SIRIS and Auckland contain queries only for the first 16 SDGs, exluding queries for goal 17 - Global Partnerships for the Goals.
 
 The example below runs the `detect_sdg_systems()` function only for SDGs 1, 2, 3, 4, and 5. 
 
@@ -113,7 +118,7 @@ detect_sdg_systems(projects, output = "documents")
 
 ### Keeping track of progress
 
-By default the `detect_sdg()` and `detect_sdg_systems()` function prints messages to communicate the progress of the underlying the SDG detection process, which can take several minutes. To suppress these messages, the user can set the `verbose` argument to `FALSE`. 
+By default the `detect_sdg()` and `detect_sdg_systems()` function prints messages to communicate the progress of the underlying SDG detection process, which can take several minutes. To suppress these messages, the user can set the `verbose` argument to `FALSE`. 
 
 ## Custom search with `detect_any()`
 

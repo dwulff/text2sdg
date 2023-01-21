@@ -8,7 +8,7 @@
 A \code{character} vector of length 500.
 }
 \source{
-\url{https://p3.snf.ch/Pages/DataAndDocumentation.aspx}
+\url{https://data.snf.ch/about/glossary}
 }
 \usage{
 projects

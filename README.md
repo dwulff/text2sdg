@@ -14,8 +14,8 @@ The `text2sdg` package is the first open-source, multi-system analysis package t
 The `text2sdg` package is developed by Dirk U. Wulff and Dominik S. Meier, with contributions from Rui Mata and the <a href="https://cds.unibas.ch/">Center for Cognitive and Decision Sciences</a>. It is published under the GNU General Public License.
 
 An overview of the package can be accessed
-[online](https://dwulff.github.io/text2sdg/reference/text2sdg.html) or from within R using `?text2sdg`. A tutorial illustrating the use of the package can be accessed
-[online](https://dwulff.github.io/text2sdg/articles/text2sdg.html) or from within R using `vignette("text2sdg")`.
+[online](https://www.text2sdg.io/reference/text2sdg.html) or from within R using `?text2sdg`. A tutorial illustrating the use of the package can be accessed
+[online]( https://www.text2sdg.io/articles/text2sdg.html) or from within R using `vignette("text2sdg")`.
 
 # Installation
 

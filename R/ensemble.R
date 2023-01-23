@@ -97,6 +97,7 @@ detect_sdg = function(text,
 
   # get around ::: warning
   predict.ranger <- utils::getFromNamespace("predict.ranger", "ranger")
+  aaa <- ranger::treeInfo
 
   # run ensemble
   hits = list()

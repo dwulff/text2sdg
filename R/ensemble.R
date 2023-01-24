@@ -22,6 +22,7 @@
 #' }
 #'
 #' @references Wulff, D. U., Meier, D., & Mata, R. (2023). Using novel data and ensemble models to improve automated SDG-labeling. arXiv
+#' @importFrom ranger treeInfo
 #'
 #' @examples
 #' \donttest{

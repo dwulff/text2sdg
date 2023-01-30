@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">text2sdg</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
       </span>
     </div>
 
@@ -56,7 +58,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/dwulff/text2sdg">
+  <a href="https://github.com/dwulff/text2sdg" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -71,293 +73,489 @@
 
       
 
-      </header><script src="text2sdg_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>text2sdg: Detecting UN Sustainable Development Goals in Text</h1>
+      <h1 data-toc-skip>text2sdg: Detecting UN Sustainable Development
+Goals in Text</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/dwulff/text2sdg/blob/master/vignettes/text2sdg.Rmd"><code>vignettes/text2sdg.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dwulff/text2sdg/blob/HEAD/vignettes/text2sdg.Rmd" class="external-link"><code>vignettes/text2sdg.Rmd</code></a></small>
       <div class="hidden name"><code>text2sdg.Rmd</code></div>
 
     </div>
 
     
     
-<div id="introduction" class="section level2">
-<h2 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>The United Nations’ Sustainable Development Goals (SDGs) have become an important guideline for organizations to monitor and plan their contributions to social, economic, and environmental transformations. Existing approaches to identify efforts addressing each of the 17 goals rely on economic indicators or, in the case of academic output, on search engines of academic databases. <code>text2sdg</code> is the first open source, multi-system tool to detect SDGs in text.</p>
-<p>The <code>text2sdg</code> package consists of four functions: <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code>, <code><a href="../reference/detect_any.html">detect_any()</a></code>, <code><a href="../reference/plot_sdg.html">plot_sdg()</a></code>, and <code><a href="../reference/crosstab_sdg.html">crosstab_sdg()</a></code>. The function <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> carries out the detection of SDGs in text using up to five different established query systems. The function <code><a href="../reference/detect_any.html">detect_any()</a></code> enables search for custom search queries. Finally, the functions <code><a href="../reference/plot_sdg.html">plot_sdg()</a></code> and <code><a href="../reference/crosstab_sdg.html">crosstab_sdg()</a></code> help visualize and analyze the resulting SDG matches.</p>
-</div>
-<div id="detecting-sdgs-using-detect_sdg" class="section level2">
-<h2 class="hasAnchor">
-<a href="#detecting-sdgs-using-detect_sdg" class="anchor"></a>Detecting SDGs using <code>detect_sdg()</code>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> identifies SDGs in texts that are provided via the <code>text</code> argument. Inputs to <code>text</code> must either be a character vector or an object of <code>tCorpus</code> from package <code>corpustools</code>. <code>text</code> is the only non-default argument of the function, which means that the function can be run with only the texts as input. The output of the function is a <code>tibble</code> with one row per match including the following columns (and types):</p>
+<p>The United Nations’ Sustainable Development Goals (SDGs) have become
+an important guideline for organizations to monitor and plan their
+contributions to social, economic, and environmental transformations.
+Existing approaches to identify efforts addressing each of the 17 goals
+rely on economic indicators or, in the case of academic output, on
+search engines of academic databases. <code>text2sdg</code> is the first
+open source, multi-system tool to detect SDGs in text.</p>
+<p>The <code>text2sdg</code> package consists of five functions:
+<code><a href="../reference/detect_sdg.html">detect_sdg()</a></code>, <code><a href="../reference/detect_sdg_systems.html">detect_sdg_systems()</a></code>,
+<code><a href="../reference/detect_any.html">detect_any()</a></code>, <code><a href="../reference/plot_sdg.html">plot_sdg()</a></code>, and
+<code><a href="../reference/crosstab_sdg.html">crosstab_sdg()</a></code>. The function <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code>
+carries out the detection of SDGs in text using a trained machine
+learning model, whereas <code><a href="../reference/detect_sdg_systems.html">detect_sdg_systems()</a></code> does so using
+up to six different query systems. The function
+<code><a href="../reference/detect_any.html">detect_any()</a></code> enables search for custom search queries.
+Finally, the functions <code><a href="../reference/plot_sdg.html">plot_sdg()</a></code> and
+<code><a href="../reference/crosstab_sdg.html">crosstab_sdg()</a></code> help visualize and analyze the resulting SDG
+matches.</p>
+</div>
+<div class="section level2">
+<h2 id="detecting-sdgs-using-detect_sdg">Detecting SDGs using <code>detect_sdg()</code><a class="anchor" aria-label="anchor" href="#detecting-sdgs-using-detect_sdg"></a>
+</h2>
+<p>The <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> function identifies SDGs in texts that
+are provided via the <code>text</code> argument. Inputs to
+<code>text</code> must either be a character vector or an object of
+<code>tCorpus</code> from package <code>corpustools</code>.
+<code>text</code> is the only non-default argument of the function,
+which means that the function can be run with only the texts as input.
+The output of the function is a <code>tibble</code> with one row per
+match including the following columns (and types):</p>
 <ul>
 <li>
-<code>document</code> (<code>factor</code>) - index of element in the character vector or corpus supply for <code>text</code>
+<code>document</code> (<code>factor</code>) - index of element in
+the character vector or corpus supply for <code>text</code>
 </li>
 <li>
-<code>sdg</code> (<code>character</code>) - labels indicating the matched SDGs</li>
+<code>sdg</code> (<code>character</code>) - labels indicating the
+matched SDGs</li>
 <li>
-<code>system</code> (<code>character</code>) - the query system that produced the match</li>
+<code>system</code> (<code>character</code>) - the query system that
+produced the match</li>
 <li>
-<code>query_id</code> (<code>integer</code>) - identifier of query in the query system</li>
-<li>
-<code>features</code> (<code>character</code>) - words in the document that were matched by the query</li>
-<li>
-<code>hit</code> (<code>numeric</code>) - running index of matches for each query system</li>
+<code>hit</code> (<code>numeric</code>) - running index of
+matches</li>
 </ul>
-<p>The example below runs the <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> for the <code>projects</code> data set included in the package prints the results. The data set is character vector containing 500 descriptions of randomly selected University of Basel research projects that were funded by the Swiss National Science Foundation (<a href="https://p3.snf.ch">https://p3.snf.ch</a>). The analysis produced a total of <code>462</code> matches using the three default query systems Aurora, Elsevier, and SIRIS.</p>
+<p>The <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> function implements a ensemble model
+based on a random forest architecture that pools the predictions of six
+labeling systems generated using <code><a href="../reference/detect_sdg_systems.html">detect_sdg_systems()</a></code> and
+also considers text length. The ensemble model can be run for any subset
+of the 17 SDGs by using the <code>sdgs</code> argument. Our research
+shows that the ensemble model implemented by <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code>
+outperforms any individual labeling system and the OSDG tool developed
+by the UN SDG AI Lab (Wulff, Meier, &amp; Mata, 2023).</p>
+<p>The example below runs the <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> function for the
+<code>projects</code> data set included in the package and prints the
+results. The data set is a character vector containing 500 descriptions
+of randomly selected University of Basel research projects that were
+funded by the Swiss National Science Foundation
+(<a href="https://p3.snf.ch" class="external-link">https://p3.snf.ch</a>). The analysis
+produced a total of <code>62</code> matches.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># detecting SDGs in projects</span>
-<span class="va">hits_default</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_sdg.html">detect_sdg</a></span><span class="op">(</span><span class="va">projects</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Running aurora queries</span>
-<span class="co">#&gt; Running siris queries</span>
-<span class="co">#&gt; Running elsevier queries</span>
-<span class="va">hits_default</span>
-<span class="co">#&gt; # A tibble: 462 × 6</span>
-<span class="co">#&gt;    document sdg    system  query_id features                                 hit</span>
-<span class="co">#&gt;  * &lt;fct&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;                                  &lt;int&gt;</span>
-<span class="co">#&gt;  1 1        SDG-03 elsevi…        3 tuberculosis, human, tuberculosis, di…     1</span>
-<span class="co">#&gt;  2 6        SDG-03 elsevi…        3 cancer                                     2</span>
-<span class="co">#&gt;  3 8        SDG-03 elsevi…        3 vaccine                                    3</span>
-<span class="co">#&gt;  4 14       SDG-03 elsevi…        3 cancer, cardiovascular, disease, obes…     4</span>
-<span class="co">#&gt;  5 15       SDG-03 elsevi…        3 disease, human, human, human, disease…     5</span>
-<span class="co">#&gt;  6 17       SDG-13 elsevi…       13 climate, prediction                        6</span>
-<span class="co">#&gt;  7 19       SDG-03 elsevi…        3 mental, health, mental, health, menta…     7</span>
-<span class="co">#&gt;  8 19       SDG-03 siris        749 sleep, quality                             1</span>
-<span class="co">#&gt;  9 21       SDG-03 elsevi…        3 human, medicine, health, human             8</span>
-<span class="co">#&gt; 10 22       SDG-03 elsevi…        3 cancer, cancer, cancer, cancer, cance…     9</span>
-<span class="co">#&gt; # … with 452 more rows</span></code></pre></div>
-<div id="selecting-query-systems" class="section level3">
-<h3 class="hasAnchor">
-<a href="#selecting-query-systems" class="anchor"></a>Selecting query systems</h3>
-<p>By default <code>sdg_detect()</code> runs the three query systems, Aurora, Elsevier, and SIRIS. Using the function’s <code>system</code> argument the user can control which systems are run. There are two additional query systems that can be selected, Ontology and SDSN. In comparison, these two systems are much simpler and less restrictive than the former three as they only rely on logical ORs to combine keywords, which results much larger numbers of SDGs. Systematic validations are outstanding; however, it is likely that Ontology and SDSN therefore also produce a larger number of false positives, which is the reason they are not included in the function’s default query system set. More information about the systems can be gathered from the help files of the respective query data frames, <code>aurora_queries</code>, <code>elsevier_queries</code>, <code>siris_queries</code>, <code>sdsn_queries</code>, and <code>ontology_queries</code>.</p>
-<p>The example below runs the <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> on the <code>projects</code> for each query system individually, including the two keyword-based systems. The resulting <code>tibble</code>s reveal that Aurora is most conservative (60 hits), followed by SIRIS (167), Elsevier (235), and then by large margin the two keyword-based systems SDSN (2,575) and Ontology (3,617). Note that the high numbers for the two keyword-based systems imply that, on average, 5 and 7 SDGs, respectively, are identified per document.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># detecting SDGs using all available query systems</span>
-<span class="va">hits_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_sdg.html">detect_sdg</a></span><span class="op">(</span><span class="va">projects</span>, 
-                       system <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"aurora"</span>, <span class="st">"elsevier"</span>, <span class="st">"siris"</span>, <span class="st">"sdsn"</span>, <span class="st">"ontology"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Running aurora queries</span>
-<span class="co">#&gt; Running siris queries</span>
-<span class="co">#&gt; Running elsevier queries</span>
-<span class="co">#&gt; Running ontology queries</span>
-<span class="co">#&gt; Running sdsn queries</span>
-
-<span class="co"># count hits of systems</span>
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">hits_all</span><span class="op">$</span><span class="va">system</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   aurora elsevier ontology     sdsn    siris </span>
-<span class="co">#&gt;       60      235     3617     2575      167</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># detecting SDGs in projects</span></span>
+<span><span class="va">hits_default</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_sdg_systems.html">detect_sdg_systems</a></span><span class="op">(</span><span class="va">projects</span><span class="op">)</span></span>
+<span><span class="va">hits_default</span></span></code></pre></div>
 </div>
-<div id="selecting-sdgs" class="section level3">
-<h3 class="hasAnchor">
-<a href="#selecting-sdgs" class="anchor"></a>Selecting SDGs</h3>
-<p>By default the <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> function aims to detect all SDGs covered by the different systems, which is 17 for Aurora, Ontology, and SDSN, and 16 for Elsevier and Siris. The latter two do not include queries for goal 17 - Global Partnerships for the Goals. If the user is only interested in a subset of SDGs or wants to reduce runtime, the <code>sdgs</code> argument can be used to run subsets of SDGs. The argument takes a numeric vector with integers in [1,17] indicating the SDGs that shall be detected.</p>
-<p>The example below runs the <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> function only for SDGs 1, 2, 3, 4, and 5.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># detecting only for SDGs 1 to 5</span>
-<span class="va">hits_sdg_subset</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_sdg.html">detect_sdg</a></span><span class="op">(</span><span class="va">projects</span>, sdgs <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Running aurora queries</span>
-<span class="co">#&gt; Running siris queries</span>
-<span class="co">#&gt; Running elsevier queries</span>
-<span class="va">hits_sdg_subset</span>
-<span class="co">#&gt; # A tibble: 241 × 6</span>
-<span class="co">#&gt;    document sdg    system  query_id features                                 hit</span>
-<span class="co">#&gt;  * &lt;fct&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;                                  &lt;int&gt;</span>
-<span class="co">#&gt;  1 1        SDG-03 elsevi…        3 tuberculosis, human, tuberculosis, di…     1</span>
-<span class="co">#&gt;  2 6        SDG-03 elsevi…        3 cancer                                     2</span>
-<span class="co">#&gt;  3 8        SDG-03 elsevi…        3 vaccine                                    3</span>
-<span class="co">#&gt;  4 14       SDG-03 elsevi…        3 cancer, cardiovascular, disease, obes…     4</span>
-<span class="co">#&gt;  5 15       SDG-03 elsevi…        3 disease, human, human, human, disease…     5</span>
-<span class="co">#&gt;  6 19       SDG-03 elsevi…        3 mental, health, mental, health, menta…     6</span>
-<span class="co">#&gt;  7 19       SDG-03 siris        749 sleep, quality                             1</span>
-<span class="co">#&gt;  8 21       SDG-03 elsevi…        3 human, medicine, health, human             7</span>
-<span class="co">#&gt;  9 22       SDG-03 elsevi…        3 cancer, cancer, cancer, cancer, cance…     8</span>
-<span class="co">#&gt; 10 23       SDG-03 elsevi…        3 cancers, cancer, diseases, Human           9</span>
-<span class="co">#&gt; # … with 231 more rows</span></code></pre></div>
-</div>
-<div id="controlling-the-output" class="section level3">
-<h3 class="hasAnchor">
-<a href="#controlling-the-output" class="anchor"></a>Controlling the output</h3>
-<p>By default the output of the <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> function returns matches at the level of query. This means one SDG can be matched multiple times in one document, which is possible because there are multiple queries belonging to the same SDGs produced in all systems except for Elsevier. On this level, it is meaningful to study the features (individual words) that were matched by the individual queries, which is why we refer to this output type as <code>"features"</code>. If the user is only interested in matches at the level of documents, a reduced output can be selected by setting the <code>output</code> argument to <code>"documents"</code>. As a result, the <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> returns a <code>tibble</code> that includes only distinct matches of <code>document</code>, <code>system</code>, and <code>sdg</code> combinations and drops the columns <code>query_id</code> and <code>features</code>.</p>
-<p>The example below shows the alternative output resulting from setting <code>output = "documents"</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># return documents output format</span>
-<span class="fu"><a href="../reference/detect_sdg.html">detect_sdg</a></span><span class="op">(</span><span class="va">projects</span>, output <span class="op">=</span> <span class="st">"documents"</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Running aurora queries</span>
-<span class="co">#&gt; Running siris queries</span>
-<span class="co">#&gt; Running elsevier queries</span>
-<span class="co">#&gt; # A tibble: 418 × 4</span>
-<span class="co">#&gt;    document sdg    system    hits</span>
-<span class="co">#&gt;    &lt;fct&gt;    &lt;chr&gt;  &lt;chr&gt;    &lt;int&gt;</span>
-<span class="co">#&gt;  1 1        SDG-03 elsevier     1</span>
-<span class="co">#&gt;  2 6        SDG-03 elsevier     1</span>
-<span class="co">#&gt;  3 8        SDG-03 elsevier     1</span>
-<span class="co">#&gt;  4 14       SDG-03 elsevier     1</span>
-<span class="co">#&gt;  5 15       SDG-03 elsevier     1</span>
-<span class="co">#&gt;  6 17       SDG-13 elsevier     1</span>
-<span class="co">#&gt;  7 19       SDG-03 elsevier     1</span>
-<span class="co">#&gt;  8 19       SDG-03 siris        1</span>
-<span class="co">#&gt;  9 21       SDG-03 elsevier     1</span>
-<span class="co">#&gt; 10 22       SDG-03 elsevier     1</span>
-<span class="co">#&gt; # … with 408 more rows</span></code></pre></div>
-</div>
-<div id="keeping-track-of-progress" class="section level3">
-<h3 class="hasAnchor">
-<a href="#keeping-track-of-progress" class="anchor"></a>Keeping track of progress</h3>
-<p>By default the <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> function prints messages whenever it begins running a query system. This can help track the progress of the function, which for a large number of texts can take several minutes. To suppress these messages, the user can set the <code>verbose</code> argument to <code>FALSE</code>.</p>
-</div>
-</div>
-<div id="custom-search-with-detect_any" class="section level2">
-<h2 class="hasAnchor">
-<a href="#custom-search-with-detect_any" class="anchor"></a>Custom search with <code>detect_any()</code>
+<div class="section level2">
+<h2 id="detecting-sdgs-using-detect_sdg_systems">Detecting SDGs using <code>detect_sdg_systems()</code><a class="anchor" aria-label="anchor" href="#detecting-sdgs-using-detect_sdg_systems"></a>
 </h2>
-<p>The <code>text2sdg</code> provides with <code><a href="../reference/detect_any.html">detect_any()</a></code> a function that permits specification of custom query systems. The function operates similarly to <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code>, but it requires an additional argument <code>queries</code> that specifies the queries to be employed. The <code>queries</code> argument expects a <code>tibble</code> with the following columns:</p>
+<p>The <code><a href="../reference/detect_sdg_systems.html">detect_sdg_systems()</a></code> function generates SDG labels
+by using up to six different SDG labeling systems. The function works
+similarly to <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> but has additional arguments to
+control which systems are run and the aggregation of the output. The
+output is a <code>tibble</code> with one row per match including the
+following columns (and types):</p>
 <ul>
 <li>
-<code>system</code> (<code>character</code>) - names used to label query systems.</li>
+<code>document</code> (<code>factor</code>) - index of element in
+the character vector or corpus supply for <code>text</code>
+</li>
 <li>
-<code>queries</code> (<code>character</code>) - queries used in search.</li>
+<code>sdg</code> (<code>character</code>) - labels indicating the
+matched SDGs</li>
 <li>
-<code>sdg</code> (<code>integer</code>) - mapping of queries to SDGs.</li>
+<code>system</code> (<code>character</code>) - the query system that
+produced the match</li>
+<li>
+<code>query_id</code> (<code>integer</code>) - identifier of query
+in the query system</li>
+<li>
+<code>features</code> (<code>character</code>) - words in the
+document that were matched by the query</li>
+<li>
+<code>hit</code> (<code>numeric</code>) - running index of matches
+for each query system</li>
 </ul>
-<p>The queries in the custom query set can be Lucene-style queries following the syntax of the <code>corpustools</code> package. See <code>vignette("corpustools")</code>. This is illustrated in the example below. First, a tibble of three queries is defined that includes a single system and three queries that are mapped onto two sdgs, 3 and 7. The first query represents a simple keyword search, whereas queries 2 and 3 are proper search queries using logical operators.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># definition of query set</span>
-<span class="va">my_queries</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>system <span class="op">=</span> <span class="st">"my_system"</span>,
-                              query <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"theory"</span>, <span class="st">"analysis OR analyses OR analyzed"</span>, <span class="st">"study AND hypothesis"</span><span class="op">)</span>,
-                              sdg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">7</span>,<span class="fl">7</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># return documents output format</span>
-<span class="fu"><a href="../reference/detect_any.html">detect_any</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">projects</span>, 
-           queries <span class="op">=</span> <span class="va">my_queries</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 280 × 6</span>
-<span class="co">#&gt;    document sdg    system    query_id features             hit</span>
-<span class="co">#&gt;    &lt;fct&gt;    &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;              &lt;int&gt;</span>
-<span class="co">#&gt;  1 2        SDG-07 my_system        2 analysis              62</span>
-<span class="co">#&gt;  2 4        SDG-07 my_system        2 analysis             189</span>
-<span class="co">#&gt;  3 8        SDG-07 my_system        2 analyses, analysis   267</span>
-<span class="co">#&gt;  4 9        SDG-07 my_system        2 analysis             274</span>
-<span class="co">#&gt;  5 10       SDG-07 my_system        2 analysis, analyses     1</span>
-<span class="co">#&gt;  6 11       SDG-07 my_system        2 analysis               6</span>
-<span class="co">#&gt;  7 13       SDG-07 my_system        3 hypothesis, study     19</span>
-<span class="co">#&gt;  8 15       SDG-07 my_system        2 analysis              28</span>
-<span class="co">#&gt;  9 15       SDG-07 my_system        3 study, hypothesis     29</span>
-<span class="co">#&gt; 10 16       SDG-07 my_system        2 analyzed              39</span>
-<span class="co">#&gt; # … with 270 more rows</span></code></pre></div>
-</div>
-<div id="visualizing-hits-with-plot_sdg" class="section level2">
-<h2 class="hasAnchor">
-<a href="#visualizing-hits-with-plot_sdg" class="anchor"></a>Visualizing hits with <code>plot_sdg()</code>
-</h2>
-<p>To visualize the hits produced by <code>detect_sdg</code>, the <code>text2sdg</code> package provides the function <code><a href="../reference/plot_sdg.html">plot_sdg()</a></code>. The function produces barplots illustrating either the hit frequencies produced by the different query systems. It is built on the <code>ggplot2</code> package, which provides high levels of flexibility for adapting and extending its visualizations.</p>
-<p>By default <code><a href="../reference/plot_sdg.html">plot_sdg()</a></code> produces a stacked barplot of absolute hit frequencies. Frequencies are determined on the document level for each system and SDGs present in the <code>tibble</code> that was provided to the function’s <code>hits</code> argument. If multiple hits per document, system and SDG combination exist, the function returns a message of how many duplicate hits have been suppressed.</p>
-<p>The example below produces the default visualization for the hits of all five systems. Since the object was created with <code>"output = features"</code>, the function informs that a total of 2490 duplicate hits were removed.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># show stacked barplot of hits</span>
-<span class="fu"><a href="../reference/plot_sdg.html">plot_sdg</a></span><span class="op">(</span><span class="va">hits_all</span><span class="op">)</span>
-<span class="co">#&gt; 2490 duplicate hits removed. Set remove_duplicates = FALSE to retain duplicates.</span></code></pre></div>
-<p><img src="text2sdg_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
-<div id="adjusting-visualizations" class="section level3">
-<h3 class="hasAnchor">
-<a href="#adjusting-visualizations" class="anchor"></a>Adjusting visualizations</h3>
-<p>The <code><a href="../reference/plot_sdg.html">plot_sdg()</a></code> has several arguments that permit adjustment of the visualization. The <code>systems</code> and <code>sdgs</code> arguments can be used to visualize subsets of systems and/or SDGs. The <code>normalize</code> argument can be used to normalize the absolute frequency by the number of documents (<code>normalize = "documents"</code>) or by the total number of hits within a system (<code>normalize = "systems"</code>). The <code>color</code> argument can be used to adapt the color set used for the systems. The <code>sdg_titles</code> argument can be used to add the full titles of the SDGs. The <code>remove duplicates</code> argument can be used to retain any duplicate hits of document, system, and SDG combinations. Finally, the <code>...</code> arguments can be used to pass on additional arguments to the <code>geom_bar()</code> function that underlies <code><a href="../reference/plot_sdg.html">plot_sdg()</a></code>.</p>
-<p>The example below uses some of the available arguments to make adjustments to the default visualization. With <code>normalize = "systems"</code> and <code>position = "dodge"</code>, an argument passed to <code>geom_bar()</code>, it shows the proportion of SDG hits per system with bars presented side-by-side rather than stacked. Furthermore, due to <code>sdg_titles = TRUE</code> the full titles are shown rather than SDG numbers.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># show normalized, side-by-side barplot of hits</span>
-<span class="fu"><a href="../reference/plot_sdg.html">plot_sdg</a></span><span class="op">(</span><span class="va">hits_all</span>, 
-         sdg_titles <span class="op">=</span> <span class="cn">TRUE</span>,
-         normalize <span class="op">=</span> <span class="st">"systems"</span>, 
-         position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span>
-<span class="co">#&gt; 2490 duplicate hits removed. Set remove_duplicates = FALSE to retain duplicates.</span></code></pre></div>
-<p><img src="text2sdg_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
-</div>
-<div id="extending-visualizations-with-ggplot2" class="section level3">
-<h3 class="hasAnchor">
-<a href="#extending-visualizations-with-ggplot2" class="anchor"></a>Extending visualizations with <code>ggplot2</code>
+<p>The example below runs the <code><a href="../reference/detect_sdg_systems.html">detect_sdg_systems()</a></code> function
+for the <code>projects</code> data. The analysis produced a total of
+<code>835</code> matches using the four default query systems Aurora,
+Elsevier, Auckland, and SIRIS.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># detecting SDGs in projects</span></span>
+<span><span class="va">hits_default</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_sdg_systems.html">detect_sdg_systems</a></span><span class="op">(</span><span class="va">projects</span><span class="op">)</span></span>
+<span><span class="va">hits_default</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="selecting-query-systems">Selecting query systems<a class="anchor" aria-label="anchor" href="#selecting-query-systems"></a>
 </h3>
-<p>Because <code><a href="../reference/plot_sdg.html">plot_sdg()</a></code> is implemented using <code>ggplot2</code>, visualizations can easily be extended using functions from the <code>ggplot2</code> universe. The example below illustrates this. Using the <code>facet_wrap</code> function separate panels are created, one for each system, that show the absolute frequencies of hits per SDG.</p>
+<p>By default <code>sdg_detect_systems()</code> runs the four query
+systems, Aurora, Elsevier, Auckland, and SIRIS. Using the function’s
+<code>system</code> argument the user can control which systems are run.
+There are two additional query systems that can be selected, SDSN and
+SDGO. These two systems are much simpler and less restrictive than the
+former four as they only rely on basic keyword matching, whereas the
+four default systems are based on more complex search queries. As a
+result, the four default systems are more specific but also more prone
+to misses, whereas the two optional systems are more sensitive but also
+more prone to false alarms. Our research suggests that the four default
+systems are likely more accurate in balanced datasets including
+SDG-related and SDG-unrelated content (Wulff, Meier, &amp; Mata, 2023).
+More information about the systems can be gathered from the help files
+of the respective query data frames, <code>aurora_queries</code>,
+<code>elsevier_queries</code>, <code>auckland_queries</code>,
+<code>siris_queries</code>, <code>sdsn_queries</code>, and
+<code>sdgo_queries</code>.</p>
+<p>The example below runs the <code><a href="../reference/detect_sdg_systems.html">detect_sdg_systems()</a></code> on the
+<code>projects</code> using all query systems, including the two
+keyword-based systems. The resulting <code>tibble</code>s reveal that
+Aurora is most conservative (60 hits), followed by SIRIS (166), Elsevier
+(235), Auckland (374), and then by large margin the two keyword-based
+systems SDSN (2,589) and SDGO (3,629). Note that the high numbers for
+the two keyword-based systems imply that, on average, 5 and 7 SDGs,
+respectively, are identified per document.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># detecting SDGs using all query systems</span></span>
+<span><span class="co"># hits_all &lt;- detect_sdg_systems(projects,</span></span>
+<span><span class="co">#                        system = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"))</span></span>
+<span><span class="va">hits_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_sdg_systems.html">detect_sdg_systems</a></span><span class="op">(</span><span class="va">projects</span>,</span>
+<span>                       system <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Aurora"</span>, <span class="st">"Elsevier"</span>, <span class="st">"Auckland"</span>, <span class="st">"SIRIS"</span>, <span class="st">"SDSN"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Running Aurora</span></span>
+<span><span class="co">#&gt; Running Elsevier</span></span>
+<span><span class="co">#&gt; Running Auckland</span></span>
+<span><span class="co">#&gt; Running SIRIS</span></span>
+<span><span class="co">#&gt; Running SDSN</span></span>
+<span></span>
+<span><span class="co"># hits_all &lt;- detect_sdg_systems(projects,</span></span>
+<span><span class="co">#                        system = c("SDGO"))</span></span>
+<span></span>
+<span><span class="co"># count hits of systems</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">hits_all</span><span class="op">$</span><span class="va">system</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Auckland   Aurora Elsevier     SDSN    SIRIS </span></span>
+<span><span class="co">#&gt;      374       60      235     2589      166</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="selecting-sdgs">Selecting SDGs<a class="anchor" aria-label="anchor" href="#selecting-sdgs"></a>
+</h3>
+<p>By default the <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> and
+<code><a href="../reference/detect_sdg_systems.html">detect_sdg_systems()</a></code> will try to detect all 17 SDGs.
+However, the user can limit the set of SDGs sought in text using the
+<code>sdgs</code> argument, which takes a numeric vector with integers
+in [1,17] as input. When using the <code><a href="../reference/detect_sdg_systems.html">detect_sdg_systems()</a></code>
+function, the user should note that Elsevier, SIRIS and Auckland contain
+queries only for the first 16 SDGs, exluding queries for goal 17 -
+Global Partnerships for the Goals.</p>
+<p>The example below runs the <code><a href="../reference/detect_sdg_systems.html">detect_sdg_systems()</a></code> function
+only for SDGs 1, 2, 3, 4, and 5.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># detecting only for SDGs 1 to 5</span></span>
+<span><span class="va">hits_sdg_subset</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_sdg_systems.html">detect_sdg_systems</a></span><span class="op">(</span><span class="va">projects</span>, sdgs <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Running Aurora</span></span>
+<span><span class="co">#&gt; Running Elsevier</span></span>
+<span><span class="co">#&gt; Running Auckland</span></span>
+<span><span class="co">#&gt; Running SIRIS</span></span>
+<span><span class="va">hits_sdg_subset</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 489 × 6</span></span></span>
+<span><span class="co">#&gt;    document sdg    system   query_id features                                hit</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                 <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1        SDG-03 Auckland        3 tuberculosis, human, tuberculosis, d…     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 1        SDG-03 Elsevier        3 tuberculosis, human, tuberculosis, d…     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2        SDG-03 Auckland        3 SARs                                      2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 3        SDG-03 Auckland        3 immunology, medicine                      3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 6        SDG-03 Auckland        3 cancer                                    4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 6        SDG-03 Elsevier        3 cancer                                    2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 8        SDG-03 Auckland        3 epidemics, epidemics, vaccine             5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 8        SDG-03 Elsevier        3 vaccine                                   3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 9        SDG-03 Auckland        3 primary, care, primary, care, Primar…     6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 12       SDG-03 Auckland        3 epidemics                                 7</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 479 more rows</span></span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="controlling-the-output">Controlling the output<a class="anchor" aria-label="anchor" href="#controlling-the-output"></a>
+</h3>
+<p>By default, <code><a href="../reference/detect_sdg_systems.html">detect_sdg_systems()</a></code> returns matches at the
+level of query. If a system has multiple queries for a single SDG, the
+output can include multiple hits (and rows) per document and system.
+Separating hits by queries can be useful because different queries
+typically capture different aspects of a given SDGs, which will be
+revealed through the keywords that were matched by the queries. These
+keyword matches are shown in the column <code>features</code> and,
+hence, we refer to thsi type of output as <code>"features"</code>. If
+the user is not interested in separating matches by queries and only
+cares about matches at the level of documents, a reduced output can be
+selected by setting the <code>output</code> argument to
+<code>"documents"</code>. In this case, the
+<code><a href="../reference/detect_sdg_systems.html">detect_sdg_systems()</a></code> returns a <code>tibble</code> that
+includes only distinct matches of <code>document</code>,
+<code>system</code>, and <code>sdg</code> combinations, concatenates the
+values of <code>features</code> into a single character string, and
+drops the column <code>query_id</code>.</p>
+<p>The example below shows the alternative output resulting from setting
+<code>output = "documents"</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># return documents output format</span></span>
+<span><span class="fu"><a href="../reference/detect_sdg_systems.html">detect_sdg_systems</a></span><span class="op">(</span><span class="va">projects</span>, output <span class="op">=</span> <span class="st">"documents"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Running Aurora</span></span>
+<span><span class="co">#&gt; Running Elsevier</span></span>
+<span><span class="co">#&gt; Running Auckland</span></span>
+<span><span class="co">#&gt; Running SIRIS</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 791 × 5</span></span></span>
+<span><span class="co">#&gt;    document sdg    system   n_hit features                                      </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1        SDG-03 Auckland     1 tuberculosis, human, tuberculosis, disease    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 1        SDG-03 Elsevier     1 tuberculosis, human, tuberculosis, disease    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2        SDG-03 Auckland     1 SARs                                          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 3        SDG-03 Auckland     1 immunology, medicine                          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 6        SDG-03 Auckland     1 cancer                                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 6        SDG-03 Elsevier     1 cancer                                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 8        SDG-03 Auckland     1 epidemics, epidemics, vaccine                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 8        SDG-03 Elsevier     1 vaccine                                       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 9        SDG-03 Auckland     1 primary, care, primary, care, Primary, care, …</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 12       SDG-03 Auckland     1 epidemics                                     </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 781 more rows</span></span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="keeping-track-of-progress">Keeping track of progress<a class="anchor" aria-label="anchor" href="#keeping-track-of-progress"></a>
+</h3>
+<p>By default the <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> and
+<code><a href="../reference/detect_sdg_systems.html">detect_sdg_systems()</a></code> function prints messages to
+communicate the progress of the underlying SDG detection process, which
+can take several minutes. To suppress these messages, the user can set
+the <code>verbose</code> argument to <code>FALSE</code>.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="custom-search-with-detect_any">Custom search with <code>detect_any()</code><a class="anchor" aria-label="anchor" href="#custom-search-with-detect_any"></a>
+</h2>
+<p>The <code><a href="../reference/detect_any.html">detect_any()</a></code> function permits specification of
+custom query systems. The function operates similarly to
+<code><a href="../reference/detect_sdg_systems.html">detect_sdg_systems()</a></code>, but it requires an additional
+argument <code>queries</code> that specifies the queries to be employed.
+The <code>queries</code> argument expects a <code>tibble</code> with the
+following columns:</p>
+<ul>
+<li>
+<code>system</code> (<code>character</code>) - names used to label
+query systems.</li>
+<li>
+<code>queries</code> (<code>character</code>) - queries used in
+search.</li>
+<li>
+<code>sdg</code> (<code>integer</code>) - mapping of queries to
+SDGs.</li>
+</ul>
+<p>The queries in the custom query set can be Lucene-style queries
+following the syntax of the <code>corpustools</code> package. See
+<code>vignette("corpustools")</code>. This is illustrated in the example
+below. First, a tibble of three queries is defined that includes a
+single system and three queries that are mapped onto two sdgs, 3 and 7.
+The first query represents a simple keyword search, whereas queries 2
+and 3 are proper search queries using logical operators.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># definition of query set</span></span>
+<span><span class="va">my_queries</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>system <span class="op">=</span> <span class="st">"my_system"</span>,</span>
+<span>                              query <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"theory"</span>, <span class="st">"analysis OR analyses OR analyzed"</span>, <span class="st">"study AND hypothesis"</span><span class="op">)</span>,</span>
+<span>                              sdg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">7</span>,<span class="fl">7</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># return documents output format</span></span>
+<span><span class="fu"><a href="../reference/detect_any.html">detect_any</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">projects</span>, </span>
+<span>           system <span class="op">=</span> <span class="va">my_queries</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 280 × 6</span></span></span>
+<span><span class="co">#&gt;    document sdg    system    query_id features             hit</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2        SDG-07 my_system        2 analysis              62</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 4        SDG-07 my_system        2 analysis             189</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 8        SDG-07 my_system        2 analyses, analysis   267</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 9        SDG-07 my_system        2 analysis             274</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 10       SDG-07 my_system        2 analysis, analyses     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 11       SDG-07 my_system        2 analysis               6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 13       SDG-07 my_system        3 hypothesis, study     19</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 15       SDG-07 my_system        2 analysis              28</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 15       SDG-07 my_system        3 study, hypothesis     29</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 16       SDG-07 my_system        2 analyzed              39</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 270 more rows</span></span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="visualizing-hits-with-plot_sdg">Visualizing hits with <code>plot_sdg()</code><a class="anchor" aria-label="anchor" href="#visualizing-hits-with-plot_sdg"></a>
+</h2>
+<p>To visualize the hits produced by the <code>detect_*</code>
+functions, the <code>text2sdg</code> package provides the function
+<code><a href="../reference/plot_sdg.html">plot_sdg()</a></code>. The function produces barplots illustrating
+either the hit frequencies produced by the different query systems. It
+is built on the <code>ggplot2</code> package, which provides high levels
+of flexibility for adapting and extending its visualizations.</p>
+<p>By default <code><a href="../reference/plot_sdg.html">plot_sdg()</a></code> produces a stacked barplot of
+absolute hit frequencies. Frequencies are determined on the document
+level for each system and SDGs present in the <code>tibble</code> that
+was provided to the function’s <code>hits</code> argument. If multiple
+hits per document, system and SDG combination exist, the function
+returns a message of how many duplicate hits have been suppressed.</p>
+<p>The example below produces the default visualization for the hits of
+all five systems. Since the object was created with
+<code>"output = features"</code>, the function informs that a total of
+2490 duplicate hits were removed.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># show stacked barplot of hits</span></span>
+<span><span class="fu"><a href="../reference/plot_sdg.html">plot_sdg</a></span><span class="op">(</span><span class="va">hits_all</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 765 duplicate hits removed. Set remove_duplicates = FALSE to retain duplicates.</span></span></code></pre></div>
+<p><img src="text2sdg_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
+<div class="section level3">
+<h3 id="adjusting-visualizations">Adjusting visualizations<a class="anchor" aria-label="anchor" href="#adjusting-visualizations"></a>
+</h3>
+<p>The <code><a href="../reference/plot_sdg.html">plot_sdg()</a></code> function has several arguments that
+permit adjustment of the visualization. The <code>systems</code> and
+<code>sdgs</code> arguments can be used to visualize subsets of systems
+and/or SDGs. The <code>normalize</code> argument can be used to
+normalize the absolute frequency by the number of documents
+(<code>normalize = "documents"</code>) or by the total number of hits
+within a system (<code>normalize = "systems"</code>). The
+<code>color</code> argument can be used to adapt the color set used for
+the systems. The <code>sdg_titles</code> argument can be used to add the
+full titles of the SDGs. The <code>remove_duplicates</code> argument can
+be used to retain any duplicate hits of document, system, and SDG
+combinations. Finally, the <code>...</code> arguments can be used to
+pass on additional arguments to the <code>geom_bar()</code> function
+that underlies <code><a href="../reference/detect_sdg_systems.html">detect_sdg_systems()</a></code>.</p>
+<p>The example below uses some of the available arguments to make
+adjustments to the default visualization. With
+<code>normalize = "systems"</code> and <code>position = "dodge"</code>,
+an argument passed to <code>geom_bar()</code>, it shows the proportion
+of SDG hits per system with bars presented side-by-side rather than
+stacked. Furthermore, due to <code>sdg_titles = TRUE</code> the full
+titles are shown rather than SDG numbers.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># show system hits in separate panels</span>
-<span class="fu"><a href="../reference/plot_sdg.html">plot_sdg</a></span><span class="op">(</span><span class="va">hits_all</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">system</span>, ncol<span class="op">=</span> <span class="fl">1</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span>
-<span class="co">#&gt; 2490 duplicate hits removed. Set remove_duplicates = FALSE to retain duplicates.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># show normalized, side-by-side barplot of hits</span></span>
+<span><span class="fu"><a href="../reference/plot_sdg.html">plot_sdg</a></span><span class="op">(</span><span class="va">hits_all</span>, </span>
+<span>         sdg_titles <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>         normalize <span class="op">=</span> <span class="st">"systems"</span>, </span>
+<span>         position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 765 duplicate hits removed. Set remove_duplicates = FALSE to retain duplicates.</span></span></code></pre></div>
 <p><img src="text2sdg_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 </div>
-</div>
-<div id="analyzing-hits-using-crosstab_sdg" class="section level2">
-<h2 class="hasAnchor">
-<a href="#analyzing-hits-using-crosstab_sdg" class="anchor"></a>Analyzing hits using <code>crosstab_sdg()</code>
-</h2>
-<p>To assist the user in understanding the relationships among SDGs and query systems, the <code>text2sdg</code> package provides the <code><a href="../reference/crosstab_sdg.html">crosstab_sdg()</a></code> function. The function takes as input the <code>tibble</code> of hits produced by <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> and compares hits between either systems or SDGs. Comparing hits by system means that correlations are determined across all documents and all SDGs for every pair of systems to produce a fully crossed table of system correlations. Conversely, comparing hits by SDG means that correlations are determined across all documents and all systems for every pair of SDGs to produce a fully crossed table of SDG correlations.</p>
-<div id="correspondence-between-query-systems" class="section level3">
-<h3 class="hasAnchor">
-<a href="#correspondence-between-query-systems" class="anchor"></a>Correspondence between query systems</h3>
-<p>By default the <code><a href="../reference/crosstab_sdg.html">crosstab_sdg()</a></code> function compares <code>systems</code>, which is illustrated below for the hits for all five systems. Note that the <code><a href="../reference/crosstab_sdg.html">crosstab_sdg()</a></code> function only considers distinct combinations of documents, systems, and SDGs implying that the output type of <code><a href="../reference/detect_sdg.html">detect_sdg()</a></code> does not matter; it will automatically treat the hits as if they had been produced using <code>output = documents</code>.</p>
-<p>The analysis reveals two noteworthy results. First, correlations between systems are overall rather small. Second, query systems are more similar to systems of the same type, i.e., query or keyword-based.</p>
+<div class="section level3">
+<h3 id="extending-visualizations-with-ggplot2">Extending visualizations with <code>ggplot2</code><a class="anchor" aria-label="anchor" href="#extending-visualizations-with-ggplot2"></a>
+</h3>
+<p>Because <code><a href="../reference/plot_sdg.html">plot_sdg()</a></code> is implemented using
+<code>ggplot2</code>, visualizations can easily be extended using
+functions from the <code>ggplot2</code> universe. The example below
+illustrates this. Using the <code>facet_wrap</code> function separate
+panels are created, one for each system, that show the absolute
+frequencies of hits per SDG.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># evaluate correspondence between systems </span>
-<span class="fu"><a href="../reference/crosstab_sdg.html">crosstab_sdg</a></span><span class="op">(</span><span class="va">hits_all</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt;          Aurora Elsevier SIRIS SDSN Ontology</span>
-<span class="co">#&gt; Aurora     1.00     0.24  0.31 0.12     0.14</span>
-<span class="co">#&gt; Elsevier   0.24     1.00  0.27 0.23     0.29</span>
-<span class="co">#&gt; SIRIS      0.31     0.27  1.00 0.19     0.19</span>
-<span class="co">#&gt; SDSN       0.12     0.23  0.19 1.00     0.35</span>
-<span class="co">#&gt; Ontology   0.14     0.29  0.19 0.35     1.00</span></code></pre></div>
-<p>When <code><a href="../reference/crosstab_sdg.html">crosstab_sdg()</a></code> evaluates the correspondence between query systems it does not distinguish between hits of different SDGs. Correlations for individual SDGs could be different from the overall correlations, and it is likely that they are higher, on average. To determine the correspondence between query systems for individual SDGs, the user can use the <code>sdgs</code> argument. For instance, <code>sdgs = 1</code> will only result in a comparison of systems using only hits of SDG 1.</p>
+<code class="sourceCode R"><span><span class="co"># show system hits in separate panels</span></span>
+<span><span class="fu"><a href="../reference/plot_sdg.html">plot_sdg</a></span><span class="op">(</span><span class="va">hits_all</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">system</span>, ncol<span class="op">=</span> <span class="fl">1</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 765 duplicate hits removed. Set remove_duplicates = FALSE to retain duplicates.</span></span></code></pre></div>
+<p><img src="text2sdg_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
 </div>
-<div id="correspondence-between-sdgs" class="section level3">
-<h3 class="hasAnchor">
-<a href="#correspondence-between-sdgs" class="anchor"></a>Correspondence between SDGs</h3>
-<p>The <code><a href="../reference/crosstab_sdg.html">crosstab_sdg()</a></code> can also be used to analyze, in a similar fashion, the correspondence between SDGs. To do this, the <code>compare</code> argument must be set to <code>"sdgs"</code>. Again, correlations are calculated for distinct hits, while ignoring, in this case, the systems from which the hits originated.</p>
-<p>The example below analyzes the correspondence of all SDGs across all systems. The resulting cross table reveals strong correspondences between certain pairs of SDGs, such as, for instance, between <code>SDG-01</code> and <code>SDG-02</code> or between <code>SDG-07</code> and <code>SDG-13</code>.</p>
+</div>
+<div class="section level2">
+<h2 id="analyzing-hits-using-crosstab_sdg">Analyzing hits using <code>crosstab_sdg()</code><a class="anchor" aria-label="anchor" href="#analyzing-hits-using-crosstab_sdg"></a>
+</h2>
+<p>To assist the user in understanding the relationships among SDGs and
+query systems, the <code>text2sdg</code> package provides the
+<code><a href="../reference/crosstab_sdg.html">crosstab_sdg()</a></code> function. The function takes as input the
+<code>tibble</code> of hits produced by any of the detect functions and
+compares hits between either systems or SDGs. Comparing hits by system
+means that correlations are determined across all documents and all SDGs
+for every pair of systems to produce a fully crossed table of system
+correlations. Conversely, comparing hits by SDG means that correlations
+are determined across all documents and all systems for every pair of
+SDGs to produce a fully crossed table of SDG correlations.</p>
+<div class="section level3">
+<h3 id="correspondence-between-query-systems">Correspondence between query systems<a class="anchor" aria-label="anchor" href="#correspondence-between-query-systems"></a>
+</h3>
+<p>By default the <code><a href="../reference/crosstab_sdg.html">crosstab_sdg()</a></code> function compares
+<code>systems</code>, which is illustrated below for the hits for all
+five systems. Note that the <code><a href="../reference/crosstab_sdg.html">crosstab_sdg()</a></code> function only
+considers distinct combinations of documents, systems, and SDGs implying
+that the output type of <code><a href="../reference/detect_sdg_systems.html">detect_sdg_systems()</a></code> does not
+matter; it will automatically treat the hits as if they had been
+produced using <code>output = documents</code>.</p>
+<p>The analysis reveals two noteworthy results. First, correlations
+between systems are overall rather small. Second, query systems are more
+similar to systems of the same type, i.e., query or keyword-based.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># evaluate correspondence between systems </span>
-<span class="fu"><a href="../reference/crosstab_sdg.html">crosstab_sdg</a></span><span class="op">(</span><span class="va">hits_all</span>, compare <span class="op">=</span> <span class="st">"sdgs"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt;        SDG-01 SDG-02 SDG-03 SDG-04 SDG-05 SDG-06 SDG-07 SDG-08 SDG-09 SDG-10</span>
-<span class="co">#&gt; SDG-01   1.00   0.47   0.05   0.06   0.12   0.17   0.08   0.16   0.32   0.18</span>
-<span class="co">#&gt; SDG-02   0.47   1.00   0.09   0.07   0.06   0.17   0.13   0.16   0.29   0.15</span>
-<span class="co">#&gt; SDG-03   0.05   0.09   1.00   0.22   0.17   0.04   0.02   0.22   0.17   0.35</span>
-<span class="co">#&gt; SDG-04   0.06   0.07   0.22   1.00   0.14   0.08   0.09   0.18   0.15   0.27</span>
-<span class="co">#&gt; SDG-05   0.12   0.06   0.17   0.14   1.00   0.11   0.05   0.10   0.14   0.20</span>
-<span class="co">#&gt; SDG-06   0.17   0.17   0.04   0.08   0.11   1.00   0.19   0.16   0.18   0.11</span>
-<span class="co">#&gt; SDG-07   0.08   0.13   0.02   0.09   0.05   0.19   1.00   0.13   0.29   0.10</span>
-<span class="co">#&gt; SDG-08   0.16   0.16   0.22   0.18   0.10   0.16   0.13   1.00   0.35   0.33</span>
-<span class="co">#&gt; SDG-09   0.32   0.29   0.17   0.15   0.14   0.18   0.29   0.35   1.00   0.31</span>
-<span class="co">#&gt; SDG-10   0.18   0.15   0.35   0.27   0.20   0.11   0.10   0.33   0.31   1.00</span>
-<span class="co">#&gt; SDG-11   0.20   0.22   0.22   0.20   0.16   0.32   0.22   0.27   0.31   0.28</span>
-<span class="co">#&gt; SDG-12   0.24   0.28   0.10   0.05   0.07   0.30   0.28   0.13   0.31   0.14</span>
-<span class="co">#&gt; SDG-13   0.05   0.08  -0.03   0.04   0.01   0.21   0.40   0.07   0.15   0.04</span>
-<span class="co">#&gt; SDG-14   0.05   0.09   0.03   0.02   0.02   0.15   0.15   0.09   0.09   0.09</span>
-<span class="co">#&gt; SDG-15   0.08   0.18   0.14   0.05   0.03   0.22   0.14   0.18   0.21   0.14</span>
-<span class="co">#&gt; SDG-16   0.14   0.11   0.17   0.26   0.33   0.13   0.04   0.23   0.17   0.24</span>
-<span class="co">#&gt; SDG-17  -0.02   0.02   0.26   0.25   0.05   0.03  -0.01   0.14   0.03   0.21</span>
-<span class="co">#&gt;        SDG-11 SDG-12 SDG-13 SDG-14 SDG-15 SDG-16 SDG-17</span>
-<span class="co">#&gt; SDG-01   0.20   0.24   0.05   0.05   0.08   0.14  -0.02</span>
-<span class="co">#&gt; SDG-02   0.22   0.28   0.08   0.09   0.18   0.11   0.02</span>
-<span class="co">#&gt; SDG-03   0.22   0.10  -0.03   0.03   0.14   0.17   0.26</span>
-<span class="co">#&gt; SDG-04   0.20   0.05   0.04   0.02   0.05   0.26   0.25</span>
-<span class="co">#&gt; SDG-05   0.16   0.07   0.01   0.02   0.03   0.33   0.05</span>
-<span class="co">#&gt; SDG-06   0.32   0.30   0.21   0.15   0.22   0.13   0.03</span>
-<span class="co">#&gt; SDG-07   0.22   0.28   0.40   0.15   0.14   0.04  -0.01</span>
-<span class="co">#&gt; SDG-08   0.27   0.13   0.07   0.09   0.18   0.23   0.14</span>
-<span class="co">#&gt; SDG-09   0.31   0.31   0.15   0.09   0.21   0.17   0.03</span>
-<span class="co">#&gt; SDG-10   0.28   0.14   0.04   0.09   0.14   0.24   0.21</span>
-<span class="co">#&gt; SDG-11   1.00   0.31   0.17   0.12   0.19   0.26   0.18</span>
-<span class="co">#&gt; SDG-12   0.31   1.00   0.13   0.10   0.19   0.08   0.07</span>
-<span class="co">#&gt; SDG-13   0.17   0.13   1.00   0.29   0.27   0.01   0.00</span>
-<span class="co">#&gt; SDG-14   0.12   0.10   0.29   1.00   0.23  -0.01   0.01</span>
-<span class="co">#&gt; SDG-15   0.19   0.19   0.27   0.23   1.00   0.07   0.11</span>
-<span class="co">#&gt; SDG-16   0.26   0.08   0.01  -0.01   0.07   1.00   0.18</span>
-<span class="co">#&gt; SDG-17   0.18   0.07   0.00   0.01   0.11   0.18   1.00</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># evaluate correspondence between systems </span></span>
+<span><span class="fu"><a href="../reference/crosstab_sdg.html">crosstab_sdg</a></span><span class="op">(</span><span class="va">hits_all</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          Auckland Aurora Elsevier SDSN SIRIS</span></span>
+<span><span class="co">#&gt; Auckland     1.00   0.26     0.75 0.27  0.32</span></span>
+<span><span class="co">#&gt; Aurora       0.26   1.00     0.24 0.12  0.30</span></span>
+<span><span class="co">#&gt; Elsevier     0.75   0.24     1.00 0.23  0.27</span></span>
+<span><span class="co">#&gt; SDSN         0.27   0.12     0.23 1.00  0.19</span></span>
+<span><span class="co">#&gt; SIRIS        0.32   0.30     0.27 0.19  1.00</span></span></code></pre></div>
+<p>When <code><a href="../reference/crosstab_sdg.html">crosstab_sdg()</a></code> evaluates the correspondence between
+query systems it does not distinguish between hits of different SDGs.
+Correlations for individual SDGs could be different from the overall
+correlations, and it is likely that they are higher, on average. To
+determine the correspondence between query systems for individual SDGs,
+the user can use the <code>sdgs</code> argument. For instance,
+<code>sdgs = 1</code> will only result in a comparison of systems using
+only hits of SDG 1.</p>
+</div>
+<div class="section level3">
+<h3 id="correspondence-between-sdgs">Correspondence between SDGs<a class="anchor" aria-label="anchor" href="#correspondence-between-sdgs"></a>
+</h3>
+<p>The <code><a href="../reference/crosstab_sdg.html">crosstab_sdg()</a></code> can also be used to analyze, in a
+similar fashion, the correspondence between SDGs. To do this, the
+<code>compare</code> argument must be set to <code>"sdgs"</code>. Again,
+correlations are calculated for distinct hits, while ignoring, in this
+case, the systems from which the hits originated.</p>
+<p>The example below analyzes the correspondence of all SDGs across all
+systems. The resulting cross table reveals strong correspondences
+between certain pairs of SDGs, such as, for instance, between
+<code>SDG-01</code> and <code>SDG-02</code> or between
+<code>SDG-07</code> and <code>SDG-13</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># evaluate correspondence between systems </span></span>
+<span><span class="fu"><a href="../reference/crosstab_sdg.html">crosstab_sdg</a></span><span class="op">(</span><span class="va">hits_all</span>, compare <span class="op">=</span> <span class="st">"sdgs"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        SDG-01 SDG-02 SDG-03 SDG-04 SDG-05 SDG-06 SDG-07 SDG-08 SDG-09 SDG-10</span></span>
+<span><span class="co">#&gt; SDG-01   1.00   0.50   0.08   0.20   0.16   0.23   0.13   0.28   0.40   0.29</span></span>
+<span><span class="co">#&gt; SDG-02   0.50   1.00   0.09   0.13   0.09   0.21   0.12   0.23   0.35   0.19</span></span>
+<span><span class="co">#&gt; SDG-03   0.08   0.09   1.00   0.08   0.11  -0.01  -0.02   0.08   0.10   0.24</span></span>
+<span><span class="co">#&gt; SDG-04   0.20   0.13   0.08   1.00   0.17   0.08   0.03   0.10   0.17   0.26</span></span>
+<span><span class="co">#&gt; SDG-05   0.16   0.09   0.11   0.17   1.00   0.17   0.08   0.15   0.20   0.28</span></span>
+<span><span class="co">#&gt; SDG-06   0.23   0.21  -0.01   0.08   0.17   1.00   0.21   0.21   0.25   0.12</span></span>
+<span><span class="co">#&gt; SDG-07   0.13   0.12  -0.02   0.03   0.08   0.21   1.00   0.14   0.34   0.07</span></span>
+<span><span class="co">#&gt; SDG-08   0.28   0.23   0.08   0.10   0.15   0.21   0.14   1.00   0.46   0.35</span></span>
+<span><span class="co">#&gt; SDG-09   0.40   0.35   0.10   0.17   0.20   0.25   0.34   0.46   1.00   0.37</span></span>
+<span><span class="co">#&gt; SDG-10   0.29   0.19   0.24   0.26   0.28   0.12   0.07   0.35   0.37   1.00</span></span>
+<span><span class="co">#&gt; SDG-11   0.32   0.27   0.07   0.11   0.15   0.45   0.27   0.26   0.45   0.29</span></span>
+<span><span class="co">#&gt; SDG-12   0.29   0.32   0.04   0.05   0.12   0.42   0.41   0.23   0.40   0.19</span></span>
+<span><span class="co">#&gt; SDG-13   0.08   0.09  -0.08   0.00   0.00   0.21   0.28   0.07   0.15   0.01</span></span>
+<span><span class="co">#&gt; SDG-14   0.07   0.10  -0.07  -0.02   0.03   0.14   0.04   0.05   0.06  -0.01</span></span>
+<span><span class="co">#&gt; SDG-15   0.13   0.24   0.02   0.00   0.03   0.24   0.14   0.17   0.20   0.06</span></span>
+<span><span class="co">#&gt; SDG-16   0.21   0.14   0.04   0.21   0.38   0.15   0.05   0.21   0.19   0.31</span></span>
+<span><span class="co">#&gt; SDG-17   0.09   0.02   0.03   0.12   0.05  -0.01  -0.01   0.02   0.03   0.07</span></span>
+<span><span class="co">#&gt;        SDG-11 SDG-12 SDG-13 SDG-14 SDG-15 SDG-16 SDG-17</span></span>
+<span><span class="co">#&gt; SDG-01   0.32   0.29   0.08   0.07   0.13   0.21   0.09</span></span>
+<span><span class="co">#&gt; SDG-02   0.27   0.32   0.09   0.10   0.24   0.14   0.02</span></span>
+<span><span class="co">#&gt; SDG-03   0.07   0.04  -0.08  -0.07   0.02   0.04   0.03</span></span>
+<span><span class="co">#&gt; SDG-04   0.11   0.05   0.00  -0.02   0.00   0.21   0.12</span></span>
+<span><span class="co">#&gt; SDG-05   0.15   0.12   0.00   0.03   0.03   0.38   0.05</span></span>
+<span><span class="co">#&gt; SDG-06   0.45   0.42   0.21   0.14   0.24   0.15  -0.01</span></span>
+<span><span class="co">#&gt; SDG-07   0.27   0.41   0.28   0.04   0.14   0.05  -0.01</span></span>
+<span><span class="co">#&gt; SDG-08   0.26   0.23   0.07   0.05   0.17   0.21   0.02</span></span>
+<span><span class="co">#&gt; SDG-09   0.45   0.40   0.15   0.06   0.20   0.19   0.03</span></span>
+<span><span class="co">#&gt; SDG-10   0.29   0.19   0.01  -0.01   0.06   0.31   0.07</span></span>
+<span><span class="co">#&gt; SDG-11   1.00   0.43   0.21   0.12   0.22   0.19   0.04</span></span>
+<span><span class="co">#&gt; SDG-12   0.43   1.00   0.20   0.14   0.29   0.13   0.02</span></span>
+<span><span class="co">#&gt; SDG-13   0.21   0.20   1.00   0.23   0.32  -0.02  -0.01</span></span>
+<span><span class="co">#&gt; SDG-14   0.12   0.14   0.23   1.00   0.17   0.01  -0.01</span></span>
+<span><span class="co">#&gt; SDG-15   0.22   0.29   0.32   0.17   1.00   0.02   0.07</span></span>
+<span><span class="co">#&gt; SDG-16   0.19   0.13  -0.02   0.01   0.02   1.00   0.11</span></span>
+<span><span class="co">#&gt; SDG-17   0.04   0.02  -0.01  -0.01   0.07   0.11   1.00</span></span></code></pre></div>
 </div>
 </div>
   </div>
@@ -373,11 +571,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Dirk U. Wulff, Dominik S. Meier.</p>
+  <p></p>
+<p>Developed by Dirk U. Wulff, Dominik S. Meier.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -385,6 +585,8 @@
 
   
 
+
+  
 
   </body>
 </html>

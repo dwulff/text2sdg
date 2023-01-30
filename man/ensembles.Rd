@@ -14,6 +14,6 @@ Wulff, Meier, & Mata (2023)
 ensembles
 }
 \description{
-A list of trained `ranger::ranger()` random forest models that are used as the basis of `detect_sdg`.
+A list of trained `ranger::ranger()` random forest models that are used by `detect_sdg()`.
 }
 \keyword{datasets}

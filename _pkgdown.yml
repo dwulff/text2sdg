@@ -5,6 +5,7 @@ reference:
   - title: Functions
     contents:
     - detect_sdg
+    - detect_sdg_systems
     - detect_any
     - plot_sdg
     - crosstab_sdg
@@ -13,9 +14,11 @@ reference:
     - projects
     - aurora_queries
     - elsevier_queries
+    - auckland_queries
     - siris_queries
     - sdsn_queries
-    - ontology_queries
+    - sdgo_queries
+    - ensembles
 navbar:
   title: ~
   type: default

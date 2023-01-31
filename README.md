@@ -27,7 +27,6 @@ The latest development version on GitHub can be installed via `devtools::install
 To identify SDGs in a series of documents, the user can choose between two approaches, an individual systems approach implementing six individual query systems and an ensemble approach powered by machine learning that integrates these systems. It is recommended to use the more accurate and bias-free ensemble approach (see Wulff, Meier, & Mata, 2023).  
 
 ```r
-
 # vector of texts
 texts = c("This is text 1", "This is text 2")
 
@@ -36,7 +35,6 @@ hits = detect_sdg_systems(texts)
 
 # ensemble approach
 hits = detect_sdg(texts)
-
 ```
 
 For a complete tutorial on the use of the package, visit

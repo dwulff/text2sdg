@@ -86,7 +86,7 @@
 <h2 id="general-information">General Information<a class="anchor" aria-label="anchor" href="#general-information"></a>
 </h2>
 <p>The <code>text2sdg</code> package is developed by Dirk U. Wulff and Dominik S. Meier, with contributions from Rui Mata and the <a href="https://cds.unibas.ch/" class="external-link">Center for Cognitive and Decision Sciences</a>. It is published under the GNU General Public License.</p>
-<p>An overview of the package can be accessed <a href="https://www.text2sdg.io/reference/text2sdg.html" class="external-link">online</a> or from within R using <code><a href="reference/text2sdg.html">?text2sdg</a></code>. A tutorial illustrating the use of the package can be accessed <a href="https://www.text2sdg.io/articles/text2sdg.html" class="external-link">online</a> or from within R using <code><a href="articles/text2sdg.html">vignette("text2sdg")</a></code>.</p>
+<p>An overview of the package can be accessed <a href="https://www.text2sdg.io/reference/text2sdg.html" class="external-link">online</a> or from within R using <code><a href="reference/text2sdg.html">?text2sdg</a></code>.</p>
 </div>
 </div>
 <div class="section level1">
@@ -94,11 +94,34 @@
 </h1>
 <p>The current stable version is available on CRAN and can be installed via <code>install.packages("text2sdg")</code>.</p>
 <p>The latest development version on GitHub can be installed via <code>devtools::install_github("dwulff/text2sdg")</code>. Note that this requires prior installation of the <code>devtools</code> package.</p>
+</div>
+<div class="section level1">
+<h1 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h1>
+<p>To identify SDGs in a series of documents, the user can choose between two approaches, an individual systems approach implementing six individual query systems and an ensemble approach powered by machine learning that integrates these systems. It is recommended to use the more accurate and bias-free ensemble approach (see Wulff, Meier, &amp; Mata, 2023).</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># vector of texts</span></span>
+<span><span class="va">texts</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"This is text 1"</span>, <span class="st">"This is text 2"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># individual systems approach</span></span>
+<span><span class="va">hits</span> <span class="op">=</span> <span class="fu"><a href="reference/detect_sdg_systems.html">detect_sdg_systems</a></span><span class="op">(</span><span class="va">texts</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ensemble approach</span></span>
+<span><span class="va">hits</span> <span class="op">=</span> <span class="fu"><a href="reference/detect_sdg.html">detect_sdg</a></span><span class="op">(</span><span class="va">texts</span><span class="op">)</span></span></code></pre></div>
+<p>For a complete tutorial on the use of the package, visit <a href="https://www.text2sdg.io/articles/text2sdg.html" class="external-link">this page</a> or call <code><a href="articles/text2sdg.html">vignette("text2sdg")</a></code> from within R.</p>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
-<p>If you publish analyzes carried out using the <code>text2sdg</code> package, we kindly ask that you cite the package as follows:</p>
-<p>Wulff, Dirk U. &amp; Meier, Dominik S. (2021). text2sdg: Detecting UN Sustainable Development Goals in Text (0.1.0). Zenodo. <a href="https://doi.org/10.5281/zenodo.5553980" class="external-link uri">https://doi.org/10.5281/zenodo.5553980</a></p>
+<p>If you use the <code>text2sdg</code> package for published work, we kindly ask that you cite the package as follows:</p>
+<p>Wulff, D. U., &amp; Meier, D. S. (2021). text2sdg: Detecting UN Sustainable Development Goals in Text (1.0.0). Zenodo. <a href="https://doi.org/10.5281/zenodo.5553980" class="external-link uri">https://doi.org/10.5281/zenodo.5553980</a></p>
+<p>Depending on the use of the package, also consider referencing one of the related articles below.</p>
+</div>
+<div class="section level2">
+<h2 id="related-articles">Related articles<a class="anchor" aria-label="anchor" href="#related-articles"></a>
+</h2>
+<p>Meier, D. S., Mata, R., &amp; Wulff, D. U. (2021). text2sdg: An open-source solution to monitoring sustainable development goals from text. arXiv. <a href="https://arxiv.org/abs/2110.05856" class="external-link uri">https://arxiv.org/abs/2110.05856</a></p>
+<p>Wulff, Dirk U., Meier, Dominik S., &amp; Mata, R. (2023). Using novel data and ensemble models to improve automated labeling of Sustainable Development Goals. arXiv. <a href="https://arxiv.org/abs/2301.11353" class="external-link uri">https://arxiv.org/abs/2301.11353</a></p>
 </div>
 </div>
 

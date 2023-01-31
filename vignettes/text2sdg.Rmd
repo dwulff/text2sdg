@@ -40,7 +40,7 @@ The example below runs the `detect_sdg()` function for the `projects` data set i
 
 ```{r, eval=FALSE}
 # detecting SDGs in projects
-hits_default <- detect_sdg_systems(projects)
+hits_default <- detect_sdg(projects)
 hits_default
 ```
 

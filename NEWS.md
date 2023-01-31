@@ -1,3 +1,9 @@
+
+# text2sdg 1.0.0
+* added the Auckland query system
+* renamed the "detect_sdg" function to "detect_sdg_systems"
+* the "detect_sdg" function now implements an ensemble model, see Wulff, Meier and Mata (2023) for more information
+
 # text2sdg 0.2.0
 * changed hits to n_hits
 

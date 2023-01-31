@@ -46,7 +46,7 @@ For a complete tutorial on the use of the package, visit
 
 If you use the `text2sdg` package for published work, we kindly ask that you cite the package as follows:
 
-Wulff, Dirk U., & Meier, Dominik S. (2021). text2sdg: Detecting UN Sustainable Development Goals in Text (1.0.0). Zenodo. https://doi.org/10.5281/zenodo.5553980
+Wulff, D. U., & Meier, D. S. (2021). text2sdg: Detecting UN Sustainable Development Goals in Text (1.0.0). Zenodo. https://doi.org/10.5281/zenodo.5553980
 
 Depending on the use of the package, also consider referencing one of the related articles below. 
 

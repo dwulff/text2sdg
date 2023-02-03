@@ -1,3 +1,5 @@
+# text2sdg 1.0.1
+Some small updates for pkgdown and typo fixes in the vignette.
 
 # text2sdg 1.0.0
 * added the Auckland query system

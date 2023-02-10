@@ -37,16 +37,25 @@
 #' }
 #' @export
 detect_sdg = function(text,
-                      system = lifecycle::deprecated(),
+                      systems = lifecycle::deprecated(),
+                      output = lifecycle::deprecated(),
                       sdgs = 1:17,
                       synthetic = "equal",
                       verbose = TRUE){
 
   # Check if `system` argument is present
-  if (lifecycle::is_present(system)) {
+  if (lifecycle::is_present(systems)) {
 
     # Signal the deprecation to the user
-    lifecycle::deprecate_stop("1.0.0", "text2sdg::detect_sdg(system = )", details = "As of text2sdg 1.0.0, the `system` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now implements an ensemble model pools the predictions of all other systems systems and considers text length, see `?detect_sdg` for more information. The old functionality of `detect_sdg()` is now provided by the `detect_sdg_systems()` function.")
+    lifecycle::deprecate_stop("1.0.0", "text2sdg::detect_sdg(systems = )", details = "As of text2sdg 1.0.0, the `system` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now implements an ensemble model that pools the predictions of all other systems systems and considers text length, see `?detect_sdg` for more information. The old functionality of `detect_sdg()` is now provided by the `detect_sdg_systems()` function.")
+  }
+
+
+  # Check if `system` argument is present
+  if (lifecycle::is_present(output)) {
+
+    # Signal the deprecation to the user
+    lifecycle::deprecate_stop("1.0.0", "text2sdg::detect_sdg(output = )", details = "As of text2sdg 1.0.0, the `output` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now implements an ensemble model that pools the predictions of all other systems systems and considers text length, see `?detect_sdg` for more information. The old functionality of `detect_sdg()` is now provided by the `detect_sdg_systems()` function.")
   }
 
 
@@ -98,7 +107,10 @@ detect_sdg = function(text,
 
   # get around ::: warning
   predict.ranger <- utils::getFromNamespace("predict.ranger", "ranger")
-  aaa <- ranger::treeInfo
+
+  ignore_unused_imports <- function() {
+    ranger::treeInfo
+  }
 
   # run ensemble
   hits = list()

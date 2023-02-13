@@ -84,6 +84,16 @@ detect_sdg = function(text,
                                    systems = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"),
                                    output = "documents",
                                    verbose = FALSE)
+
+  #return empty tibble if no SDGs were detected
+  if(nrow(system_hits) == 0) {
+    return(tibble::tibble(
+      document = factor(),
+      sdg = character(),
+      system = character(),
+      hit = integer()))
+  }
+
   # add lengths
   if(verbose) cat("\nObtaining text lengths",sep = '')
   lens = table(corpus$tokens$doc_id)

@@ -106,6 +106,7 @@ detect_sdg = function(text,
                        dplyr::select(document, sdg, system) %>%
                        dplyr::mutate(hit = TRUE),
                      by = "document") %>%
+    dplyr::mutate(system = factor(system, levels = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"))) %>%
     tidyr::complete(document, sdg, system) %>%
     dplyr::filter(!is.na(system)) %>%
     dplyr::mutate(hit = dplyr::case_when(is.na(hit) ~ FALSE, TRUE ~ hit)) %>%
@@ -114,6 +115,8 @@ detect_sdg = function(text,
 
   if(verbose) cat("\nRunning ensemble",sep = '')
 
+  # newline
+  cat("\n")
 
   # get around ::: warning
   predict.ranger <- utils::getFromNamespace("predict.ranger", "ranger")
@@ -128,6 +131,7 @@ detect_sdg = function(text,
   for(s in 1:length(sdgs)){
     m = ensemble_sel[[sdgs[s]]]
     tbl_sdg = tbl %>% dplyr::filter(sdg == sdgs[s])
+    if(nrow(tbl_sdg) == 0) {next}
     if(s == 17) {
       tbl_sdg = tbl_sdg %>% dplyr::select(document, dplyr::all_of(c("Aurora","SDGO","SDSN","n_words")))
       }
@@ -138,6 +142,15 @@ detect_sdg = function(text,
 
   # combine hits
   hits = dplyr::bind_rows(hits)
+
+  # return early if all predictions are 0
+  if(all(hits$pred == 0)) {
+    return(tibble::tibble(
+      document = factor(),
+      sdg = character(),
+      system = character(),
+      hit = integer()))
+  }
 
   #output
   hits = hits %>%

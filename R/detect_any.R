@@ -49,6 +49,9 @@ detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = N
 
   # make corpus
   if(class(text)[1] == "character"){
+    if(length(text) == 1 && text == "") {
+      stop('Argument text must not be an empty string.')
+    }
     corpus = make_corpus(text)
   } else if(class(text)[1] == "tCorpus"){
     corpus = text
@@ -67,6 +70,9 @@ detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = N
     stop(paste0("Variables 'sdg', 'query' and 'system' must be present in quries dataset."))
   }
 
+  # check output argument
+  if(!output[1] %in% c("features", "documents")) stop('Argument output must be "features" or "documents"')
+
   #handle selected SDGs
   if(any(!sdgs %in% 1:17)) stop("show_sdg can only take numbers in 1:17.")
   sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
@@ -84,7 +90,15 @@ detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = N
   hits = search_corpus(corpus, system$query)
 
   #return empty tibble if no SDGs were detected
-  if(nrow(hits) == 0) return(tibble::tibble())
+  if(nrow(hits) == 0) {
+    return(tibble::tibble(
+      document = factor(),
+      sdg = character(),
+      system = character(),
+      query_id = integer(),
+      features = character(),
+      hit = integer()))
+  }
 
   # process hits
   hits = hits %>%
@@ -106,8 +120,6 @@ detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = N
       dplyr::group_by(document, sdg, system) %>%
       dplyr::summarize(hits = dplyr::n()) %>%
       dplyr::ungroup()
-  } else {
-    if(output[1] != "features") stop('Argument output must be "features" or "documents"')
   }
 
   #convert document to factor for downstream functions

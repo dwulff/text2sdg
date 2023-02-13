@@ -42,9 +42,9 @@ detect_sdg_systems = function(text,
                       output = c("features","documents"),
                       verbose = TRUE){
   # make corpus
-  if(class(text)[1] == "character"){
+  if(inherits(text, "character")){
     corpus = make_corpus(text)
-  } else if(class(text)[1] == "tCorpus"){
+  } else if(inherits(text, "tCorpus")){
     corpus = text
   } else {
     stop("Argument text must be either class character or corpustools::tCorpus.")

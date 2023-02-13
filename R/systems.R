@@ -87,10 +87,10 @@ detect_sdg_systems = function(text,
   # newline
   cat("\n")
   #combine lists to df
-  hits <- do.call(rbind, hits)
+  hits <- dplyr::bind_rows(hits)
 
   #return empty tibble if no SDGs were detected
-  if(is.null(hits)) {
+  if(nrow(hits) == 0) {
     return(tibble::tibble(
     document = factor(),
     sdg = character(),

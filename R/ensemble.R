@@ -127,7 +127,7 @@ detect_sdg = function(text,
     }
 
   # combine hits
-  hits = do.call(what = rbind, hits)
+  hits = dplyr::bind_rows(hits)
 
   #output
   hits = hits %>%

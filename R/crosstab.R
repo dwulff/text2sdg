@@ -37,6 +37,11 @@ crosstab_sdg <- function(hits,
     stop(paste0("Data object must include columns [", paste0(missing, collapse=", "),"]."))
   }
 
+  # check if any hits are present
+  if(nrow(hits) == 0) {
+    stop("Hits data frame seems not to contain any hits, cross tabulation thus not possible.")
+  }
+
   # replace NULLs
   if(is.null(systems)) systems = hits %>% dplyr::arrange(system) %>% dplyr::pull(system) %>% as.character() %>% unique()
   if(is.null(sdgs)) sdgs = unique(stringr::str_extract(hits$sdg,"[:digit:]{2}") %>% as.numeric())

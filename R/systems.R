@@ -43,6 +43,9 @@ detect_sdg_systems = function(text,
                       verbose = TRUE){
   # make corpus
   if(inherits(text, "character")){
+    if(length(text) == 1 && text == "") {
+      stop('Argument text must not be an empty string.')
+    }
     corpus = make_corpus(text)
   } else if(inherits(text, "tCorpus")){
     corpus = text
@@ -60,11 +63,15 @@ detect_sdg_systems = function(text,
     stop("OSDG has been renamed to SDGO (SDG Ontology).")
   }
 
-  # run sdg
+  # check systems Argument
   if (!all(systems %in% c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"))){
     stop("Argument systems must be Aurora, Elsevier, Auckland, SIRIS, SDSN, or SDGO.")
   }
 
+  # check output argument
+  if(!output[1] %in% c("features", "documents")) stop('Argument output must be "features" or "documents"')
+
+  # run sdg
   if("Aurora" %in% systems){
     if(verbose) cat("Running Aurora",sep = '')
     hits[["Aurora"]] = detect_aurora(corpus, sdgs)}
@@ -107,8 +114,6 @@ detect_sdg_systems = function(text,
       dplyr::summarize(n_hit = dplyr::n(),
                        features = paste(features, collapse = ", ")) %>%
       dplyr::ungroup()
-  } else {
-    if(output[1] != "features") stop('Argument output must be "features" or "documents"')
   }
 
   #convert document to factor for downstream functions

@@ -61,6 +61,9 @@ detect_sdg = function(text,
 
   # make corpus
   if(inherits(text, "character")){
+    if(text == "") {
+      stop('Argument text must not be an empty string.')
+    }
     corpus = make_corpus(text)
   } else if(inherits(text, "tCorpus")){
     corpus = text

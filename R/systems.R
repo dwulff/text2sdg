@@ -90,7 +90,15 @@ detect_sdg_systems = function(text,
   hits <- do.call(rbind, hits)
 
   #return empty tibble if no SDGs were detected
-  if(is.null(hits)) return(tibble::tibble())
+  if(is.null(hits)) {
+    return(tibble::tibble(
+    document = factor(),
+    sdg = character(),
+    system = character(),
+    query_id = integer(),
+    features = character(),
+    hit = integer()))
+    }
 
   # reduce if requested
   if(output[1] == "documents"){

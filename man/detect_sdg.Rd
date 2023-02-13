@@ -6,7 +6,8 @@
 \usage{
 detect_sdg(
   text,
-  system = lifecycle::deprecated(),
+  systems = lifecycle::deprecated(),
+  output = lifecycle::deprecated(),
   sdgs = 1:17,
   synthetic = "equal",
   verbose = TRUE
@@ -15,7 +16,9 @@ detect_sdg(
 \arguments{
 \item{text}{\code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.}
 
-\item{system}{As of text2sdg 1.0.0 the `system` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now makes use of an ensemble approach that draws on all systems as well as on the text length, see --preprint-- for more information. The old version of `detect_sdg()` is available through the `detect_sdg_systems()` function.}
+\item{systems}{As of text2sdg 1.0.0 the `systems` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now makes use of an ensemble approach that draws on all systems as well as on the text length, see --preprint-- for more information. The old version of `detect_sdg()` is available through the `detect_sdg_systems()` function.}
+
+\item{output}{As of text2sdg 1.0.0 the `output` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now makes use of an ensemble approach that draws on all systems as well as on the text length, see --preprint-- for more information. The old version of `detect_sdg()` is available through the `detect_sdg_systems()` function.}
 
 \item{sdgs}{\code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.}
 

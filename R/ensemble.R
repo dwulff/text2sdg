@@ -8,7 +8,8 @@
 #'
 #'
 #' @param text \code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.
-#' @param system As of text2sdg 1.0.0 the `system` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now makes use of an ensemble approach that draws on all systems as well as on the text length, see --preprint-- for more information. The old version of `detect_sdg()` is available through the `detect_sdg_systems()` function.
+#' @param systems As of text2sdg 1.0.0 the `systems` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now makes use of an ensemble approach that draws on all systems as well as on the text length, see --preprint-- for more information. The old version of `detect_sdg()` is available through the `detect_sdg_systems()` function.
+#' @param output As of text2sdg 1.0.0 the `output` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now makes use of an ensemble approach that draws on all systems as well as on the text length, see --preprint-- for more information. The old version of `detect_sdg()` is available through the `detect_sdg_systems()` function.
 #' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.
 #' @param synthetic \code{character} specifying the ensemble version that vary in terms of the amount of synthetic data used in training (relative to the amount of expert-labeled data). Can be one of \code{"none"}, \code{"third"}, \code{"equal"}, and \code{"tripple"}. The default is \code{"equal"}.
 #' @param verbose \code{logical} specifying whether messages on the function's progress should be printed.
@@ -47,7 +48,7 @@ detect_sdg = function(text,
   if (lifecycle::is_present(systems)) {
 
     # Signal the deprecation to the user
-    lifecycle::deprecate_stop("1.0.0", "text2sdg::detect_sdg(systems = )", details = "As of text2sdg 1.0.0, the `system` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now implements an ensemble model that pools the predictions of all other systems systems and considers text length, see `?detect_sdg` for more information. The old functionality of `detect_sdg()` is now provided by the `detect_sdg_systems()` function.")
+    lifecycle::deprecate_stop("1.0.0", "text2sdg::detect_sdg(systems = )", details = "As of text2sdg 1.0.0, the `system` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now implements an ensemble model that pools the predictions of all other systems and considers text length, see `?detect_sdg` for more information. The old functionality of `detect_sdg()` is now provided by the `detect_sdg_systems()` function.")
   }
 
 
@@ -55,13 +56,13 @@ detect_sdg = function(text,
   if (lifecycle::is_present(output)) {
 
     # Signal the deprecation to the user
-    lifecycle::deprecate_stop("1.0.0", "text2sdg::detect_sdg(output = )", details = "As of text2sdg 1.0.0, the `output` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now implements an ensemble model that pools the predictions of all other systems systems and considers text length, see `?detect_sdg` for more information. The old functionality of `detect_sdg()` is now provided by the `detect_sdg_systems()` function.")
+    lifecycle::deprecate_stop("1.0.0", "text2sdg::detect_sdg(output = )", details = "As of text2sdg 1.0.0, the `output` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now implements an ensemble model that pools the predictions of all other systems and considers text length, see `?detect_sdg` for more information. The old functionality of `detect_sdg()` is now provided by the `detect_sdg_systems()` function.")
   }
 
 
   # make corpus
   if(inherits(text, "character")){
-    if(text == "") {
+    if(length(text) == 1 && text == "") {
       stop('Argument text must not be an empty string.')
     }
     corpus = make_corpus(text)

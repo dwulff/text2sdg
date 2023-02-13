@@ -66,7 +66,7 @@ detect_sdg_systems = function(text,
   }
 
   if("Aurora" %in% systems){
-    if(verbose) cat("\nRunning Aurora",sep = '')
+    if(verbose) cat("Running Aurora",sep = '')
     hits[["Aurora"]] = detect_aurora(corpus, sdgs)}
   if("Elsevier" %in% systems){
     if(verbose) cat("\nRunning Elsevier",sep = '')

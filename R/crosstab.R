@@ -82,7 +82,7 @@ crosstab_sdg <- function(hits,
 
   # abort if no hits left
   if(nrow(hits) == 0) {
-    stop(paste0("There are no hits matching the combination of sdgs = [", paste0(sdgs, collapse = ", "), "] and systems = [", paste0(systems, collapse = ", ")))
+    stop(paste0("The combination of sdgs = [", paste0(sdgs, collapse = ", "), "] and systems = [", paste0(systems, collapse = ", "), " produced no hits."))
   }
 
   # do systems

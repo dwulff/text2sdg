@@ -91,8 +91,7 @@ detect_sdg_systems = function(text,
     if(verbose) cat("\nRunning SDGO",sep = '')
     hits[["SDGO"]] = detect_sdgo(corpus, sdgs)}
 
-  # newline
-  cat("\n")
+
   #combine lists to df
   hits <- dplyr::bind_rows(hits)
 

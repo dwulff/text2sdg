@@ -7,7 +7,7 @@ test_that("detect_sdg returns an error when the input is not a character vector 
 # Test that detect_sdg returns an error when the synthetic argument is not one of "none", "third", "equal", or "tripple"
 test_that("detect_sdg returns an error when the synthetic argument is not one of 'none', 'third', 'equal', or 'tripple'", {
   test_text <- c("Test text for SDG", "Test text for SDGs")
-  expect_error(detect_sdg(test_text, synthetic = "invalid"), 'Argument synthetic must be "none","third","equal", or "tripple".')
+  expect_error(detect_sdg(test_text, synthetic = "invalid"), 'Argument synthetic must be one or more of "none","third","equal", or "tripple".')
 })
 
 # Test that detect_sdg works when no SDGs are detected and that it returns a tibble with the correct columns
@@ -48,7 +48,7 @@ test_that("run detect_sdg with empty string", {
 test_that("filtering SDGs works", {
   test_text <- projects[1:100]
 
-  result <- detect_sdg(test_text, synthetic = "none", sdgs = c(3, 5))
+  result <- detect_sdg(test_text, synthetic = c("none"), sdgs = c(3, 5))
 
   expect_equal(result %>%
                  dplyr::distinct(sdg) %>%

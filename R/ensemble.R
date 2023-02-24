@@ -79,7 +79,7 @@ detect_sdg = function(text,
 
 
   # run systems
-  if(verbose) cat("\nRunning systems",sep = '')
+  if(verbose) cat("Running systems",sep = '')
 
   # run detect sdg
   system_hits = detect_sdg_systems(text = corpus,
@@ -98,7 +98,7 @@ detect_sdg = function(text,
   }
 
   # add lengths
-  if(verbose) cat("\nObtaining text lengths",sep = '')
+  if(verbose) cat("Obtaining text lengths",sep = '')
   lens = table(corpus$tokens$doc_id)
   lens = tibble::tibble(document = factor(names(lens)),
                         n_words = c(lens))

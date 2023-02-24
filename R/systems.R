@@ -92,6 +92,8 @@ detect_sdg_systems = function(text,
     hits[["SDGO"]] = detect_sdgo(corpus, sdgs)}
 
 
+  # newline
+  cat("\n")
   #combine lists to df
   hits <- dplyr::bind_rows(hits)
 

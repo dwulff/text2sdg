@@ -109,4 +109,3 @@
 #' }
 #' @source \url{https://ap-unsdsn.org/regional-initiatives/universities-sdgs/}
 "sdsn_queries"
-

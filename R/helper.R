@@ -35,16 +35,13 @@ get_code = function(data) {
 
   # get id
   id = as.character(data[[1]])
-  for(i in 2:ncol(data)) id = paste0(id, '_', data[[i]])
+  for (i in 2:ncol(data)) id = paste0(id, '_', data[[i]])
 
   # out
   id
+}
 
-  }
-
-w_n = function(x, y, n = 3){
+w_n = function(x, y, n = 3) {
   pairs = expand.grid(x, y)
-  min(abs(pairs[,1] - pairs[,2])) <= n
-  }
-
-
+  min(abs(pairs[, 1] - pairs[, 2])) <= n
+}

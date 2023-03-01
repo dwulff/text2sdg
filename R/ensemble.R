@@ -42,7 +42,7 @@ detect_sdg = function(text,
                       output = lifecycle::deprecated(),
                       sdgs = 1:17,
                       synthetic = c("equal"),
-                      verbose = TRUE){
+                      verbose = TRUE) {
 
   # Check if `system` argument is present
   if (lifecycle::is_present(systems)) {
@@ -61,54 +61,60 @@ detect_sdg = function(text,
 
 
   # make corpus
-  if(inherits(text, "character")){
-    if(length(text) == 1 && text == "") {
+  if (inherits(text, "character")) {
+    if (length(text) == 1 && text == "") {
       stop('Argument text must not be an empty string.')
     }
     corpus = make_corpus(text)
-  } else if(inherits(text, "tCorpus")){
+  } else if (inherits(text, "tCorpus")) {
     corpus = text
   } else {
     stop("Argument text must be either class character or corpustools::tCorpus.")
   }
 
   # test model selector
-  if(any(!(synthetic[1] %in% c("none","third","equal","tripple")))){
+  if (any(!(synthetic[1] %in% c("none", "third", "equal", "tripple")))) {
     stop('Argument synthetic must be one or more of "none","third","equal", or "tripple".')
-    }
+  }
 
 
   # run systems
-  if(verbose) cat("Running systems",sep = '')
+  if (verbose) cat("Running systems", sep = '')
 
   # run detect sdg
-  system_hits = detect_sdg_systems(text = corpus,
-                                   sdgs = sdgs,
-                                   systems = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"),
-                                   output = "documents",
-                                   verbose = FALSE)
+  system_hits = detect_sdg_systems(
+    text = corpus,
+    sdgs = sdgs,
+    systems = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"),
+    output = "documents",
+    verbose = FALSE
+  )
 
-  #return empty tibble if no SDGs were detected
-  if(nrow(system_hits) == 0) {
+  # return empty tibble if no SDGs were detected
+  if (nrow(system_hits) == 0) {
     return(tibble::tibble(
       document = factor(),
       sdg = character(),
       system = character(),
-      hit = integer()))
+      hit = integer()
+    ))
   }
 
   # add lengths
-  if(verbose) cat("Obtaining text lengths",sep = '')
+  if (verbose) cat("Obtaining text lengths", sep = '')
   lens = table(corpus$tokens$doc_id)
-  lens = tibble::tibble(document = factor(names(lens)),
-                        n_words = c(lens))
+  lens = tibble::tibble(
+    document = factor(names(lens)),
+    n_words = c(lens)
+  )
   # generate features
-  if(verbose) cat("\nBuilding features",sep = '')
+  if (verbose) cat("\nBuilding features", sep = '')
   tbl = tibble::tibble(document = factor(1:corpus$n_meta)) %>%
     dplyr::left_join(system_hits %>%
-                       dplyr::select(document, sdg, system) %>%
-                       dplyr::mutate(hit = TRUE),
-                     by = "document") %>%
+      dplyr::select(document, sdg, system) %>%
+      dplyr::mutate(hit = TRUE),
+    by = "document"
+    ) %>%
     dplyr::mutate(system = factor(system, levels = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"))) %>%
     tidyr::complete(document, sdg, system) %>%
     dplyr::filter(!is.na(system)) %>%
@@ -123,15 +129,15 @@ detect_sdg = function(text,
     ranger::treeInfo
   }
 
-  if(verbose) cat("\nRunning ensemble",sep = '')
+  if (verbose) cat("\nRunning ensemble", sep = '')
 
   # newline
   cat("\n")
 
   hits = list()
-  sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
+  sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""), sdgs) %>% sort()
 
-  for(synt in synthetic) {
+  for (synt in synthetic) {
 
     # select model
     ensemble_sel = ensembles[[synt]]
@@ -140,16 +146,20 @@ detect_sdg = function(text,
 
     # run ensemble
     hits_ensemble = list()
-    for(s in 1:length(sdgs)){
+    for (s in 1:length(sdgs)) {
       m = ensemble_sel[[sdgs[s]]]
       tbl_sdg = tbl %>% dplyr::filter(sdg == sdgs[s])
-      if(nrow(tbl_sdg) == 0) {next}
-      if(s == 17) {
-        tbl_sdg = tbl_sdg %>% dplyr::select(document, dplyr::all_of(c("Aurora","SDGO","SDSN","n_words")))
+      if (nrow(tbl_sdg) == 0) {
+        next
       }
-      hits_ensemble[[s]] = tibble::tibble(document = tbl_sdg %>% dplyr::pull(document),
-                                 sdg = sdgs[s],
-                                 pred = predict.ranger(m, data = tbl_sdg)$predictions)
+      if (s == 17) {
+        tbl_sdg = tbl_sdg %>% dplyr::select(document, dplyr::all_of(c("Aurora", "SDGO", "SDSN", "n_words")))
+      }
+      hits_ensemble[[s]] = tibble::tibble(
+        document = tbl_sdg %>% dplyr::pull(document),
+        sdg = sdgs[s],
+        pred = predict.ranger(m, data = tbl_sdg)$predictions
+      )
     }
 
     # combine hits
@@ -158,7 +168,6 @@ detect_sdg = function(text,
 
 
     hits[[synt]] = hits_ensemble
-
   }
 
   # combine hits from all ensemble models
@@ -166,15 +175,16 @@ detect_sdg = function(text,
 
 
   # return early if all ensemble predictions are 0
-  if(all(hits$pred == 0)) {
+  if (all(hits$pred == 0)) {
     return(tibble::tibble(
       document = factor(),
       sdg = character(),
       system = character(),
-      hit = integer()))
+      hit = integer()
+    ))
   }
 
-  #output
+  # output
   hits = hits %>%
     dplyr::filter(pred == 1) %>%
     dplyr::select(-pred) %>%

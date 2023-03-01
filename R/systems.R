@@ -37,93 +37,100 @@
 #' @export
 
 detect_sdg_systems = function(text,
-                      systems = c("Aurora", "Elsevier", "Auckland", "SIRIS"),
-                      sdgs = 1:17,
-                      output = c("features","documents"),
-                      verbose = TRUE){
+                              systems = c("Aurora", "Elsevier", "Auckland", "SIRIS"),
+                              sdgs = 1:17,
+                              output = c("features", "documents"),
+                              verbose = TRUE) {
   # make corpus
-  if(inherits(text, "character")){
-    if(length(text) == 1 && text == "") {
+  if (inherits(text, "character")) {
+    if (length(text) == 1 && text == "") {
       stop('Argument text must not be an empty string.')
     }
     corpus = make_corpus(text)
-  } else if(inherits(text, "tCorpus")){
+  } else if (inherits(text, "tCorpus")) {
     corpus = text
   } else {
     stop("Argument text must be either class character or corpustools::tCorpus.")
   }
 
-  #make output list
+  # make output list
   hits = list()
 
-  #handle selected SDGs
-  if(any(!sdgs %in% 1:17)) stop("sdgs can only take numbers in 1:17.")
-  sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
-  if("OSDG" %in% systems){
+  # handle selected SDGs
+  if (any(!sdgs %in% 1:17)) stop("sdgs can only take numbers in 1:17.")
+  sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""), sdgs) %>% sort()
+  if ("OSDG" %in% systems) {
     stop("OSDG has been renamed to SDGO (SDG Ontology).")
   }
 
   # check systems Argument
-  if (!all(systems %in% c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"))){
+  if (!all(systems %in% c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"))) {
     stop("Argument systems must be Aurora, Elsevier, Auckland, SIRIS, SDSN, or SDGO.")
   }
 
   # check output argument
-  if(!output[1] %in% c("features", "documents")) stop('Argument output must be "features" or "documents"')
+  if (!output[1] %in% c("features", "documents")) stop('Argument output must be "features" or "documents"')
 
   # run sdg
-  if("Aurora" %in% systems){
-    if(verbose) cat("Running Aurora",sep = '')
-    hits[["Aurora"]] = detect_aurora(corpus, sdgs)}
-  if("Elsevier" %in% systems){
-    if(verbose) cat("\nRunning Elsevier",sep = '')
-    hits[["Elsevier"]] = detect_elsevier(corpus, sdgs)}
-  if("Auckland" %in% systems){
-    if(verbose) cat("\nRunning Auckland",sep = '')
-    hits[["Auckland"]] = detect_auckland(corpus, sdgs)}
-  if("SIRIS" %in% systems) {
-    if(verbose) cat("\nRunning SIRIS",sep = '')
-    hits[["SIRIS"]] = detect_siris(corpus, sdgs)}
-  if("SDSN" %in% systems) {
-    if(verbose) cat("\nRunning SDSN",sep = '')
-    hits[["SDSN"]] = detect_sdsn(corpus, sdgs)}
-  if("SDGO" %in% systems) {
-    if(verbose) cat("\nRunning SDGO",sep = '')
-    hits[["SDGO"]] = detect_sdgo(corpus, sdgs)}
+  if ("Aurora" %in% systems) {
+    if (verbose) cat("Running Aurora", sep = '')
+    hits[["Aurora"]] = detect_aurora(corpus, sdgs)
+  }
+  if ("Elsevier" %in% systems) {
+    if (verbose) cat("\nRunning Elsevier", sep = '')
+    hits[["Elsevier"]] = detect_elsevier(corpus, sdgs)
+  }
+  if ("Auckland" %in% systems) {
+    if (verbose) cat("\nRunning Auckland", sep = '')
+    hits[["Auckland"]] = detect_auckland(corpus, sdgs)
+  }
+  if ("SIRIS" %in% systems) {
+    if (verbose) cat("\nRunning SIRIS", sep = '')
+    hits[["SIRIS"]] = detect_siris(corpus, sdgs)
+  }
+  if ("SDSN" %in% systems) {
+    if (verbose) cat("\nRunning SDSN", sep = '')
+    hits[["SDSN"]] = detect_sdsn(corpus, sdgs)
+  }
+  if ("SDGO" %in% systems) {
+    if (verbose) cat("\nRunning SDGO", sep = '')
+    hits[["SDGO"]] = detect_sdgo(corpus, sdgs)
+  }
 
 
   # newline
   cat("\n")
-  #combine lists to df
+  # combine lists to df
   hits <- dplyr::bind_rows(hits)
 
-  #return empty tibble if no SDGs were detected
-  if(nrow(hits) == 0) {
+  # return empty tibble if no SDGs were detected
+  if (nrow(hits) == 0) {
     return(tibble::tibble(
-    document = factor(),
-    sdg = character(),
-    system = character(),
-    query_id = integer(),
-    features = character(),
-    hit = integer()))
-    }
+      document = factor(),
+      sdg = character(),
+      system = character(),
+      query_id = integer(),
+      features = character(),
+      hit = integer()
+    ))
+  }
 
   # reduce if requested
-  if(output[1] == "documents"){
+  if (output[1] == "documents") {
     hits = hits %>%
       dplyr::group_by(document, sdg, system) %>%
-      dplyr::summarize(n_hit = dplyr::n(),
-                       features = paste(features, collapse = ", ")) %>%
+      dplyr::summarize(
+        n_hit = dplyr::n(),
+        features = paste(features, collapse = ", ")
+      ) %>%
       dplyr::ungroup()
   }
 
-  #convert document to factor for downstream functions
+  # convert document to factor for downstream functions
   hits = hits %>%
     dplyr::mutate(document = factor(document, levels = 1:length(corpus$doc_id_levels)))
 
-  #output
+  # output
   hits %>%
     dplyr::arrange(document, sdg, system)
 }
-
-

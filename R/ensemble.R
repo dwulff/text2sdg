@@ -180,6 +180,7 @@ detect_sdg = function(text,
     dplyr::select(-pred) %>%
     dplyr::group_by(system) %>%
     dplyr::mutate(hit = 1:dplyr::n()) %>%
+    dplyr::ungroup() %>%
     dplyr::arrange(document, sdg, system)
 
   # set attribute

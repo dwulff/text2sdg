@@ -3,11 +3,12 @@
 #' Makes Corpus
 #'
 #' @param txt character vector
+#' @param logical If TRUE, report progress. Only if x is large enough to require multiple sequential batches
 #' @param ... further arguments for corpustools::search_features
 #' @noRd
 
 
-make_corpus = function(txt, ...) corpustools::create_tcorpus(txt, ...)
+make_corpus = function(txt, ...) corpustools::create_tcorpus(txt, verbose = FALSE, ...)
 
 #' Search Corpus
 #'

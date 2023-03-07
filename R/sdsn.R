@@ -1,5 +1,5 @@
 # Detect sdsn SDG
-detect_sdsn = function(corpus, sdgs, verbose = FALSE) {
+detect_sdsn <- function(corpus, sdgs, verbose = FALSE) {
 
   # filter queries based on selected sdgs
   sdsn_queries <- sdsn_queries %>%
@@ -7,12 +7,14 @@ detect_sdsn = function(corpus, sdgs, verbose = FALSE) {
 
 
   # get hits
-  hits = search_corpus(corpus, sdsn_queries$query, mode = "unique_hits")
-  hits$sdg = sdsn_queries$sdg[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))]
-  hits$query_id = sdsn_queries$query_id[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))]
+  hits <- search_corpus(corpus, sdsn_queries$query, mode = "unique_hits")
+  hits$sdg <- sdsn_queries$sdg[as.numeric(stringr::str_extract(hits$code, "[:digit:]+"))]
+  hits$query_id <- sdsn_queries$query_id[as.numeric(stringr::str_extract(hits$code, "[:digit:]+"))]
 
   # exit if no hits
-  if (nrow(hits) == 0) return(NULL)
+  if (nrow(hits) == 0) {
+    return(NULL)
+  }
 
   # out
   hits %>%

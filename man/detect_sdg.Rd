@@ -22,7 +22,7 @@ detect_sdg(
 
 \item{sdgs}{\code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.}
 
-\item{synthetic}{\code{character} vector specifying the ensemble version to be used. These versions vary in terms of the amount of synthetic data used in training (relative to the amount of expert-labeled data). Can be one or more of \code{"none"}, \code{"third"}, \code{"equal"}, and \code{"tripple"}. The default is \code{"equal"}.}
+\item{synthetic}{\code{character} vector specifying the ensemble version to be used. These versions vary in terms of the amount of synthetic data used in training (relative to the amount of expert-labeled data). Can be one or more of \code{"none"}, \code{"third"}, \code{"equal"}, and \code{"triple"}. The default is \code{"equal"}.}
 
 \item{verbose}{\code{logical} specifying whether messages on the function's progress should be printed.}
 }

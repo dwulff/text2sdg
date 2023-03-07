@@ -1,3 +1,10 @@
+# text2sdg 1.1.0
+* added testing
+* fixed some bugs discovered by the tests
+* run `styler::style_pkg()`
+
+
+
 # text2sdg 1.0.1
 Some small updates for pkgdown and typo fixes in the vignette.
 

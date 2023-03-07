@@ -25,7 +25,6 @@ crosstab_sdg(hits, compare = c("systems", "sdgs"), systems = NULL, sdgs = NULL)
 \code{crosstab_sdg} determines correlations between either query systems or SDGs. The respectively other dimension will be ignored. Note that correlations between SDGs may vary between query systems.
 }
 \examples{
-
 \donttest{
 # run sdg detection
 hits <- detect_sdg_systems(projects)

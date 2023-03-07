@@ -4,10 +4,10 @@ test_that("detect_sdg returns an error when the input is not a character vector 
   expect_error(detect_sdg(test_text), "Argument text must be either class character or corpustools::tCorpus.")
 })
 
-# Test that detect_sdg returns an error when the synthetic argument is not one of "none", "third", "equal", or "tripple"
-test_that("detect_sdg returns an error when the synthetic argument is not one of 'none', 'third', 'equal', or 'tripple'", {
+# Test that detect_sdg returns an error when the synthetic argument is not one of "none", "third", "equal", or "triple"
+test_that("detect_sdg returns an error when the synthetic argument is not one of 'none', 'third', 'equal', or 'triple'", {
   test_text <- c("Test text for SDG", "Test text for SDGs")
-  expect_error(detect_sdg(test_text, synthetic = "invalid"), 'Argument synthetic must be one or more of "none","third","equal", or "tripple".')
+  expect_error(detect_sdg(test_text, synthetic = "invalid"), 'Argument synthetic must be one or more of "none","third","equal", or "triple".')
 })
 
 # Test that detect_sdg works when no SDGs are detected and that it returns a tibble with the correct columns

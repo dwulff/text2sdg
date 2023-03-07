@@ -50,7 +50,8 @@ hits <- detect_sdg_systems(projects)
 
 #' # detect SDGs using all five systems
 hits <- detect_sdg_systems(projects,
-                   system = c("Aurora", "Elsevier", "SIRIS", "SDSN", "SDGO"))
+  system = c("Aurora", "Elsevier", "SIRIS", "SDSN", "SDGO")
+)
 
 # visualize SDG frequencies
 plot_sdg(hits)

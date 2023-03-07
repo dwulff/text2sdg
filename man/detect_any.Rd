@@ -43,11 +43,15 @@ The function returns a \code{tibble} containing the SDG hits found in the vector
 \examples{
 \donttest{
 # create data frame with query system
-my_queries <- tibble::tibble(system = "my_system",
-                             query = c("theory",
-                                       "analysis OR analyses OR analyzed",
-                                       "study AND hypothesis"),
-                             sdg = c(1,2,2))
+my_queries <- tibble::tibble(
+  system = "my_system",
+  query = c(
+    "theory",
+    "analysis OR analyses OR analyzed",
+    "study AND hypothesis"
+  ),
+  sdg = c(1, 2, 2)
+)
 
 # run sdg detection with own query system
 hits <- detect_any(projects, my_queries)

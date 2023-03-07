@@ -54,17 +54,17 @@ detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = N
   # make corpus
   if (class(text)[1] == "character") {
     if (length(text) == 1 && text == "") {
-      stop('Argument text must not be an empty string.')
+      stop("Argument text must not be an empty string.")
     }
-    corpus = make_corpus(text)
+    corpus <- make_corpus(text)
   } else if (class(text)[1] == "tCorpus") {
-    corpus = text
+    corpus <- text
   } else {
     stop("Argument text must be either class character or corpustools::tCorpus.")
   }
 
   # replace NULLs
-  if (is.null(sdgs)) sdgs = unique(stringr::str_extract(system$sdg, "[:digit:]+") %>% as.numeric())
+  if (is.null(sdgs)) sdgs <- unique(stringr::str_extract(system$sdg, "[:digit:]+") %>% as.numeric())
 
   # check that selected subset of sdgs is in queries
   if (all(!sdgs %in% unique(system$sdg))) {
@@ -81,7 +81,7 @@ detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = N
 
   # handle selected SDGs
   if (any(!sdgs %in% 1:17)) stop("show_sdg can only take numbers in 1:17.")
-  sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""), sdgs) %>% sort()
+  sdgs <- paste0("SDG-", ifelse(sdgs < 10, "0", ""), sdgs) %>% sort()
 
 
 
@@ -95,7 +95,7 @@ detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = N
 
 
   # get hits
-  hits = search_corpus(corpus, system$query)
+  hits <- search_corpus(corpus, system$query)
 
   # return empty tibble if no SDGs were detected
   if (nrow(hits) == 0) {
@@ -110,10 +110,10 @@ detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = N
   }
 
   # process hits
-  hits = hits %>%
+  hits <- hits %>%
     dplyr::mutate(
-      sdg = system$sdg[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))],
-      query_id = as.numeric(stringr::str_extract(hits$code, '[:digit:]+')),
+      sdg = system$sdg[as.numeric(stringr::str_extract(hits$code, "[:digit:]+"))],
+      query_id = as.numeric(stringr::str_extract(hits$code, "[:digit:]+")),
       system = (system %>% dplyr::pull(system, query_id))[query_id]
     ) %>%
     dplyr::rename(document = doc_id) %>%
@@ -127,7 +127,7 @@ detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = N
 
   # reduce if requested
   if (output[1] == "documents") {
-    hits = hits %>%
+    hits <- hits %>%
       dplyr::group_by(document, sdg, system) %>%
       dplyr::summarize(hits = dplyr::n()) %>%
       dplyr::ungroup()

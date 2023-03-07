@@ -28,29 +28,31 @@
 #' }
 #'
 #' @export
-plot_sdg = function(hits,
-                    systems = NULL,
-                    sdgs = NULL,
-                    normalize = "none",
-                    color = "unibas",
-                    sdg_titles = FALSE,
-                    remove_duplicates = TRUE,
-                    ...) {
+plot_sdg <- function(hits,
+                     systems = NULL,
+                     sdgs = NULL,
+                     normalize = "none",
+                     color = "unibas",
+                     sdg_titles = FALSE,
+                     remove_duplicates = TRUE,
+                     ...) {
 
   # check if columns present
-  required_columns = c("sdg", "system")
+  required_columns <- c("sdg", "system")
   if (any(!required_columns %in% names(hits))) {
-    missing = required_columns[!required_columns %in% names(hits)]
+    missing <- required_columns[!required_columns %in% names(hits)]
     stop(paste0("Data object must include columns [", paste0(missing, collapse = ", "), "]."))
   }
 
   # replace NULLs
-  if (is.null(systems)) systems = hits %>%
-    dplyr::arrange(system) %>%
-    dplyr::pull(system) %>%
-    as.character() %>%
-    unique()
-  if (is.null(sdgs)) sdgs = unique(stringr::str_extract(hits$sdg, "[:digit:]{2}") %>% as.numeric())
+  if (is.null(systems)) {
+    systems <- hits %>%
+      dplyr::arrange(system) %>%
+      dplyr::pull(system) %>%
+      as.character() %>%
+      unique()
+  }
+  if (is.null(sdgs)) sdgs <- unique(stringr::str_extract(hits$sdg, "[:digit:]{2}") %>% as.numeric())
 
   # check sdg and system
   if (any(!sdgs %in% 1:17)) stop("sdgs can only take numbers in 1:17.")
@@ -59,30 +61,30 @@ plot_sdg = function(hits,
   }
 
   # handle duplicates
-  duplicates = hits %>%
+  duplicates <- hits %>%
     dplyr::select(document, sdg, system) %>%
     duplicated()
   if (any(duplicates) & remove_duplicates == TRUE) {
-    hits = hits %>% dplyr::filter(!duplicates)
+    hits <- hits %>% dplyr::filter(!duplicates)
     message(paste0(sum(duplicates), " duplicate hits removed. Set remove_duplicates = FALSE to retain duplicates."))
   }
 
   # extract number of documents
-  n_documents = length(levels(hits$document))
+  n_documents <- length(levels(hits$document))
 
   # handle colors
   if (color[1] == "unibas") {
-    color = c("#D2EBE9", "#A5D7D2", "#46505A")
+    color <- c("#D2EBE9", "#A5D7D2", "#46505A")
   }
   if (length(color) != length(systems)) {
-    color = grDevices::colorRampPalette(color)(length(systems))
+    color <- grDevices::colorRampPalette(color)(length(systems))
   }
 
   # handle sdgs
-  sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""), sdgs) %>% sort()
+  sdgs <- paste0("SDG-", ifelse(sdgs < 10, "0", ""), sdgs) %>% sort()
 
   # prepare data
-  hits = hits %>%
+  hits <- hits %>%
     dplyr::filter(
       sdg %in% sdgs,
       system %in% systems
@@ -94,43 +96,43 @@ plot_sdg = function(hits,
 
   # change to titles
   if (sdg_titles == TRUE) {
-    sdg_titles = aurora_queries %>%
+    sdg_titles <- aurora_queries %>%
       dplyr::mutate(sdg_title = stringr::str_to_title(sdg_title)) %>%
       dplyr::select(sdg, sdg_title) %>%
       unique() %>%
       dplyr::arrange(sdg) %>%
       dplyr::pull(sdg_title, sdg)
-    hits = hits %>%
+    hits <- hits %>%
       dplyr::mutate(sdg = factor(sdg_titles[sdg], levels = sdg_titles))
   }
 
   # get frequencies
-  hits = hits %>%
+  hits <- hits %>%
     dplyr::group_by(system, sdg) %>%
     dplyr::summarize(n = dplyr::n()) %>%
     dplyr::ungroup()
-  y_label = "Frequency"
+  y_label <- "Frequency"
 
   # transform to proportions
   if (normalize[1] != "none") {
     if (normalize[1] == "systems") {
-      hits = hits %>%
+      hits <- hits %>%
         dplyr::group_by(system) %>%
         dplyr::mutate(n = n / sum(n)) %>%
         dplyr::ungroup()
     } else if (normalize[1] == "documents") {
-      hits = hits %>%
+      hits <- hits %>%
         dplyr::group_by(system) %>%
         dplyr::mutate(n = n / n_documents) %>%
         dplyr::ungroup()
     } else {
       stop('Argument normalize must the "none", "systems", or "documents".')
     }
-    y_label = "Proportion"
+    y_label <- "Proportion"
   }
 
   # generate plot
-  plot = hits %>%
+  plot <- hits %>%
     ggplot2::ggplot(mapping = ggplot2::aes(x = sdg, y = n, fill = system)) +
     ggplot2::geom_bar(..., stat = "identity") +
     ggplot2::scale_x_discrete(drop = FALSE) +

@@ -1,17 +1,19 @@
 # Detect Auckland SDG
-detect_auckland = function(corpus, sdgs, verbose = FALSE) {
+detect_auckland <- function(corpus, sdgs, verbose = FALSE) {
 
   # filter queries based on selected sdgs
   auckland_queries <- auckland_queries %>%
     dplyr::filter(sdg %in% sdgs)
 
   # get hits
-  hits = search_corpus(corpus, auckland_queries$query)
-  hits$sdg = auckland_queries$sdg[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))]
-  hits$query_id = auckland_queries$query_id[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))]
+  hits <- search_corpus(corpus, auckland_queries$query)
+  hits$sdg <- auckland_queries$sdg[as.numeric(stringr::str_extract(hits$code, "[:digit:]+"))]
+  hits$query_id <- auckland_queries$query_id[as.numeric(stringr::str_extract(hits$code, "[:digit:]+"))]
 
   # exit if no hits
-  if (nrow(hits) == 0) return(NULL)
+  if (nrow(hits) == 0) {
+    return(NULL)
+  }
 
   # prepare out
   hits %>%

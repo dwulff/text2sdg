@@ -11,7 +11,7 @@
 #' @param systems As of text2sdg 1.0.0 the `systems` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now makes use of an ensemble approach that draws on all systems as well as on the text length, see --preprint-- for more information. The old version of `detect_sdg()` is available through the `detect_sdg_systems()` function.
 #' @param output As of text2sdg 1.0.0 the `output` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now makes use of an ensemble approach that draws on all systems as well as on the text length, see --preprint-- for more information. The old version of `detect_sdg()` is available through the `detect_sdg_systems()` function.
 #' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.
-#' @param synthetic \code{character} vector specifying the ensemble version to be used. These versions vary in terms of the amount of synthetic data used in training (relative to the amount of expert-labeled data). Can be one or more of \code{"none"}, \code{"third"}, \code{"equal"}, and \code{"tripple"}. The default is \code{"equal"}.
+#' @param synthetic \code{character} vector specifying the ensemble version to be used. These versions vary in terms of the amount of synthetic data used in training (relative to the amount of expert-labeled data). Can be one or more of \code{"none"}, \code{"third"}, \code{"equal"}, and \code{"triple"}. The default is \code{"equal"}.
 #' @param verbose \code{logical} specifying whether messages on the function's progress should be printed.
 #'
 #' @return The function returns a \code{tibble} containing the SDG hits found in the vector of documents. The columns of the \code{tibble} are described below. The \code{tibble} also includes as an attribute with name \code{"system_hits"} the predictions of the individual systems produced by \code{detect_sdg_systems()}.
@@ -37,12 +37,12 @@
 #' attr(hits, "system_hits")
 #' }
 #' @export
-detect_sdg = function(text,
-                      systems = lifecycle::deprecated(),
-                      output = lifecycle::deprecated(),
-                      sdgs = 1:17,
-                      synthetic = c("equal"),
-                      verbose = TRUE) {
+detect_sdg <- function(text,
+                       systems = lifecycle::deprecated(),
+                       output = lifecycle::deprecated(),
+                       sdgs = 1:17,
+                       synthetic = c("equal"),
+                       verbose = TRUE) {
 
   # Check if `system` argument is present
   if (lifecycle::is_present(systems)) {
@@ -63,26 +63,26 @@ detect_sdg = function(text,
   # make corpus
   if (inherits(text, "character")) {
     if (length(text) == 1 && text == "") {
-      stop('Argument text must not be an empty string.')
+      stop("Argument text must not be an empty string.")
     }
-    corpus = make_corpus(text)
+    corpus <- make_corpus(text)
   } else if (inherits(text, "tCorpus")) {
-    corpus = text
+    corpus <- text
   } else {
     stop("Argument text must be either class character or corpustools::tCorpus.")
   }
 
   # test model selector
-  if (any(!(synthetic[1] %in% c("none", "third", "equal", "tripple")))) {
-    stop('Argument synthetic must be one or more of "none","third","equal", or "tripple".')
+  if (any(!(synthetic[1] %in% c("none", "third", "equal", "triple")))) {
+    stop('Argument synthetic must be one or more of "none","third","equal", or "triple".')
   }
 
 
   # run systems
-  if (verbose) cat("Running systems", sep = '')
+  if (verbose) cat("Running systems", sep = "")
 
   # run detect sdg
-  system_hits = detect_sdg_systems(
+  system_hits <- detect_sdg_systems(
     text = corpus,
     sdgs = sdgs,
     systems = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"),
@@ -101,15 +101,15 @@ detect_sdg = function(text,
   }
 
   # add lengths
-  if (verbose) cat("Obtaining text lengths", sep = '')
-  lens = table(corpus$tokens$doc_id)
-  lens = tibble::tibble(
+  if (verbose) cat("Obtaining text lengths", sep = "")
+  lens <- table(corpus$tokens$doc_id)
+  lens <- tibble::tibble(
     document = factor(names(lens)),
     n_words = c(lens)
   )
   # generate features
-  if (verbose) cat("\nBuilding features", sep = '')
-  tbl = tibble::tibble(document = factor(1:corpus$n_meta)) %>%
+  if (verbose) cat("\nBuilding features", sep = "")
+  tbl <- tibble::tibble(document = factor(1:corpus$n_meta)) %>%
     dplyr::left_join(system_hits %>%
       dplyr::select(document, sdg, system) %>%
       dplyr::mutate(hit = TRUE),
@@ -129,33 +129,33 @@ detect_sdg = function(text,
     ranger::treeInfo
   }
 
-  if (verbose) cat("\nRunning ensemble", sep = '')
+  if (verbose) cat("\nRunning ensemble", sep = "")
 
   # newline
   cat("\n")
 
-  hits = list()
-  sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""), sdgs) %>% sort()
+  hits <- list()
+  sdgs <- paste0("SDG-", ifelse(sdgs < 10, "0", ""), sdgs) %>% sort()
 
   for (synt in synthetic) {
 
     # select model
-    ensemble_sel = ensembles[[synt]]
+    ensemble_sel <- ensembles[[synt]]
 
 
 
     # run ensemble
-    hits_ensemble = list()
+    hits_ensemble <- list()
     for (s in 1:length(sdgs)) {
-      m = ensemble_sel[[sdgs[s]]]
-      tbl_sdg = tbl %>% dplyr::filter(sdg == sdgs[s])
+      m <- ensemble_sel[[sdgs[s]]]
+      tbl_sdg <- tbl %>% dplyr::filter(sdg == sdgs[s])
       if (nrow(tbl_sdg) == 0) {
         next
       }
       if (s == 17) {
-        tbl_sdg = tbl_sdg %>% dplyr::select(document, dplyr::all_of(c("Aurora", "SDGO", "SDSN", "n_words")))
+        tbl_sdg <- tbl_sdg %>% dplyr::select(document, dplyr::all_of(c("Aurora", "SDGO", "SDSN", "n_words")))
       }
-      hits_ensemble[[s]] = tibble::tibble(
+      hits_ensemble[[s]] <- tibble::tibble(
         document = tbl_sdg %>% dplyr::pull(document),
         sdg = sdgs[s],
         pred = predict.ranger(m, data = tbl_sdg)$predictions
@@ -163,15 +163,15 @@ detect_sdg = function(text,
     }
 
     # combine hits
-    hits_ensemble = dplyr::bind_rows(hits_ensemble) %>%
+    hits_ensemble <- dplyr::bind_rows(hits_ensemble) %>%
       dplyr::mutate(system = paste0("Ensemble ", !!synt))
 
 
-    hits[[synt]] = hits_ensemble
+    hits[[synt]] <- hits_ensemble
   }
 
   # combine hits from all ensemble models
-  hits = dplyr::bind_rows(hits)
+  hits <- dplyr::bind_rows(hits)
 
 
   # return early if all ensemble predictions are 0
@@ -185,7 +185,7 @@ detect_sdg = function(text,
   }
 
   # output
-  hits = hits %>%
+  hits <- hits %>%
     dplyr::filter(pred == 1) %>%
     dplyr::select(-pred) %>%
     dplyr::group_by(system) %>%
@@ -194,7 +194,7 @@ detect_sdg = function(text,
     dplyr::arrange(document, sdg, system)
 
   # set attribute
-  attr(hits, 'system_hits') = system_hits
+  attr(hits, "system_hits") <- system_hits
 
   # out
   hits

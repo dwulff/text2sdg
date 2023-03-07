@@ -30,9 +30,9 @@ crosstab_sdg <- function(hits,
 
 
   # check if columns present
-  required_columns = c("document", "sdg", "system")
+  required_columns <- c("document", "sdg", "system")
   if (any(!required_columns %in% names(hits))) {
-    missing = required_columns[!required_columns %in% names(hits)]
+    missing <- required_columns[!required_columns %in% names(hits)]
     stop(paste0("Data object must include columns [", paste0(missing, collapse = ", "), "]."))
   }
 
@@ -42,12 +42,14 @@ crosstab_sdg <- function(hits,
   }
 
   # replace NULLs
-  if (is.null(systems)) systems = hits %>%
-    dplyr::arrange(system) %>%
-    dplyr::pull(system) %>%
-    as.character() %>%
-    unique()
-  if (is.null(sdgs)) sdgs = unique(stringr::str_extract(hits$sdg, "[:digit:]{2}") %>% as.numeric())
+  if (is.null(systems)) {
+    systems <- hits %>%
+      dplyr::arrange(system) %>%
+      dplyr::pull(system) %>%
+      as.character() %>%
+      unique()
+  }
+  if (is.null(sdgs)) sdgs <- unique(stringr::str_extract(hits$sdg, "[:digit:]{2}") %>% as.numeric())
 
   # check compare
   if (!compare[[1]] %in% c("systems", "sdgs")) {
@@ -76,10 +78,10 @@ crosstab_sdg <- function(hits,
   hits <- hits %>% dplyr::distinct(document, sdg, system)
 
   # handle selected sdgs
-  sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""), sdgs) %>% sort()
+  sdgs <- paste0("SDG-", ifelse(sdgs < 10, "0", ""), sdgs) %>% sort()
 
   # filter and process systems
-  hits = hits %>%
+  hits <- hits %>%
     dplyr::filter(
       sdg %in% sdgs,
       system %in% systems

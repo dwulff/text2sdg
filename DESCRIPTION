@@ -1,7 +1,7 @@
 Package: text2sdg
 Type: Package
 Version: 1.1.0
-Date: 2023-3-3
+Date: 2023-3-16
 Title: Detecting UN Sustainable Development Goals in Text
 Description: The United Nations’ Sustainable Development Goals (SDGs) have become an important guideline for organisations to monitor and plan their contributions to social, economic, and environmental transformations. The 'text2sdg' package is an open-source analysis package that identifies SDGs in text using scientifically developed query systems, opening up the opportunity to monitor any type of text-based data, such as scientific output or corporate publications. For more information regarding the methodology see Meier, Mata & Wulff (2022) <arXiv:2110.05856>.
 Maintainer: Dominik S. Meier <dominikmeier@outlook.com>
@@ -30,7 +30,8 @@ Imports:
     stringr,
     ggplot2,
     lifecycle,
-    ranger
+    ranger,
+    text2sdgData
 Suggests: 
     testthat (>= 3.0.0),
     knitr,

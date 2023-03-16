@@ -1,17 +1,9 @@
 ## Minor update
-Added testing. 
+Added testing and outsourced the ensemble data to the 'text2sdgData' package.
 
 ## R CMD check results
-There were no ERRORs 
 
-There were no WARNINGs
-
-There was one NOTE:
-❯ checking installed package size ... NOTE
-  installed size is  6.5Mb
-  sub-directories of 1Mb or more:
-    data   5.7Mb
-
+0 errors | 0 warnings | 0 notes
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.

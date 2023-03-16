@@ -140,7 +140,7 @@ detect_sdg <- function(text,
   for (synt in synthetic) {
 
     # select model
-    ensemble_sel <- ensembles[[synt]]
+    ensemble_sel <- text2sdgData::ensembles[[synt]]
 
 
 

@@ -134,9 +134,6 @@ detect_sdg <- function(text,
     ranger::treeInfo
   }
 
-  # set seed for ranger model
-  set.seed(1)
-
   if (verbose) cat("\nRunning ensemble", sep = "")
 
   # newline
@@ -163,6 +160,8 @@ detect_sdg <- function(text,
       if (s == 17) {
         tbl_sdg <- tbl_sdg %>% dplyr::select(document, dplyr::all_of(c("Aurora", "SDGO", "SDSN", "n_words")))
       }
+      # set seed for ranger model
+      set.seed(1)
       hits_ensemble[[s]] <- tibble::tibble(
         document = tbl_sdg %>% dplyr::pull(document),
         sdg = sdgs[s],

@@ -77,12 +77,6 @@ detect_sdg <- function(text,
     stop('Argument synthetic must be one or more of "none","third","equal", or "triple".')
   }
 
-  #### triple to tripple --> update text2sdgData
-  if ("triple" %in% synthetic) {
-    synthetic[synthetic == "triple"] <- "tripple"
-  }
-
-
   # run systems
   if (verbose) cat("Running systems", sep = "")
 

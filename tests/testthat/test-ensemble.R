@@ -12,6 +12,7 @@ test_that("detect_sdg returns an error when the synthetic argument is not one of
 
 # Test that detect_sdg works when no SDGs are detected and that it returns a tibble with the correct columns
 test_that("detect_sdg returns a tibble", {
+  skip_on_cran()
   test_text <- c("a")
   expected_result <- tibble::tibble(
     document = factor(),
@@ -26,6 +27,7 @@ test_that("detect_sdg returns a tibble", {
 
 # Test that detect_sdg throws expected error with empty string as input
 test_that("run detect_sdg with empty string", {
+  skip_on_cran()
   test_text <- c("")
   expect_error(detect_sdg(test_text), "Argument text must not be an empty string.")
 })
@@ -33,6 +35,7 @@ test_that("run detect_sdg with empty string", {
 
 # Test that filtering SDGs works
 test_that("filtering SDGs works", {
+  skip_on_cran()
   test_text <- projects[c(19, 50, 83)]
 
   result <- detect_sdg(test_text, synthetic = c("none"), sdgs = c(3, 5))

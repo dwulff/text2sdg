@@ -21,6 +21,7 @@ test_that('detect_any returns an error when the output argument is not one of "f
 
 # Test that detect_any works when no SDGs are detected and that it returns a tibble with the correct columns
 test_that("detect_sdg_systems returns a tibble", {
+  skip_on_cran()
   test_text <- c("Test text for SDG 1", "Test text for SDG 2")
 
   my_queries <- tibble::tibble(
@@ -56,6 +57,7 @@ test_that("run detect_sdg_systems with empty string", {
 
 # Test that filtering SDGs works
 test_that("filtering SDGs works", {
+  skip_on_cran()
   test_text <- c("theory", "analysis", "study hypothesis")
 
   my_queries <- tibble::tibble(
@@ -79,6 +81,7 @@ test_that("filtering SDGs works", {
 
 # Test that documents output works as expected
 test_that("Test documents output", {
+  skip_on_cran()
   test_text <- c("theory", "analysis", "study hypothesis")
 
   my_queries <- tibble::tibble(
@@ -98,6 +101,7 @@ test_that("Test documents output", {
 
 # Test detect_sdg_systems throws expected error when the selected subset of sdgs is not present in the queries
 test_that("Test documents output", {
+  skip_on_cran()
   test_text <- c("theory", "analysis", "study hypothesis")
 
   my_queries <- tibble::tibble(

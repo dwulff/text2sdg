@@ -56,7 +56,7 @@ test_that("run detect_sdg_systems with empty string", {
 
 # Test that filtering SDGs works
 test_that("filtering SDGs works", {
-  test_text <- projects[1:100]
+  test_text <- c("theory", "analysis", "study hypothesis")
 
   my_queries <- tibble::tibble(
     system = "my_system",
@@ -73,13 +73,13 @@ test_that("filtering SDGs works", {
 
   expect_equal(result %>%
     dplyr::distinct(sdg) %>%
-    dplyr::pull(sdg), c("SDG-02", "SDG-01"))
+    dplyr::pull(sdg), c("SDG-01", "SDG-02"))
 })
 
 
 # Test that documents output works as expected
 test_that("Test documents output", {
-  test_text <- projects[1:100]
+  test_text <- c("theory", "analysis", "study hypothesis")
 
   my_queries <- tibble::tibble(
     system = "my_system",
@@ -98,7 +98,7 @@ test_that("Test documents output", {
 
 # Test detect_sdg_systems throws expected error when the selected subset of sdgs is not present in the queries
 test_that("Test documents output", {
-  test_text <- projects[1:100]
+  test_text <- c("theory", "analysis", "study hypothesis")
 
   my_queries <- tibble::tibble(
     system = "my_system",

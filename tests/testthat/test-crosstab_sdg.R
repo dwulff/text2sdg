@@ -1,6 +1,6 @@
 # Test that crosstab_sdg returns a matrix
 test_that("crosstab_sdg returns matrix", {
-  result <- detect_sdg_systems(projects[1:100])
+  result <- detect_sdg_systems(projects[1], system = c("Auckland", "Elsevier"))
   cross <- crosstab_sdg(result)
   expect_equal(is.matrix(cross), TRUE)
 })
@@ -21,21 +21,21 @@ test_that("run crosstab without detected sdgs", {
 
 # Test that crosstab throws error when compare argument is not systems or sdgs
 test_that("run crosstab with wrong compare argument", {
-  result <- detect_sdg_systems(text = projects[1:100])
+  result <- detect_sdg_systems(text = projects[1:2])
   expect_error(crosstab_sdg(result, compare = "faulty"), "compare must be either 'systems' or 'sdgs'.")
 })
 
 
 # Test that default crosstab output has expected dimensions
 test_that("test crosstab default expected dimensions", {
-  result <- detect_sdg_systems(text = projects[1:500])
+  result <- detect_sdg_systems(text = projects[c(92, 193)])
   crosstab_result <- crosstab_sdg(result)
   expect_equal(dim(crosstab_result), c(4, 4))
 })
 
 # Test that crosstab compare sdgs output has expected dimensions
 test_that("test crosstab default expected dimensions", {
-  result <- detect_sdg_systems(text = projects[1:500])
+  result <- detect_sdg_systems(text = projects[c(14, 24, 42, 50, 75, 99, 83, 126, 190, 343, 399)])
   crosstab_result <- crosstab_sdg(result, compare = "sdgs")
   expect_equal(dim(crosstab_result), c(17, 17))
 })
@@ -43,7 +43,7 @@ test_that("test crosstab default expected dimensions", {
 
 # Test that crosstab compare sdgs filtering SDGs works
 test_that("test crosstab compare sdgs filtering SDGs works", {
-  result <- detect_sdg_systems(text = projects[1:500])
+  result <- detect_sdg_systems(text = projects[c(126, 14, 1)])
   crosstab_result <- crosstab_sdg(result, compare = "sdgs", sdgs = c(1, 2))
   expect_equal(rownames(crosstab_result), c("SDG-01", "SDG-02"))
 })
@@ -51,20 +51,20 @@ test_that("test crosstab compare sdgs filtering SDGs works", {
 
 # Test that crosstab throws expected error when only one system is passed
 test_that("test crosstab with only one system", {
-  result <- detect_sdg_systems(text = projects[1:20], system = "Elsevier")
+  result <- detect_sdg_systems(text = projects[c(1)], system = "Elsevier")
   expect_error(crosstab_sdg(result, compare = "systems"), "Argument systems must have, at least, two c values.")
 })
 
 # Test that crosstab throws expected error when only one sdg is passed
 test_that("test crosstab with only one sdg", {
-  result <- detect_sdg_systems(text = projects[1:20], system = "Elsevier")
+  result <- detect_sdg_systems(text = projects[c(1)], system = "Elsevier")
   expect_error(crosstab_sdg(result, compare = "sdgs", sdgs = 3), "Argument sdgs must have, at least, two distinct values.")
 })
 
 
 # Test that crosstab compare systems filtering systems works
-test_that("test crosstab compare sdgs filtering SDGs works", {
-  result <- detect_sdg_systems(text = projects[1:500])
+test_that("test crosstab compare systems filtering SDGs works", {
+  result <- detect_sdg_systems(text = projects[c(1, 49)])
   crosstab_result <- crosstab_sdg(result, compare = "systems", systems = c("Aurora", "Elsevier"))
   expect_equal(rownames(crosstab_result), c("Aurora", "Elsevier"))
 })

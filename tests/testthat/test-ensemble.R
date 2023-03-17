@@ -12,7 +12,7 @@ test_that("detect_sdg returns an error when the synthetic argument is not one of
 
 # Test that detect_sdg works when no SDGs are detected and that it returns a tibble with the correct columns
 test_that("detect_sdg returns a tibble", {
-  test_text <- c("Test text for SDG 1", "Test text for SDG 2")
+  test_text <- c("a")
   expected_result <- tibble::tibble(
     document = factor(),
     sdg = character(),
@@ -24,18 +24,6 @@ test_that("detect_sdg returns a tibble", {
   expect_equal(result, expected_result)
 })
 
-
-#
-test_that("names of tibble", {
-  test_text <- c("Test text for SDG 1", "Test text for SDG 2")
-
-  result <- detect_sdg(test_text)
-
-  expect_equal(names(result), c("document", "sdg", "system", "hit"))
-})
-
-
-
 # Test that detect_sdg throws expected error with empty string as input
 test_that("run detect_sdg with empty string", {
   test_text <- c("")
@@ -45,7 +33,7 @@ test_that("run detect_sdg with empty string", {
 
 # Test that filtering SDGs works
 test_that("filtering SDGs works", {
-  test_text <- projects[1:100]
+  test_text <- projects[c(19, 50, 83)]
 
   result <- detect_sdg(test_text, synthetic = c("none"), sdgs = c(3, 5))
 

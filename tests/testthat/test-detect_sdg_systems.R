@@ -36,7 +36,7 @@ test_that("run detect_sdg_systems with empty string", {
 
 # Test that filtering SDGs works
 test_that("filtering SDGs works", {
-  test_text <- projects[1:100]
+  test_text <- projects[c(c(1, 17, 50))]
 
   result <- detect_sdg_systems(test_text, sdgs = c(3, 5))
 

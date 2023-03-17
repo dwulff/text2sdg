@@ -73,7 +73,7 @@ detect_sdg <- function(text,
   }
 
   # test model selector
-  if (any(!(synthetic[1] %in% c("none", "third", "equal", "triple")))) {
+  if (any(!(synthetic %in% c("none", "third", "equal", "triple")))) {
     stop('Argument synthetic must be one or more of "none","third","equal", or "triple".')
   }
 

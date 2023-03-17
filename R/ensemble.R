@@ -134,6 +134,9 @@ detect_sdg <- function(text,
     ranger::treeInfo
   }
 
+  # set seed for ranger model
+  set.seed(1)
+
   if (verbose) cat("\nRunning ensemble", sep = "")
 
   # newline
@@ -163,7 +166,7 @@ detect_sdg <- function(text,
       hits_ensemble[[s]] <- tibble::tibble(
         document = tbl_sdg %>% dplyr::pull(document),
         sdg = sdgs[s],
-        pred = predict.ranger(m, data = tbl_sdg, seed = 0)$predictions
+        pred = predict.ranger(m, data = tbl_sdg)$predictions
       )
     }
 

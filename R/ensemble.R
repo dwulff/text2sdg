@@ -77,6 +77,11 @@ detect_sdg <- function(text,
     stop('Argument synthetic must be one or more of "none","third","equal", or "triple".')
   }
 
+  #### triple to tripple --> update text2sdgData
+  if ("triple" %in% synthetic) {
+    synthetic[synthetic == "triple"] <- "tripple"
+  }
+
 
   # run systems
   if (verbose) cat("Running systems", sep = "")
@@ -158,7 +163,7 @@ detect_sdg <- function(text,
       hits_ensemble[[s]] <- tibble::tibble(
         document = tbl_sdg %>% dplyr::pull(document),
         sdg = sdgs[s],
-        pred = predict.ranger(m, data = tbl_sdg)$predictions
+        pred = predict.ranger(m, data = tbl_sdg, seed = 0)$predictions
       )
     }
 

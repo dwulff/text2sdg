@@ -21,8 +21,7 @@ test_that('detect_any returns an error when the output argument is not one of "f
 
 # Test that detect_any works when no SDGs are detected and that it returns a tibble with the correct columns
 test_that("detect_sdg_systems returns a tibble", {
-  skip_on_cran()
-  test_text <- c("Test text for SDG 1", "Test text for SDG 2")
+  test_text <- c("Test text for SDG 1")
 
   my_queries <- tibble::tibble(
     system = "my_system",

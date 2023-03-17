@@ -9,7 +9,6 @@ test_that("crosstab_sdg returns matrix", {
 
 # Test that crosstab throws an error when required columns are missing
 test_that("run crosstab with required columns missing", {
-  skip_on_cran()
   cross <- tibble::tibble(missing_column = integer())
   expect_error(crosstab_sdg(cross), "Data object must include columns \\[document, sdg, system\\]")
 })

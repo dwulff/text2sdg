@@ -27,7 +27,6 @@ test_that("detect_sdg returns a tibble", {
 
 # Test that detect_sdg throws expected error with empty string as input
 test_that("run detect_sdg with empty string", {
-  skip_on_cran()
   test_text <- c("")
   expect_error(detect_sdg(test_text), "Argument text must not be an empty string.")
 })

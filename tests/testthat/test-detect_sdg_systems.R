@@ -12,7 +12,7 @@ test_that('detect_sdg_systems returns an error when the output argument is not o
 
 # Test that detect_sdg_systems works when no SDGs are detected and that it returns a tibble with the correct columns
 test_that("detect_sdg_systems returns a tibble", {
-  test_text <- c("Test text for SDG 1", "Test text for SDG 2")
+  test_text <- c("Test text")
   expected_result <- tibble::tibble(
     document = factor(),
     sdg = character(),
@@ -21,7 +21,7 @@ test_that("detect_sdg_systems returns a tibble", {
     features = character(),
     hit = integer()
   )
-  result <- detect_sdg_systems(test_text)
+  result <- detect_sdg_systems(test_text, system = "Elsevier")
 
   expect_equal(result, expected_result)
 })

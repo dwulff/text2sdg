@@ -98,13 +98,13 @@ detect_sdg_systems = function(text,
 
   #return empty tibble if no SDGs were detected
   if(nrow(hits) == 0) {
-    return(tibble::tibble(
-    document = factor(),
-    sdg = character(),
-    system = character(),
-    query_id = integer(),
-    features = character(),
-    hit = integer()))
+    hits = tibble::tibble(document = factor(),
+                          sdg = character(),
+                          system = character(),
+                          query_id = integer(),
+                          features = character(),
+                          hit = integer())
+    return(hits)
     }
 
   # reduce if requested

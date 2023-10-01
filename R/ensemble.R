@@ -125,6 +125,7 @@ detect_sdg = function(text,
   # get around ::: warning
   predict.ranger <- utils::getFromNamespace("predict.ranger", "ranger")
 
+  #
   ignore_unused_imports <- function() {
     ranger::treeInfo
   }
@@ -149,11 +150,11 @@ detect_sdg = function(text,
 
   # return early if all predictions are 0
   if(all(hits$pred == 0)) {
-    return(tibble::tibble(
-      document = factor(),
-      sdg = character(),
-      system = character(),
-      hit = integer()))
+    hits = tibble::tibble(document = factor(),
+                          sdg = character(),
+                          system = character(),
+                          hit = integer())
+    return(hits)
   }
 
   #output

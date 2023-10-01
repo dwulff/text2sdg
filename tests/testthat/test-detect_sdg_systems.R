@@ -12,17 +12,18 @@ test_that('detect_sdg_systems returns an error when the output argument is not o
 
 # Test that detect_sdg_systems works when no SDGs are detected and that it returns a tibble with the correct columns
 test_that("detect_sdg_systems returns a tibble", {
-  test_text <- c("Test text for SDG 1", "Test text for SDG 2")
-  expected_result <- tibble::tibble(document = factor(),
-                                    sdg = character(),
-                                    system = character(),
-                                    query_id = integer(),
-                                    features = character(),
-                                    hit = integer())
-  result <- detect_sdg_systems(test_text)
+  test_text <- c("Test text")
+  expected_result <- tibble::tibble(
+    document = factor(),
+    sdg = character(),
+    system = character(),
+    query_id = integer(),
+    features = character(),
+    hit = integer()
+  )
+  result <- detect_sdg_systems(test_text, system = "Elsevier")
 
   expect_equal(result, expected_result)
-
 })
 
 
@@ -35,21 +36,12 @@ test_that("run detect_sdg_systems with empty string", {
 
 # Test that filtering SDGs works
 test_that("filtering SDGs works", {
-  test_text <- projects[1:100]
+  skip_on_cran()
+  test_text <- projects[c(c(1, 17, 50))]
 
   result <- detect_sdg_systems(test_text, sdgs = c(3, 5))
 
   expect_equal(result %>%
-                 dplyr::distinct(sdg) %>%
-                 dplyr::pull(sdg), c("SDG-03", "SDG-05"))
-
+    dplyr::distinct(sdg) %>%
+    dplyr::pull(sdg), c("SDG-03", "SDG-05"))
 })
-
-
-
-
-
-
-
-
-

@@ -1,16 +1,10 @@
 ## Minor update
-Some small updates for pkgdown and typo fixes in the vignette.
+Added testing and outsourced the ensemble data to the 'text2sdgData' package.
+Added 'testthat::skip_on_cran' to almost all tests to stay below max CRAN check runtime.
 
 ## R CMD check results
-There were no ERRORs 
 
-There were no WARNINGs
-
-There was one NOTE:
-❯ checking installed package size ... NOTE
-    installed size is  6.8Mb
-    sub-directories of 1Mb or more:
-      data   6.0Mb
+0 errors | 0 warnings | 0 notes
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.

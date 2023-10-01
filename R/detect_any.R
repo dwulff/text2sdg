@@ -22,25 +22,29 @@
 #' @examples
 #' \donttest{
 #' # create data frame with query system
-#' my_queries <- tibble::tibble(system = "my_system",
-#'                              query = c("theory",
-#'                                        "analysis OR analyses OR analyzed",
-#'                                        "study AND hypothesis"),
-#'                              sdg = c(1,2,2))
+#' my_queries <- tibble::tibble(
+#'   system = "my_system",
+#'   query = c(
+#'     "theory",
+#'     "analysis OR analyses OR analyzed",
+#'     "study AND hypothesis"
+#'   ),
+#'   sdg = c(1, 2, 2)
+#' )
 #'
 #' # run sdg detection with own query system
 #' hits <- detect_any(projects, my_queries)
 #'
 #' # run sdg detection for sdg 2 only
 #' hits <- detect_any(projects, my_queries, sdgs = 2)
-#'}
+#' }
 #'
 #' @export
 
-detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = NULL, output = c("features","documents"), verbose = TRUE) {
+detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = NULL, output = c("features", "documents"), verbose = TRUE) {
 
 
-  #deprecated warning
+  # deprecated warning
   if (lifecycle::is_present(queries)) {
     lifecycle::deprecate_warn("0.1.5", "detect_any(queries)", "detect_any(system)")
     system <- queries
@@ -48,63 +52,70 @@ detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = N
 
 
   # make corpus
-  if(class(text)[1] == "character"){
-    if(length(text) == 1 && text == "") {
-      stop('Argument text must not be an empty string.')
+  if (class(text)[1] == "character") {
+    if (length(text) == 1 && text == "") {
+      stop("Argument text must not be an empty string.")
     }
-    corpus = make_corpus(text)
-  } else if(class(text)[1] == "tCorpus"){
-    corpus = text
+    corpus <- make_corpus(text)
+  } else if (class(text)[1] == "tCorpus") {
+    corpus <- text
   } else {
     stop("Argument text must be either class character or corpustools::tCorpus.")
   }
 
   # replace NULLs
-  if(is.null(sdgs)) sdgs = unique(stringr::str_extract(system$sdg,"[:digit:]+") %>% as.numeric())
+  if (is.null(sdgs)) sdgs <- unique(stringr::str_extract(system$sdg, "[:digit:]+") %>% as.numeric())
 
-  #check that selected subset of sdgs is in queries
-  if(all(!sdgs %in% unique(system$sdg))) {stop("At least one of the selected SDGs needs to be present in the queries data frame.")}
+  # check that selected subset of sdgs is in queries
+  if (all(!sdgs %in% unique(system$sdg))) {
+    stop("At least one of the selected SDGs needs to be present in the queries data frame.")
+  }
 
-  #check query data
+  # check query data
   if (!all(names(system) %in% c("sdg", "query", "system"))) {
     stop(paste0("Variables 'sdg', 'query' and 'system' must be present in quries dataset."))
   }
 
   # check output argument
-  if(!output[1] %in% c("features", "documents")) stop('Argument output must be "features" or "documents"')
+  if (!output[1] %in% c("features", "documents")) stop('Argument output must be "features" or "documents"')
 
-  #handle selected SDGs
-  if(any(!sdgs %in% 1:17)) stop("show_sdg can only take numbers in 1:17.")
-  sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
+  # handle selected SDGs
+  if (any(!sdgs %in% 1:17)) stop("show_sdg can only take numbers in 1:17.")
+  sdgs <- paste0("SDG-", ifelse(sdgs < 10, "0", ""), sdgs) %>% sort()
 
 
 
-  #filter queries based on selected sdgs
+  # filter queries based on selected sdgs
   system <- system %>%
-    dplyr::mutate(sdg = paste0("SDG-", ifelse(sdg < 10, "0", ""),sdg),
-                  query_id = 1:dplyr::n()) %>%
+    dplyr::mutate(
+      sdg = paste0("SDG-", ifelse(sdg < 10, "0", ""), sdg),
+      query_id = 1:dplyr::n()
+    ) %>%
     dplyr::filter(sdg %in% sdgs)
 
 
   # get hits
-  hits = search_corpus(corpus, system$query)
+  hits <- search_corpus(corpus, system$query)
 
-  #return empty tibble if no SDGs were detected
-  if(nrow(hits) == 0) {
+  # return empty tibble if no SDGs were detected
+  if (nrow(hits) == 0) {
     return(tibble::tibble(
       document = factor(),
       sdg = character(),
       system = character(),
       query_id = integer(),
       features = character(),
-      hit = integer()))
+      hit = integer()
+    ))
   }
 
   # process hits
-  hits = hits %>%
-    dplyr::mutate(sdg = system$sdg[as.numeric(stringr::str_extract(hits$code, '[:digit:]+'))],
-                  query_id = as.numeric(stringr::str_extract(hits$code, '[:digit:]+')),
-                  system = (system %>% dplyr::pull(system, query_id))[query_id]) %>%
+  hits <- hits %>%
+    dplyr::mutate(
+      sdg = system$sdg[as.numeric(stringr::str_extract(hits$code, "[:digit:]+"))],
+      query_id = as.numeric(stringr::str_extract(hits$code, "[:digit:]+")),
+      system = (system %>% dplyr::pull(system, query_id))[query_id]
+    ) %>%
     dplyr::rename(document = doc_id) %>%
     dplyr::select(document, sdg, system, query_id, feature) %>%
     dplyr::group_by(document, sdg, system, query_id) %>%
@@ -114,23 +125,19 @@ detect_any <- function(text, system, queries = lifecycle::deprecated(), sdgs = N
     dplyr::ungroup() %>%
     suppressMessages()
 
-    # reduce if requested
-  if(output[1] == "documents"){
-    hits = hits %>%
+  # reduce if requested
+  if (output[1] == "documents") {
+    hits <- hits %>%
       dplyr::group_by(document, sdg, system) %>%
       dplyr::summarize(hits = dplyr::n()) %>%
       dplyr::ungroup()
   }
 
-  #convert document to factor for downstream functions
+  # convert document to factor for downstream functions
   hits <- hits %>%
     dplyr::mutate(document = factor(document, levels = 1:length(corpus$doc_id_levels)))
 
-  #output
+  # output
   hits %>%
     dplyr::arrange(document, sdg, system)
-
-
 }
-
-

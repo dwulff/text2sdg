@@ -12,7 +12,6 @@
 #' @return \code{matrix} showing correlation coefficients for all pairs of query systems (if \code{compare = "systems"}) or SDGs (if \code{compare = "SDGs"}).
 #'
 #' @examples
-#'
 #' \donttest{
 #' # run sdg detection
 #' hits <- detect_sdg_systems(projects)
@@ -31,40 +30,46 @@ crosstab_sdg <- function(hits,
 
 
   # check if columns present
-  required_columns = c("document", "sdg", "system")
-  if(any(!required_columns %in% names(hits))){
-    missing = required_columns[!required_columns %in% names(hits)]
-    stop(paste0("Data object must include columns [", paste0(missing, collapse=", "),"]."))
+  required_columns <- c("document", "sdg", "system")
+  if (any(!required_columns %in% names(hits))) {
+    missing <- required_columns[!required_columns %in% names(hits)]
+    stop(paste0("Data object must include columns [", paste0(missing, collapse = ", "), "]."))
   }
 
   # check if any hits are present
-  if(nrow(hits) == 0) {
+  if (nrow(hits) == 0) {
     stop("Hits data frame seems not to contain any hits, cross tabulation thus not possible.")
   }
 
   # replace NULLs
-  if(is.null(systems)) systems = hits %>% dplyr::arrange(system) %>% dplyr::pull(system) %>% as.character() %>% unique()
-  if(is.null(sdgs)) sdgs = unique(stringr::str_extract(hits$sdg,"[:digit:]{2}") %>% as.numeric())
+  if (is.null(systems)) {
+    systems <- hits %>%
+      dplyr::arrange(system) %>%
+      dplyr::pull(system) %>%
+      as.character() %>%
+      unique()
+  }
+  if (is.null(sdgs)) sdgs <- unique(stringr::str_extract(hits$sdg, "[:digit:]{2}") %>% as.numeric())
 
   # check compare
-  if(!compare[[1]] %in% c("systems", "sdgs")){
+  if (!compare[[1]] %in% c("systems", "sdgs")) {
     stop("compare must be either 'systems' or 'sdgs'.")
   }
 
   # check sdg and system
-  if(any(!sdgs %in% 1:17)) stop("sdgs can only take numbers in 1:17.")
-  if(any(!systems %in% hits$system)){
-    stop(paste0("Data only contains systems [",paste0(unique(hits$system), collapse = ", "),"]."))
+  if (any(!sdgs %in% 1:17)) stop("sdgs can only take numbers in 1:17.")
+  if (any(!systems %in% hits$system)) {
+    stop(paste0("Data only contains systems [", paste0(unique(hits$system), collapse = ", "), "]."))
   }
-  if(compare[[1]] == "systems") {
-    if(length(unique(systems)) < 2){
+  if (compare[[1]] == "systems") {
+    if (length(unique(systems)) < 2) {
       stop("Argument systems must have, at least, two c values.")
     }
-    if(any(!systems %in% hits$system)){
-      stop(paste0("Values [",paste0(system[!systems %in% hits$system],collapse=", "),"] for argument systems not found in column system of data."))
+    if (any(!systems %in% hits$system)) {
+      stop(paste0("Values [", paste0(system[!systems %in% hits$system], collapse = ", "), "] for argument systems not found in column system of data."))
     }
   } else {
-    if(length(unique(sdgs)) < 2) {
+    if (length(unique(sdgs)) < 2) {
       stop("Argument sdgs must have, at least, two distinct values.")
     }
   }
@@ -73,68 +78,73 @@ crosstab_sdg <- function(hits,
   hits <- hits %>% dplyr::distinct(document, sdg, system)
 
   # handle selected sdgs
-  sdgs = paste0("SDG-", ifelse(sdgs < 10, "0", ""),sdgs) %>% sort()
+  sdgs <- paste0("SDG-", ifelse(sdgs < 10, "0", ""), sdgs) %>% sort()
 
   # filter and process systems
-  hits = hits %>%
-    dplyr::filter(sdg %in% sdgs,
-                  system %in% systems)
+  hits <- hits %>%
+    dplyr::filter(
+      sdg %in% sdgs,
+      system %in% systems
+    )
 
   # abort if no hits left
+<<<<<<< HEAD
   if(nrow(hits) == 0) {
     stop(paste0("The combination of sdgs = [", paste0(sdgs, collapse = ", "), "] and systems = [", paste0(systems, collapse = ", "), " produced no hits."))
+=======
+  if (nrow(hits) == 0) {
+    stop(paste0("There are no hits matching the combination of sdgs = [", paste0(sdgs, collapse = ", "), "] and systems = [", paste0(systems, collapse = ", ")))
+>>>>>>> ddae108aef853438a0ef3ca07911323efd57ebc0
   }
 
   # do systems
-  if(compare[[1]] == "systems") {
+  if (compare[[1]] == "systems") {
 
-      # do something
-      phi_dat <- tidyr::expand_grid(document = 1:length(levels(hits$document)), system = systems, sdg = sdgs) %>%
-        dplyr::mutate(document = as.factor(document)) %>%
-        dplyr::left_join(hits %>%
-                           dplyr::mutate(hit = 1) %>%
-                           dplyr::select(document, system, sdg, hit),
-                         by = c("document", "system", "sdg")) %>%
-        dplyr::mutate(hit = dplyr::if_else(is.na(hit), 0, 1)) %>%
-        dplyr::distinct() %>%
-        dplyr::arrange(document, sdg) %>%
-        tidyr::pivot_wider(names_from = system, values_from = hit) %>%
-        `[`(,-(1))
+    # do something
+    phi_dat <- tidyr::expand_grid(document = 1:length(levels(hits$document)), system = systems, sdg = sdgs) %>%
+      dplyr::mutate(document = as.factor(document)) %>%
+      dplyr::left_join(hits %>%
+        dplyr::mutate(hit = 1) %>%
+        dplyr::select(document, system, sdg, hit),
+      by = c("document", "system", "sdg")
+      ) %>%
+      dplyr::mutate(hit = dplyr::if_else(is.na(hit), 0, 1)) %>%
+      dplyr::distinct() %>%
+      dplyr::arrange(document, sdg) %>%
+      tidyr::pivot_wider(names_from = system, values_from = hit) %>%
+      `[`(, -(1))
 
-      # do something
-      correlations <- phi_dat %>%
-        dplyr::select(-sdg) %>%
-        cor(.) %>% suppressWarnings()
+    # do something
+    correlations <- phi_dat %>%
+      dplyr::select(-sdg) %>%
+      cor(.) %>%
+      suppressWarnings()
 
-      # reorder
-      correlations <- correlations[systems, systems]
-
+    # reorder
+    correlations <- correlations[systems, systems]
   } else {
 
     # do something
     phi_dat <- tidyr::expand_grid(document = 1:length(levels(hits$document)), system = systems, sdg = sdgs) %>%
       dplyr::mutate(document = as.factor(document)) %>%
       dplyr::left_join(hits %>%
-                         dplyr::mutate(hit = 1),
-                         dplyr::select(document, system, sdg, hit),
-                       by = c("document", "system", "sdg")) %>%
+        dplyr::mutate(hit = 1),
+      dplyr::select(document, system, sdg, hit),
+      by = c("document", "system", "sdg")
+      ) %>%
       dplyr::mutate(hit = dplyr::if_else(is.na(hit), 0, 1)) %>%
       dplyr::distinct() %>%
       dplyr::arrange(document, sdg) %>%
       tidyr::pivot_wider(names_from = sdg, values_from = hit) %>%
-      `[`(,-(1))
+      `[`(, -(1))
 
     # run correlations
     correlations <- phi_dat %>%
       dplyr::select(-system) %>%
-      cor(.) %>% suppressWarnings()
-
+      cor(.) %>%
+      suppressWarnings()
   }
 
   # out
   correlations
-
 }
-
-
-

@@ -13,10 +13,9 @@ editor_options:
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width=7, fig.height=4
+  fig.width = 7, fig.height = 4
 )
 library(text2sdg)
-
 ```
 
 ## Introduction
@@ -78,7 +77,8 @@ options(tibble.print_min = 5)
 ```{r}
 # detecting SDGs using all query systems
 hits_all <- detect_sdg_systems(projects,
-                       system = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"))
+  system = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO")
+)
 
 # count hits of systems
 table(hits_all$system)
@@ -128,13 +128,17 @@ The queries in the custom query set can be Lucene-style queries following the sy
 
 ```{r}
 # definition of query set
-my_queries <- tibble::tibble(system = "my_system",
-                              query = c("theory", "analysis OR analyses OR analyzed", "study AND hypothesis"),
-                              sdg = c(3,7,7))
+my_queries <- tibble::tibble(
+  system = "my_system",
+  query = c("theory", "analysis OR analyses OR analyzed", "study AND hypothesis"),
+  sdg = c(3, 7, 7)
+)
 
 # return documents output format
-detect_any(text = projects, 
-           system = my_queries)
+detect_any(
+  text = projects,
+  system = my_queries
+)
 ```
 
 
@@ -159,10 +163,11 @@ The example below uses some of the available arguments to make adjustments to th
 
 ```{r}
 # show normalized, side-by-side barplot of hits
-plot_sdg(hits_all, 
-         sdg_titles = TRUE,
-         normalize = "systems", 
-         position = "dodge")
+plot_sdg(hits_all,
+  sdg_titles = TRUE,
+  normalize = "systems",
+  position = "dodge"
+)
 ```
 
 ### Extending visualizations with `ggplot2`
@@ -171,8 +176,8 @@ Because `plot_sdg()` is implemented using `ggplot2`, visualizations can easily b
 
 ```{r}
 # show system hits in separate panels
-plot_sdg(hits_all) + 
-  ggplot2::facet_wrap(~system, ncol= 1, scales = "free_y")
+plot_sdg(hits_all) +
+  ggplot2::facet_wrap(~system, ncol = 1, scales = "free_y")
 ```
 
 
@@ -187,7 +192,7 @@ By default the `crosstab_sdg()` function compares `systems`, which is illustrate
 The analysis reveals two noteworthy results. First, correlations between systems are overall rather small. Second, query systems are more similar to systems of the same type, i.e., query or keyword-based.  
 
 ```{r}
-# evaluate correspondence between systems 
+# evaluate correspondence between systems
 crosstab_sdg(hits_all) %>% round(2)
 ```
 
@@ -200,7 +205,7 @@ The `crosstab_sdg()` can also be used to analyze, in a similar fashion, the corr
 The example below analyzes the correspondence of all SDGs across all systems. The resulting cross table reveals strong correspondences between certain pairs of SDGs, such as, for instance, between `SDG-01` and `SDG-02` or between `SDG-07` and `SDG-13`. 
 
 ```{r}
-# evaluate correspondence between systems 
+# evaluate correspondence between systems
 crosstab_sdg(hits_all, compare = "sdgs") %>% round(2)
 ```
 

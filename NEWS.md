@@ -1,3 +1,13 @@
+# text2sdg 1.1.1
+* outsourced trained ensemble model to 'text2sdgData' package
+* added internal seed to 'detect_sdg' to make ensemble model predictions deterministic
+* added 'testthat::skip_on_cran' to most tests to stay below max CRAN check time
+
+# text2sdg 1.1.0
+* added testing
+* fixed some bugs discovered by the tests
+* run `styler::style_pkg()`
+
 # text2sdg 1.0.1
 Some small updates for pkgdown and typo fixes in the vignette.
 

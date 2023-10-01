@@ -38,13 +38,6 @@
 #' @source \url{https://zenodo.org/record/3567769#.YVMhH9gzYUG}
 "siris_queries"
 
-#' Ensemble models based on a random forest architecture that pools the predictions of six labeling systems generated using `detect_sdg_systems()` and also considers text length.
-#'
-#' A list of trained `ranger::ranger()` random forest models that are used by `detect_sdg()`.
-#'
-#' @source Wulff, Meier, & Mata (2023)
-"ensembles"
-
 #' SDG queries of Elsevier
 #'
 #' A dataset containing the SDG queries of \href{https://www.elsevier.com/connect/sdg-report}{Elsevier} (version 1). The queries are available from \href{https://data.mendeley.com/datasets/87txkw7khs/1}{data.mendeley.com}. The Elsevier queries were developed to maximize SDG hits on the Scopus database. A detailed description of how each SDG query was developed can be found \href{https://elsevier.digitalcommonsdata.com/datasets/87txkw7khs/1}{here}. There is one query per SDG. There are no queries for SDG-17.
@@ -109,4 +102,3 @@
 #' }
 #' @source \url{https://ap-unsdsn.org/regional-initiatives/universities-sdgs/}
 "sdsn_queries"
-

@@ -19,7 +19,7 @@ provides a brief overview of the contents of the package."><meta property="og:im
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">text2sdg</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
       </span>
     </div>
 
@@ -100,7 +100,6 @@ provides a brief overview of the contents of the package.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># detect SDGs using default systems</span></span></span>
 <span class="r-in"><span><span class="va">hits</span> <span class="op">&lt;-</span> <span class="fu"><a href="detect_sdg_systems.html">detect_sdg_systems</a></span><span class="op">(</span><span class="va">projects</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running Aurora</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running Elsevier</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running Auckland</span>
@@ -108,8 +107,8 @@ provides a brief overview of the contents of the package.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#' # detect SDGs using all five systems</span></span></span>
 <span class="r-in"><span><span class="va">hits</span> <span class="op">&lt;-</span> <span class="fu"><a href="detect_sdg_systems.html">detect_sdg_systems</a></span><span class="op">(</span><span class="va">projects</span>,</span></span>
-<span class="r-in"><span>                   system <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Aurora"</span>, <span class="st">"Elsevier"</span>, <span class="st">"SIRIS"</span>, <span class="st">"SDSN"</span>, <span class="st">"SDGO"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span>  system <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Aurora"</span>, <span class="st">"Elsevier"</span>, <span class="st">"SIRIS"</span>, <span class="st">"SDSN"</span>, <span class="st">"SDGO"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running Aurora</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running Elsevier</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running SIRIS</span>

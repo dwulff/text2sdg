@@ -18,7 +18,6 @@ reference:
     - siris_queries
     - sdsn_queries
     - sdgo_queries
-    - ensembles
 navbar:
   title: ~
   type: default

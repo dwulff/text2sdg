@@ -168,16 +168,6 @@ detect_sdg <- function(text,
     hits_ensemble <- dplyr::bind_rows(hits_ensemble) %>%
       dplyr::mutate(system = paste0("Ensemble ", !!synt))
 
-<<<<<<< HEAD
-  # return early if all predictions are 0
-  if(all(hits$pred == 0)) {
-    hits = tibble::tibble(document = factor(),
-                          sdg = character(),
-                          system = character(),
-                          hit = integer())
-    return(hits)
-=======
-
     hits[[synt]] <- hits_ensemble
   }
 
@@ -193,7 +183,6 @@ detect_sdg <- function(text,
       system = character(),
       hit = integer()
     ))
->>>>>>> ddae108aef853438a0ef3ca07911323efd57ebc0
   }
 
   # output

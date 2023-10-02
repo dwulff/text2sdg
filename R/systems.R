@@ -103,18 +103,6 @@ detect_sdg_systems <- function(text,
   # combine lists to df
   hits <- dplyr::bind_rows(hits)
 
-<<<<<<< HEAD
-  #return empty tibble if no SDGs were detected
-  if(nrow(hits) == 0) {
-    hits = tibble::tibble(document = factor(),
-                          sdg = character(),
-                          system = character(),
-                          query_id = integer(),
-                          features = character(),
-                          hit = integer())
-    return(hits)
-    }
-=======
   # return empty tibble if no SDGs were detected
   if (nrow(hits) == 0) {
     return(tibble::tibble(
@@ -126,7 +114,6 @@ detect_sdg_systems <- function(text,
       hit = integer()
     ))
   }
->>>>>>> ddae108aef853438a0ef3ca07911323efd57ebc0
 
   # reduce if requested
   if (output[1] == "documents") {

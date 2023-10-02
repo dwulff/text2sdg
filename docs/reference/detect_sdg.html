@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">text2sdg</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
       </span>
     </div>
 
@@ -58,9 +58,10 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">detect_sdg</span><span class="op">(</span></span>
 <span>  <span class="va">text</span>,</span>
-<span>  system <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  systems <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  output <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  sdgs <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">17</span>,</span>
-<span>  synthetic <span class="op">=</span> <span class="st">"equal"</span>,</span>
+<span>  synthetic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"equal"</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -71,8 +72,12 @@
 <dd><p><code>character</code> vector or object of class <code>tCorpus</code> containing text in which SDGs shall be detected.</p></dd>
 
 
-<dt>system</dt>
-<dd><p>As of text2sdg 1.0.0 the `system` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now makes use of an ensemble approach that draws on all systems as well as on the text length, see --preprint-- for more information. The old version of `detect_sdg()` is available through the `detect_sdg_systems()` function.</p></dd>
+<dt>systems</dt>
+<dd><p>As of text2sdg 1.0.0 the `systems` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now makes use of an ensemble approach that draws on all systems as well as on the text length, see --preprint-- for more information. The old version of `detect_sdg()` is available through the `detect_sdg_systems()` function.</p></dd>
+
+
+<dt>output</dt>
+<dd><p>As of text2sdg 1.0.0 the `output` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now makes use of an ensemble approach that draws on all systems as well as on the text length, see --preprint-- for more information. The old version of `detect_sdg()` is available through the `detect_sdg_systems()` function.</p></dd>
 
 
 <dt>sdgs</dt>
@@ -80,7 +85,7 @@
 
 
 <dt>synthetic</dt>
-<dd><p><code>character</code> specifying the ensemble version that vary in terms of the amount of synthetic data used in training (relative to the amount of expert-labeled data). Can be one of <code>"none"</code>, <code>"third"</code>, <code>"equal"</code>, and <code>"tripple"</code>. The default is <code>"equal"</code>.</p></dd>
+<dd><p><code>character</code> vector specifying the ensemble version to be used. These versions vary in terms of the amount of synthetic data used in training (relative to the amount of expert-labeled data). Can be one or more of <code>"none"</code>, <code>"third"</code>, <code>"equal"</code>, and <code>"triple"</code>. The default is <code>"equal"</code>.</p></dd>
 
 
 <dt>verbose</dt>
@@ -98,7 +103,7 @@
 <dd><p>Label of the SDG found in document.</p></dd>
 
  <dt>system</dt>
-<dd><p>The name of the system that produced the match. In this case <code>"Ensemble"</code>.</p></dd>
+<dd><p>The name of the ensemble system that produced the match.</p></dd>
 
  <dt>hit</dt>
 <dd><p>Index of hit for the Ensemble model.</p></dd>
@@ -120,18 +125,14 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># run sdg detection</span></span></span>
 <span class="r-in"><span><span class="va">hits</span> <span class="op">&lt;-</span> <span class="fu">detect_sdg</span><span class="op">(</span><span class="va">projects</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running systems</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Obtaining text lengths</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Building features</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running ensemble</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># run sdg detection for sdg 3 only</span></span></span>
 <span class="r-in"><span><span class="va">hits</span> <span class="op">&lt;-</span> <span class="fu">detect_sdg</span><span class="op">(</span><span class="va">projects</span>, sdgs <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running systems</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Obtaining text lengths</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Building features</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running ensemble</span>
@@ -151,7 +152,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 3        SDG-03 SDSN         1 health                                        </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 6        SDG-03 Auckland     1 cancer                                        </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 6        SDG-03 Elsevier     1 cancer                                        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 969 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 969 more rows</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

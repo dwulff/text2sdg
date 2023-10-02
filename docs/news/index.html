@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">text2sdg</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
       </span>
     </div>
 
@@ -50,6 +50,29 @@
       <small>Source: <a href="https://github.com/dwulff/text2sdg/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.1.1" id="text2sdg-111">text2sdg 1.1.1<small>2023-03-17</small><a class="anchor" aria-label="anchor" href="#text2sdg-111"></a></h2>
+<ul><li>outsourced trained ensemble model to ‘text2sdgData’ package</li>
+<li>added internal seed to ‘detect_sdg’ to make ensemble model predictions deterministic</li>
+<li>added ‘testthat::skip_on_cran’ to most tests to stay below max CRAN check time</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.1.0" id="text2sdg-110">text2sdg 1.1.0<a class="anchor" aria-label="anchor" href="#text2sdg-110"></a></h2>
+<ul><li>added testing</li>
+<li>fixed some bugs discovered by the tests</li>
+<li>run <code>styler::style_pkg()</code>
+</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.1" id="text2sdg-101">text2sdg 1.0.1<a class="anchor" aria-label="anchor" href="#text2sdg-101"></a></h2>
+<p>Some small updates for pkgdown and typo fixes in the vignette.</p>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.0" id="text2sdg-100">text2sdg 1.0.0<small>2023-01-24</small><a class="anchor" aria-label="anchor" href="#text2sdg-100"></a></h2>
+<ul><li>added the Auckland query system</li>
+<li>renamed the “detect_sdg” function to “detect_sdg_systems”</li>
+<li>the “detect_sdg” function now implements an ensemble model, see Wulff, Meier and Mata (2023) for more information</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.0" id="text2sdg-020">text2sdg 0.2.0<a class="anchor" aria-label="anchor" href="#text2sdg-020"></a></h2>
 <ul><li>changed hits to n_hits</li>

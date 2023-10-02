@@ -46,8 +46,6 @@ If you use the `text2sdg` package for published work, we kindly ask that you cit
 
 Meier, D. S., Mata, R., & Wulff, D. U. (2021). text2sdg: An open-source solution to monitoring sustainable development goals from text. arXiv. https://arxiv.org/abs/2110.05856
 
-Depending on the use of the package, also consider referencing the related article below. 
-
-## Related article
+Depending on the use of the package, also consider referencing the following article. 
 
 Wulff, Dirk U., Meier, Dominik S., & Mata, R. (2023). Using novel data and ensemble models to improve automated labeling of Sustainable Development Goals. arXiv. https://arxiv.org/abs/2301.11353

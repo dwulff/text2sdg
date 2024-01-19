@@ -108,7 +108,8 @@ detect_sdg <- function(text,
   )
   # generate features
   if (verbose) cat("\nBuilding features", sep = "")
-  tbl <- tibble::tibble(document = factor(1:corpus$n_meta)) %>%
+
+  tbl <- tibble::tibble(document = unique(corpus$tokens$doc_id)) %>%
     dplyr::left_join(system_hits %>%
       dplyr::select(document, sdg, system) %>%
       dplyr::mutate(hit = TRUE),
@@ -117,6 +118,7 @@ detect_sdg <- function(text,
     dplyr::mutate(system = factor(system, levels = c("Aurora", "Elsevier", "Auckland", "SIRIS", "SDSN", "SDGO"))) %>%
     tidyr::complete(document, sdg, system) %>%
     dplyr::filter(!is.na(system)) %>%
+    dplyr::filter(!is.na(sdg)) %>%
     dplyr::mutate(hit = dplyr::case_when(is.na(hit) ~ FALSE, TRUE ~ hit)) %>%
     tidyr::pivot_wider(names_from = system, values_from = hit) %>%
     dplyr::left_join(lens, by = "document")

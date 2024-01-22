@@ -128,7 +128,7 @@ detect_sdg_systems <- function(text,
 
   # convert document to factor for downstream functions
   hits <- hits %>%
-    dplyr::mutate(document = factor(document, levels = 1:length(corpus$doc_id_levels)))
+    dplyr::mutate(document = factor(document, levels = levels(corpus$tokens$doc_id)))
 
   # output
   hits %>%

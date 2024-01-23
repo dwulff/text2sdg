@@ -7,7 +7,7 @@
 #' By default, \code{detect_sdg} implements the version of the ensemble model that has been trained on an equal amount of expert-labeled and synthetic data, providing a reasonable balance between sensitivity and specificity. For details, see article by Wulff et al. (2023).
 #'
 #'
-#' @param text \code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.
+#' @param text \code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected. Not allowed to contain any missing values.
 #' @param systems As of text2sdg 1.0.0 the `systems` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now makes use of an ensemble approach that draws on all systems as well as on the text length, see --preprint-- for more information. The old version of `detect_sdg()` is available through the `detect_sdg_systems()` function.
 #' @param output As of text2sdg 1.0.0 the `output` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now makes use of an ensemble approach that draws on all systems as well as on the text length, see --preprint-- for more information. The old version of `detect_sdg()` is available through the `detect_sdg_systems()` function.
 #' @param sdgs \code{numeric} vector with integers between 1 and 17 specifying the sdgs to identify in \code{text}. Defaults to \code{1:17}.
@@ -58,6 +58,9 @@ detect_sdg <- function(text,
     # Signal the deprecation to the user
     lifecycle::deprecate_stop("1.0.0", "text2sdg::detect_sdg(output = )", details = "As of text2sdg 1.0.0, the `output` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now implements an ensemble model that pools the predictions of all other systems and considers text length, see `?detect_sdg` for more information. The old functionality of `detect_sdg()` is now provided by the `detect_sdg_systems()` function.")
   }
+
+  # ensure that text does not contain any NA values (produces error in ensemble model)
+  if (any(is.na(text))) {stop("Missing values detected in the input text (x). Please remove any missing values from the input text.")}
 
 
   # make corpus

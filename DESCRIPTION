@@ -38,6 +38,6 @@ Suggests:
     rmarkdown
 LazyData: TRUE
 LazyDataCompression: bzip2
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.1
 VignetteBuilder: knitr
 Config/testthat/edition: 3

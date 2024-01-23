@@ -2,6 +2,7 @@
 % Please edit documentation in R/text2sdg.R
 \docType{package}
 \name{text2sdg}
+\alias{text2sdg-package}
 \alias{text2sdg}
 \title{Detecting UN Sustainable Development Goals in Text}
 \description{
@@ -61,6 +62,28 @@ crosstab_sdg(hits)
 
 # correlations between SDGs
 crosstab_sdg(hits, compare = "sdgs")
+}
+
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/dwulff/text2sdg}
+  \item Report bugs at \url{https://github.com/dwulff/text2sdg/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Dominik S. Meier \email{dominikmeier@outlook.com} (\href{https://orcid.org/0000-0002-3999-1388}{ORCID})
+
+Authors:
+\itemize{
+  \item Dirk U. Wulff \email{dirk.wulff@gmail.com} (\href{https://orcid.org/0000-0002-4008-8022}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item Rui Mata \email{rui.mata@unibas.ch} (\href{https://orcid.org/0000-0002-1679-906X}{ORCID}) [contributor]
 }
 
 }

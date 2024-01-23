@@ -14,7 +14,7 @@ detect_sdg(
 )
 }
 \arguments{
-\item{text}{\code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected.}
+\item{text}{\code{character} vector or object of class \code{tCorpus} containing text in which SDGs shall be detected. Not allowed to contain any missing values.}
 
 \item{systems}{As of text2sdg 1.0.0 the `systems` argument of `detect_sdg()` is deprecated. This is because `detect_sdg()` now makes use of an ensemble approach that draws on all systems as well as on the text length, see --preprint-- for more information. The old version of `detect_sdg()` is available through the `detect_sdg_systems()` function.}
 

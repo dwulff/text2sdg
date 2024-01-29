@@ -1,5 +1,5 @@
 [![cran version](http://www.r-pkg.org/badges/version/text2sdg)](https://CRAN.R-project.org/package=text2sdg)
-[![DOI](https://doi.org/10.48550/arXiv.2110.05856)](https://doi.org/10.48550/arXiv.2110.05856)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5553980.svg)](https://doi.org/10.48550/arXiv.2110.05856)
 [![downloads](https://cranlogs.r-pkg.org/badges/grand-total/text2sdg?color=yellow)](https://CRAN.R-project.org/package=text2sdg)
 
 # text2sdg <img src="man/figures/logo.png" align="right" alt="" width="120" />

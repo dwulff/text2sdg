@@ -6,12 +6,12 @@ detect_aurora <- function(corpus, sdgs, verbose = FALSE) {
     dplyr::left_join(aurora_queries %>% dplyr::select(query, sdg), by = c("orig" = "query")) %>%
     dplyr::filter(sdg %in% sdgs)
 
-  # select sdgs from ws
+  # select sdgs from ands
   aurora_and <- aurora_and %>%
     dplyr::left_join(aurora_queries %>% dplyr::select(query, sdg), by = c("orig" = "query")) %>%
     dplyr::filter(sdg %in% sdgs)
 
-  # select sdgs from ands
+  # select sdgs from ws
   aurora_w <- aurora_w %>%
     dplyr::left_join(aurora_queries %>% dplyr::select(query, sdg), by = c("orig" = "query")) %>%
     dplyr::filter(sdg %in% sdgs)

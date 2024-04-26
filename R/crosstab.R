@@ -123,7 +123,7 @@ crosstab_sdg <- function(hits,
     phi_dat <- tidyr::expand_grid(document = 1:length(levels(hits$document)), system = systems, sdg = sdgs) %>%
       dplyr::mutate(document = as.factor(document)) %>%
       dplyr::left_join(hits %>%
-        dplyr::mutate(hit = 1),
+        dplyr::mutate(hit = 1) %>%
       dplyr::select(document, system, sdg, hit),
       by = c("document", "system", "sdg")
       ) %>%

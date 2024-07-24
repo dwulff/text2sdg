@@ -48,4 +48,4 @@ Meier, D. S., Mata, R., & Wulff, D. U. (2021). text2sdg: An open-source solution
 
 Depending on the use of the package, also consider referencing the following article:
 
-Wulff, D. U., Meier, D. S., & Mata, R. (2024). Using novel data and ensemble models to improve automated labeling of Sustainable Development Goals. Sustainability Science. https://doi.org/10.1007/s11625-024-01516-3
+Wulff, D. U., Meier, D. S., & Mata, R. (2024). Using novel data and ensemble models to improve automated labeling of Sustainable Development Goals. *Sustainability Science*. https://doi.org/10.1007/s11625-024-01516-3

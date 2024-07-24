@@ -1,8 +1,21 @@
-@article{meier2021text2sdg,
-  title={text2sdg: An R package to Monitor Sustainable Development Goals from Text},
-  author={Meier, Dominik S and Mata, Rui and Wulff, Dirk U},
-  journal={arXiv preprint arXiv:2110.05856},
-  url={https://arxiv.org/abs/2110.05856},
-  eprint={2110.05856},
-  year={2021}
-}
+bibentry(
+  bibtype = "Misc",
+  doi = "10.21105/arxiv.2110.05856",
+  url = "https://arxiv.org/abs/2110.05856",
+  year = 2021,
+  author = "Meier, D. S. and Mata, R. and Wulff, D. U.",
+  title = "{text2sdg: An open-source solution to monitoring sustainable development goals from text}",
+  journal = "{arXiv}",
+  textVersion = "Meier, D. S., Mata, R., & Wulff, D. U. (2021). text2sdg: An open-source solution to monitoring sustainable development goals from text. arXiv. https://arxiv.org/abs/2110.05856"
+)
+
+bibentry(
+  bibtype = "Article",
+  doi = "10.1007/s11625-024-01516-3",
+  url = "https://doi.org/10.1007/s11625-024-01516-3",
+  year = 2024,
+  author = "Wulff, D. U. and Meier, D. S. and Mata, R.",
+  title = "{Using novel data and ensemble models to improve automated labeling of Sustainable Development Goals}",
+  journal = "{Sustainability Science}",
+  textVersion = "Wulff, D. U., Meier, D. S., & Mata, R. (2024). Using novel data and ensemble models to improve automated labeling of Sustainable Development Goals. Sustainability Science. https://doi.org/10.1007/s11625-024-01516-3"
+)

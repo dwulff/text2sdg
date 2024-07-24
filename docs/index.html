@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -98,7 +98,7 @@
 <div class="section level1">
 <h1 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h1>
-<p>To identify SDGs in a series of documents, the user can choose between two approaches, an individual systems approach implementing six individual query systems and an ensemble approach powered by machine learning that integrates these systems. It is recommended to use the more accurate and bias-free ensemble approach (see Wulff, Meier, &amp; Mata, 2023).</p>
+<p>To identify SDGs in a series of documents, the user can choose between two approaches, an individual systems approach implementing six individual query systems and an ensemble approach powered by machine learning that integrates these systems. It is recommended to use the more accurate and bias-free ensemble approach (see Wulff, Meier, &amp; Mata, 2024).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># vector of texts</span></span>
 <span><span class="va">texts</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"This is text 1"</span>, <span class="st">"This is text 2"</span><span class="op">)</span></span>
@@ -114,12 +114,8 @@
 </h2>
 <p>If you use the <code>text2sdg</code> package for published work, we kindly ask that you cite the package as follows:</p>
 <p>Meier, D. S., Mata, R., &amp; Wulff, D. U. (2021). text2sdg: An open-source solution to monitoring sustainable development goals from text. arXiv. <a href="https://arxiv.org/abs/2110.05856" class="external-link uri">https://arxiv.org/abs/2110.05856</a></p>
-<p>Depending on the use of the package, also consider referencing the related article below.</p>
-</div>
-<div class="section level2">
-<h2 id="related-article">Related article<a class="anchor" aria-label="anchor" href="#related-article"></a>
-</h2>
-<p>Wulff, Dirk U., Meier, Dominik S., &amp; Mata, R. (2023). Using novel data and ensemble models to improve automated labeling of Sustainable Development Goals. arXiv. <a href="https://arxiv.org/abs/2301.11353" class="external-link uri">https://arxiv.org/abs/2301.11353</a></p>
+<p>Depending on the use of the package, also consider referencing the following article:</p>
+<p>Wulff, D. U., Meier, D. S., &amp; Mata, R. (2024). Using novel data and ensemble models to improve automated labeling of Sustainable Development Goals. <em>Sustainability Science</em>. <a href="https://doi.org/10.1007/s11625-024-01516-3" class="external-link uri">https://doi.org/10.1007/s11625-024-01516-3</a></p>
 </div>
 </div>
 
@@ -163,7 +159,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://CRAN.R-project.org/package=text2sdg" class="external-link"><img src="http://www.r-pkg.org/badges/version/text2sdg" alt="cran version"></a></li>
-<li><a href="https://doi.org/10.5281/zenodo.5553980" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.5553980.svg" alt="DOI"></a></li>
+<li><a href="https://doi.org/10.48550/arXiv.2110.05856" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.5553980.svg" alt="DOI"></a></li>
 <li><a href="https://CRAN.R-project.org/package=text2sdg" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/text2sdg?color=yellow" alt="downloads"></a></li>
 </ul>
 </div>
@@ -179,7 +175,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>

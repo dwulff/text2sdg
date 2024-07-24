@@ -5,7 +5,7 @@
 \alias{aurora_queries}
 \title{SDG queries of the Aurora Universities Network}
 \format{
-A data frame with 378 rows and 5 columns
+A data frame with 373 rows and 5 columns
 \describe{
   \item{system}{Name of system}
   \item{sdg}{Label of the SDG}

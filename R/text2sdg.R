@@ -52,7 +52,7 @@
 #' crosstab_sdg(hits, compare = "sdgs")
 #' }
 #'
-#' @docType package
+#' @docType _PACKAGE
 #' @name text2sdg
 NULL
 #> NULL

@@ -1,12 +1,15 @@
 bibentry(
-  bibtype = "Misc",
-  doi = "10.21105/arxiv.2110.05856",
-  url = "https://arxiv.org/abs/2110.05856",
-  year = 2021,
+  bibtype = "Article",
+  doi = "10.32614/RJ-2024-005",
+  url = "https://doi.org/10.32614/RJ-2024-005",
+  year = 2025,
+  volume = 16,
+  number = 1,
+  pages = "83-95",
   author = "Meier, D. S. and Mata, R. and Wulff, D. U.",
-  title = "{text2sdg: An open-source solution to monitoring sustainable development goals from text}",
-  journal = "{arXiv}",
-  textVersion = "Meier, D. S., Mata, R., & Wulff, D. U. (2021). text2sdg: An open-source solution to monitoring sustainable development goals from text. arXiv. https://arxiv.org/abs/2110.05856"
+  title = "{text2sdg: An R Package to Monitor Sustainable Development Goals from Text}",
+  journal = "{The R Journal}",
+  textVersion = "Meier, D. S., Mata, R., & Wulff, D. U. (2025). text2sdg: An R Package to Monitor Sustainable Development Goals from Text. The R Journal, 16(1), 83-95. https://doi.org/10.32614/RJ-2024-005"
 )
 
 bibentry(

@@ -1,3 +1,9 @@
+# text2sdg 1.1.2
+* Updated citation information to include published papers (The R Journal and Sustainability Science)
+* Fixed URLs in documentation to resolve CRAN check notes
+* Fixed Rd cross-references for better documentation compliance
+* Updated package documentation format for compatibility with newer R versions
+
 # text2sdg 1.1.1
 * outsourced trained ensemble model to 'text2sdgData' package
 * added internal seed to 'detect_sdg' to make ensemble model predictions deterministic

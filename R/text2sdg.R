@@ -52,7 +52,6 @@
 #' crosstab_sdg(hits, compare = "sdgs")
 #' }
 #'
-#' @docType _PACKAGE
+#' @keywords internal
 #' @name text2sdg
-NULL
-#> NULL
+"_PACKAGE"

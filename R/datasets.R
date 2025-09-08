@@ -1,6 +1,6 @@
 #' Descriptions of research projects
 #'
-#' 500 project descriptions of University of Basel research projects that were funded by the Swiss National Science Foundation. The project descriptions were drawn randomly from University of Basel projects listed in the the public \href{https://p3.snf.ch}{P3 project data base}.
+#' 500 project descriptions of University of Basel research projects that were funded by the Swiss National Science Foundation. The project descriptions were drawn randomly from University of Basel projects listed in the the public \href{https://data.snf.ch}{data.snf.ch project data base}.
 #'
 #' @format A \code{character} vector of length 500.
 #' @source \url{https://data.snf.ch/about/glossary}
@@ -24,7 +24,7 @@
 
 #' SDG queries of SIRIS Academic
 #'
-#' A dataset containing the SDG queries of \href{http://www.sirislab.com/lab/sdg-research-mapping/}{SIRIS Academic}. The queries are available from\href{https://zenodo.org/record/3567769#.YRY9xdMzY8N}{Zenodo.org}. The SIRIS queries were developed by extracting key terms from the UN official list of goals, targets and indicators as well from relevant literature around SDGs. The query system has subsequently been expanded with a pre-trained word2vec model and an algorithm that selects related words from Wikipedia. There are multiple queries per SDG (one per row). There are no queries for SDG-17.
+#' A dataset containing the SDG queries of \href{https://www.sirislab.com/lab/sdg-research-mapping/}{SIRIS Academic}. The queries are available from\href{https://zenodo.org/record/3567769#.YRY9xdMzY8N}{Zenodo.org}. The SIRIS queries were developed by extracting key terms from the UN official list of goals, targets and indicators as well from relevant literature around SDGs. The query system has subsequently been expanded with a pre-trained word2vec model and an algorithm that selects related words from Wikipedia. There are multiple queries per SDG (one per row). There are no queries for SDG-17.
 #'
 #' @format A data frame with 3,445 rows and 6 columns
 #' \describe{
@@ -40,7 +40,7 @@
 
 #' SDG queries of Elsevier
 #'
-#' A dataset containing the SDG queries of \href{https://www.elsevier.com/connect/sdg-report}{Elsevier} (version 1). The queries are available from \href{https://data.mendeley.com/datasets/87txkw7khs/1}{data.mendeley.com}. The Elsevier queries were developed to maximize SDG hits on the Scopus database. A detailed description of how each SDG query was developed can be found \href{https://elsevier.digitalcommonsdata.com/datasets/87txkw7khs/1}{here}. There is one query per SDG. There are no queries for SDG-17.
+#' A dataset containing the SDG queries of \href{https://www.elsevier.com/connect/report-mapping-research-to-advance-the-sdgs}{Elsevier} (version 1). The queries are available from \href{https://data.mendeley.com/datasets/87txkw7khs/1}{data.mendeley.com}. The Elsevier queries were developed to maximize SDG hits on the Scopus database. A detailed description of how each SDG query was developed can be found \href{https://elsevier.digitalcommonsdata.com/datasets/87txkw7khs/1}{here}. There is one query per SDG. There are no queries for SDG-17.
 #'
 #' @format A data frame with 16 rows and 4 columns
 #' \describe{

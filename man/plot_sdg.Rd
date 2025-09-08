@@ -24,7 +24,7 @@ plot_sdg(
 
 \item{normalize}{\code{character} specifying whether results should be presented as frequencies (\code{normalize = "none"}), the default, or whether the frequencies should be normalized using either the total frequencies of each system (\code{normalize = "systems"}) or the total number of documents (\code{normalize = "documents"}).}
 
-\item{color}{\code{character} vector used to color the bars according to systems. The default, \code{"unibas"}, uses three colors of University of Basel's corporate design. Alternatively, \code{color} must specified using \link{color} names or color hex values. \code{color} will be interpolated to match the length of \code{systems}.}
+\item{color}{\code{character} vector used to color the bars according to systems. The default, \code{"unibas"}, uses three colors of University of Basel's corporate design. Alternatively, \code{color} must specified using \link[grDevices]{colors} names or color hex values. \code{color} will be interpolated to match the length of \code{systems}.}
 
 \item{sdg_titles}{\code{logical} specifying whether the titles of the SDG should added to the axis annotation.}
 

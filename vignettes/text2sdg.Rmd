@@ -35,7 +35,7 @@ The `detect_sdg()` function identifies SDGs in texts that are provided via the `
 
 The `detect_sdg()` function implements a ensemble model based on a random forest architecture that pools the predictions of six labeling systems generated using `detect_sdg_systems()` and also considers text length. The ensemble model can be run for any subset of the 17 SDGs by using the `sdgs` argument. Our research shows that the ensemble model implemented by `detect_sdg()` outperforms any individual labeling system and the OSDG tool developed by the UN SDG AI Lab (Wulff, Meier, & Mata, 2024).   
 
-The example below runs the `detect_sdg()` function for the `projects` data set included in the package and prints the results. The data set is a character vector containing 500 descriptions of randomly selected University of Basel research projects that were funded by the Swiss National Science Foundation (<a href="https://p3.snf.ch">https://p3.snf.ch</a>). The analysis produced a total of `62` matches.   
+The example below runs the `detect_sdg()` function for the `projects` data set included in the package and prints the results. The data set is a character vector containing 500 descriptions of randomly selected University of Basel research projects that were funded by the Swiss National Science Foundation (<a href="https://data.snf.ch">https://data.snf.ch</a>). The analysis produced a total of `62` matches.   
 
 ```{r, eval=FALSE}
 # detecting SDGs in projects

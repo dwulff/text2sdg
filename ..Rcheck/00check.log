@@ -1,0 +1,14 @@
+* using log directory ‘/Users/meidom02/Dropbox/Uni/Psychologie/PhD/R Stuff/text2sdg/..Rcheck’
+* using R version 4.4.2 (2024-10-31)
+* using platform: aarch64-apple-darwin20
+* R was compiled by
+    Apple clang version 14.0.0 (clang-1400.0.29.202)
+    GNU Fortran (GCC) 12.2.0
+* running under: macOS Sequoia 15.6.1
+* using session charset: UTF-8
+* using options ‘--no-manual --no-build-vignettes’
+* checking for file ‘./DESCRIPTION’ ... ERROR
+Required field missing or empty:
+  ‘Author’
+* DONE
+Status: 1 ERROR
